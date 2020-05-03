@@ -1,0 +1,210 @@
+# jemdoc: menu{MENU}{rnd.html},addpackage{amssymb},addpackage{mathrsfs},addpackage{amsmath}
+# jemdoc: addcss{jemdoc.css}
+# jemdoc: addcss{bibover.css}
+#include{masterFile_2.jeminc}
+#include{mj-complete-bib_3.jeminc}
+
+= The reaction-diffusion equation
+
+We illustrate how +SISMatlab+ can be used to conduct modal and nonmodal analysis of the reaction-diffusion equation,
+\(
+\begin{align}
+\phi_{t}(y,t) \;&=\;  \phi_{yy}(y,t)  \,-\, \epsilon^2\,\phi (y,t) \, + \, d(y,t),\label{eq:0}  \\
+\end{align}
+\)
+with homogeneous Neumann boundary conditions,
+\(
+\begin{align}
+[\partial_y \phi (\cdot, t)](\pm 1) \;& =\; 0, \label{eq:0bc}
+\end{align}
+\)
+where $t$ is time, $y \in \left[ -1, 1 \right]$ is a spatial variable, and $ \epsilon \in \mathbb{R}$. 
+
+== Eigenvalue decomposition
+
+=== Problem 
+
+Compute the eigenvalue decomposition of the operator in Eq.~$\eqref{eq:0}$ with Neumann boundary conditions,
+\(
+\begin{equation}
+\begin{array}{rcl}
+	(\mathrm D^2  \,-\, \epsilon^2 I)\,\phi (y) 
+	&=& 
+	\lambda \, I \, \phi (y),  
+	\\[0.1cm]  
+[\mathrm D \phi (\cdot)](\pm 1) 
+&=& 
+0,
+\end{array}
+\label{eq:1} 
+\end{equation}
+\)
+where $\mathrm D  = \mathrm d/\mathrm dy$, $I$ is the identity operator, $\lambda$ is an eigenvalue, and $\phi$ is an eigenfunction. 
+
+=== Solution
+
+See [basic-example.html basic example] for an in-depth discussion of functions that we use to solve the problem.
+~~~
+{Step 1: Problem data}{matlab}
+% Set problem data
+% number of basis functions, differential order, spatial variable, parameters
+N = 63; % N has to be an odd number
+m = 2; % order of differential operator
+y = sety(N); % spatially-independent variable
+
+% parameter eps in reaction-diffusion equation
+eps = 1; eps2 = eps*eps;
+~~~
+
+~~~
+{Step 2: Operators in TPBVP}{matlab}
+% Represent operators Delta = D^2 - eps^2 I and I in e-value problem
+Delta = cell(m+1,1); % cell array with coefficients
+Delta{1} = 1.0; Delta{2} = 0; Delta{3} = -eps2;
+I = cell(1,1); % Identity operator
+I{1} = 1;
+~~~  
+
+~~~
+{Step 3: Boundary conditions}{matlab}
+% The first derivative operator 1.0 Dy + 0.0 
+Dy = cell(2,1); Dy{1} = 1.0; Dy{2} = 0.0;
+
+% Neumann boundary conditions at y = \pm 1
+bc = BCs(2,1); % two constraints on one variable
+bc.Operator = {Dy; Dy};
+bc.Points = [1; -1];
+~~~
+We now use +sisEigs+ to compute the eigenpairs. +sisEigs+ takes five inputs: order of the differential equation $m$ (Eq.~$\eqref{eq:1}$ is a 2nd order differential equation), the number of basis functions $N$, the operators in the generalized eigenvalue problem to be discretized (cell arrays in Matlab), and the boundary conditions. 
+
++sisEigs+ uses Matlab's sparse eigenvalue solver, +eigs+, as a default option and it returns $6$ eigenvalues with largest magnitude. The optional arguments are the number of eigenvalues to be computed (in this case $20$); flag +'Full'+ specifies the use of the regular eigenvalue solver +eig+ in the place of the sparse solver +eigs+. Other valid flags mimic Matlab's +eigs+; +'LR'+ and +'SR'+ for the eigenvalues with the largest and smallest real part, and +'LM'+ and +'SM'+ for the eigenvalues with the largest and smallest magnitude.   
+~~~
+{Step 4: Compute eigenpairs}{matlab}
+% Use sisEig to conduct the eigenvalue decomposition
+[V,lambda] = sisEigs(n,N,Delta,I,bc,20,'Full');
+~~~
+~~~
+{}{raw}
+<figure>
+  <img src="pics/Code2_1.svg" alt="3dflow" style="width:60%">
+  <figcaption>Fig.1 The eigenfunction corresponding to the second largest eigenvalue of <br />the reaction-diffusion equation \eqref{eq:0} with Neumann boundary conditions \eqref{eq:0bc}.</figcaption>
+</figure>
+~~~
+
+== Frequency response analysis 
+
+=== Problem 
+
+Compute the singular values decomposition of the frequency response operator for the reaction-diffusion equation~$\eqref{eq:0}$ with homogeneous Neumann boundary conditions~$\eqref{eq:0bc}$. 
+
+=== Solution
+
+The temporal Fourier transform can be used to represent the frequency response operator associated with Eqs.~$\eqref{eq:0}$-$\eqref{eq:0bc}$ as a TPBVP,
+\(
+\begin{align}
+    \left[\mathcal A(\omega)\,\phi(\cdot)\right] (y) 
+    \;&=\; 
+    \left[\mathcal B(\omega)\, d(\cdot)\right](y),\notag\\
+    \xi (y)
+    \;&=\; 
+    \left[\mathcal C(\omega)\,\phi(\cdot)\right](y),\label{eq:mot1c}\\
+    [\mathcal{L}_a \, \phi(\cdot)](a)  \;&=\; [\mathcal{L}_b \, \phi(\cdot)](b) \;=\;  0,\notag
+  \end{align}  
+\)
+where,
+\(
+	\mathcal A (\omega)
+	\;=\;  
+	({\mathrm i} \omega \, +  \, \epsilon^2) I
+	\; - \;
+	\mathrm D^2,
+	\quad
+	\mathcal B 
+	\;=\; 
+	\mathcal C 
+	\;=\; 
+	I,
+	\quad
+	\mathcal {L}_{\pm 1} 
+	\; = \; 
+	\mathrm D.
+\)
+
+A feedback interconnection of the frequency response operator with its adjoint can be used to compute singular values (see the accompanying paper and [/javascript:cite('Boyd1989') Boyd]),
+\(
+  \begin{align}
+\left[
+\begin{array}{cc}
+  0 &\mathcal{B}\mathcal{B}^{\dagger} \\
+   \mathcal{C}^{\dagger}\mathcal{C}&0
+\end{array} \right] \left[ \begin{array}{c}
+   \phi(y)\\
+   \psi(y)
+\end{array} \right]   
+\;&=\; 
+\gamma 
+\left[\begin{array}{cc}
+  \mathcal{A} & 0\\
+  0 & \mathcal{A}^{\dagger}
+\end{array}\right]\left[ \begin{array}{c}
+   \phi(y)\\
+   \psi(y)
+\end{array} \right], \label{eq:feedback}\\
+\left[\begin{array}{cc}
+\mathcal{L}(\pm 1,\mathrm D) & 0\\
+0 & \mathcal{L}(\pm 1,\mathrm D) 
+\end{array}\right]\left[ \begin{array}{c}
+   \phi(y)\\
+   \psi(y)
+\end{array} \right] \;&=\; 0, \notag
+\end{align}
+\)
+where $(\cdot)^{\dagger}$ denotes adjoint of the operator $(\cdot)$, $\psi$ is the auxiliary variable associated with the adjoint operator, and $\mathcal{L} (a,L)$ determines the action of an operator $L$ on a variable at a point $a$ in the domain $y \in [-1,1]$. The resulting eigenvalues determine the singular values in pairs of opposite signs, i.e., $\gamma = \pm \sigma$.
+~~~
+{Step 1: Problem data}{matlab}
+% Set problem data
+% number of basis functions, differential order, spatial variable, parameters
+N = 63; % N has to be an odd number
+m = 2; % order of differential operator
+y = sety(N); % spatially-independent variable
+
+% parameter eps in TPBVP
+eps = 1; eps2 = eps*eps;
+% temporal frequency
+omega = 0;
+~~~
+~~~
+{Step 2: Operators in TPBVP}{matlab}
+% Represent operators A, B, and C in the frequency response operator
+A = cell(m+1,1); % cell array with coefficients
+A{1} = -1.0; A{2} = 0; A{3} = 1i*omega + eps2;
+
+% Identity operator
+I = cell(1,1); I{1} = 1; 
+
+% Input and output operators B and C
+B = I; C = I;
+~~~
+~~~
+{Step 3: Boundary conditions}{matlab}
+% The first derivative operator 1.0 Dy + 0.0:  
+Dy = cell(2,1); Dy{1} = 1.0; Dy{2} = 0.0;
+
+% Neumann boundary conditions at y = \pm 1
+bc = BCs(2,1); % two constraints on one variable
+bc.Operator = {Dy; Dy};
+bc.Points = [1; -1];
+~~~
+# % Zero operator Z = cell(1,1); Z{1} = 0;
+~~~
+{Step 4: Compute singular values}{matlab}
+[Phi0Psi0,gamma] = sisSvdfrs(2,2,N,A,B,C,bc,bc);
+plot(y,Phi0Psi0{1,2}/val_rbc(Phi0Psi0{1,2}));
+~~~
+~~~
+{}{raw}
+<figure>
+  <img src="pics/Code2_2.svg" alt="3dflow" style="width:60%">
+  <figcaption>Fig.1 The singular function corresponding to the second largest singular value <br />of the frequency response operator associated with Eqs. \eqref{eq:0}-\eqref{eq:0bc}.</figcaption>
+</figure>
+~~~

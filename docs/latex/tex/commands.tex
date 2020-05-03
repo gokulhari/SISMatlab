@@ -1,0 +1,785 @@
+%%%%%% Fernando's commands %%%%%%%%%%%%
+
+%\input{psfig}
+%%\setlength{\textwidth}{6.5 in}
+%%\setlength{\oddsidemargin}{0 in}
+%%\setlength{\evensidemargin}{0 in}
+
+% xfig shit
+%\newcommand{\tenrm}{\relax}
+%\newcommand{\ninrm}{\relax}
+%\newcommand{\sevrm}{\relax}
+%\newcommand{\svtnrm}{\relax}
+%\newcommand{\twlrm}{\relax}
+%\newcommand{\twfvrm}{\relax}
+%\newcommand{\frtnrm}{\relax}
+%\newcommand{\ninbf}{\relax}
+
+% Theorems, etc; this version uses different numbering for each case.
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{corollary}{Corollary}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{definition}{Definition}
+%\newtheorem{remark}{Remark}
+%\newtheorem{example}{Example}
+
+% Theorems, unified numbering
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem{condition}{Condition}
+
+
+%Space
+
+\newcommand{\vmo}{\vspace{-1ex}}
+\newcommand{\vmt}{\vspace{-2ex}}
+\newcommand{\vmth}{\vspace{-3ex}}
+\newcommand{\vpo}{\vspace{1ex}}
+%\newcommand{\vpt}{\vspace{2ex}}
+\newcommand{\vpth}{\vspace{3ex}}
+
+% Command abbreviations
+
+\newcommand{\enma}[1]   {\ensuremath{#1}}
+\newcommand{\noi}{\noindent}
+\newcommand{\non}{\nonumber}
+
+\newcommand{\reo}[1]{(\ref{#1})}
+\newcommand{\reeq}[1]{(\ref{eq.#1})}
+\newcommand{\reex}[1]{(\ref{ex.#1})}
+\newcommand{\reeqs}[2]{(\ref{eq.#1}-\ref{eq.#2})}
+\newcommand{\refi}[1]{Figure \ref{fig.#1}}
+\newcommand{\reth}[1]{Theorem \ref{teo.#1}}
+\newcommand{\relem}[1]{Lemma \ref{lemma.#1}}
+\newcommand{\repro}[1]{Proposition \ref{prop.#1}}
+\newcommand{\resec}[1]{Section \ref{sec.#1}}
+\newcommand{\ressec}[1]{Section \ref{ssec.#1}}
+\newcommand{\recha}[1]{Chapter \ref{cha.#1}}
+\newcommand{\recond}[1]{Condition \ref{cond.#1}}
+\newcommand{\recoro}[1]{Corollary \ref{corol.#1}}
+\newcommand{\reapp}[1]{Appendix \ref{append.#1}}
+\newcommand{\refdef}[1]{Definition \ref{def.#1}}
+\newcommand{\redef}[1]{Definition \ref{def.#1}}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bseq}{\begin{subequations}}
+\newcommand{\eseq}{\end{subequations}}
+\newcommand{\beqn}{\begin{eqnarray}}
+\newcommand{\eeqn}{\end{eqnarray}}
+\newcommand{\ba}{\begin{array}}
+\newcommand{\ea}{\end{array}}
+\newcommand{\bct}{\begin{center}}
+\newcommand{\ect}{\end{center}}
+\newcommand{\btmz}{\begin{itemize}}
+\newcommand{\etmz}{\end{itemize}}
+\newcommand{\benum}{\begin{enumerate}}
+\newcommand{\eenum}{\end{enumerate}}
+
+
+
+\newcommand{\flecha}{{\rightarrow}}
+\newcommand{\flechah}[1]{\stackrel{#1\rightarrow 0}{\longrightarrow}}
+\newcommand{\flechahp}[1]{\stackrel{#1\rightarrow 0+}{\longrightarrow}}
+\newcommand{\flechas}[2]{\stackrel{\stackrel{#1\rightarrow 0}{#2\rightarrow 0}}{\longrightarrow}}
+\newcommand{\flechaN}[1]{\stackrel{#1\rightarrow\infty}{\longrightarrow}}
+%\newcommand{\flechaN}{\stackrel{N\rightarrow\infty}{\longrightarrow}}
+\newcommand{\implica}{{\Rightarrow}}
+\newcommand{\Implica}{{\Longrightarrow}}
+\newcommand{\sii}{{\Leftrightarrow}}
+\newcommand{\Sii}{{\Longleftrightarrow}}
+
+
+% For proofs
+
+%\newcommand{\proof}{{\sc Proof.\ }}
+%\Newcommand{\pfbox}{\hfill\mbox{$\Box$}}
+\newcommand{\defequal}{:=}
+\newcommand{\ha}{\frac{1}{2}}
+%\newcommand{\eopr}{\begin{flushright} $\Box$ \end{flushright}}
+\newcommand{\eopr}{\hfill \rule{1.2ex}{1.2ex}}
+\newcommand{\chico}{\scriptscriptstyle}
+%\newenvironment{pf}{\paragraph*{Proof{\rm.}}}{\pfbox\bigskip}
+
+
+%Gral. notation, function spaces
+
+%%\newcommand{\R}{{\mathbb R}}
+%%\newcommand{\C}{{\mathbb C}}
+%%\newcommand{\Z}{{\mathbb Z}}
+%%\newcommand{\T}{{\mathbb T}}
+%%\newcommand{\V}{{\mathbb V}}
+%%\newcommand{\G}{{\mathbb G}}
+%%\newcommand{\hG}{\hat{\G}}
+%%\newcommand{\W}{{\mathbb W}}
+%%\newcommand{\D}{{\mathbb D}}
+\newcommand{\beh}{{\mathcal B}}
+\newcommand{\beheps}{{\mathcal B}_{\epsilon}}
+\newcommand{\sT}{{ {\bf T}}}
+\newcommand{\F}{{\mathbb F}}
+\newcommand{\Fou}{{\mathcal F}}
+\newcommand{\X}{{\mathbb X}}
+\newcommand{\Xb}{\mbox{\boldmath $\mathit{X}$}}
+%\newcommand{\X}{{\bf X}}
+\newcommand{\ques}{\cal {\bf Q}}
+
+
+
+\newcommand{\lam}{\enma{\lambda}}
+\newcommand{\cH}{\enma{\mathcal H}}
+\newcommand{\cL}{\enma{\mathcal L}}
+\newcommand{\cF}{\enma{\mathcal F}}
+\newcommand{\Flti}{\enma{\mathcal F^{\chico LTI}}}
+\newcommand{\clc}{\enma{\mathcal L}_c}
+\newcommand{\smax}[1] { \bar \sigma \left( #1 \right) }
+\newcommand{\smin}[1] { \underline{\sigma} \left( #1 \right) }
+\newcommand{\norm}[1]{\| #1 \|}                 %does not make large \|
+\newcommand{\Norm}[1]{\left\| #1 \right\|}
+\newcommand{\Hinf}{\mathcal{H}_{\infty} }
+\newcommand{\Ht}{ \mathcal{H}_{2}}
+\newcommand{\Htprp}{  \mathcal{H}_{2}^{\perp} }
+\newcommand{\RHt}{  \mathcal{RH}_{2} }
+\newcommand{\RHtprp}{  \mathcal{RH}_{2}^{\perp} }
+\newcommand{\RHinf}{  \mathcal{RH}_{\infty} }
+\newcommand{\Lt}{  \mathcal{L}_2 }
+\newcommand{\RLt}{  \mathcal{RL}_{2} }
+\newcommand{\Lone}{  \mathcal{L}_1 }
+\newcommand{\lone}{l_1 }
+%\newcommand{\lt}{  l_2 }
+\newcommand{\lte}{  l_{2e} }
+\newcommand{\Lte}{  \mathcal{L}_{2e} }
+\newcommand{\Linf}{  \mathcal{L}_{\infty} }
+\newcommand{\RLinf}{  \mathcal{RL}_{\infty} }
+\newcommand{\Ltplusd}{ \mathcal{L}_2  [0, \infty ) }
+\newcommand{\Ltplus}{ \mathcal{L}_{2+} }
+\newcommand{\Pplus}{ P_{+} }
+\newcommand{\Ltminusd}{ \mathcal{L}_2 (-\infty ,0] }
+\newcommand{\Ltminus}{ \mathcal{L}_{2-}}
+\newcommand{\Pminus}{ P_{-} }
+\newcommand{\nab}{{\bf \nabla}}
+\newcommand{\nabo}{{\bf \nabla}^0}
+\newcommand{\w}{\omega}
+\newcommand{\dospi}{\frac{1}{2\pi}}
+\newcommand{\unopi}{\frac{1}{\pi}}
+\newcommand{\betapi}{\frac{\beta}{\pi}}
+\newcommand{\Bpi}{\frac{B}{\pi}}
+\newcommand{\wpi}{\frac{\w}{\pi}}
+\newcommand{\dw}{\frac{d\omega}{2\pi}}
+\newcommand{\ejw}{ e^{j\omega} }
+\newcommand{\ejs}{ e^{js} }
+\newcommand{\fnu}{\mbox{\boldmath $B^{\nu}$}}
+\newcommand{\fnubar}{\mbox{\boldmath $B^{\bar{\nu}}$}}
+%\newcommand{\fnu}{\enma{\mbox{\boldmath $\mathcal{F}$}(\nu)}\xspace}
+%\newcommand{\fnubar}{\enma{\mbox{\boldmath $\mathcal{F}$}(\bar{\nu})}\xspace}
+%\newcommand{\fnu}{{\cal F}(\nu)}
+\newcommand{\intinf}{\int_{-\infty}^{\infty}}
+
+
+\newcommand{\ws}{\w_1,\ldots,\w_d}
+\newcommand{\Llt}[1]{{\cal L}(l_2^{#1})}
+\newcommand{\thetas}{\theta^1,\ldots,\theta^d}
+\newcommand{\vs}{v^1,\ldots,v^d}
+\newcommand{\xfi}{X^\Phi}
+\newcommand{\xth}{X^\theta}
+\newcommand{\Xfi}{\X^\Phi}
+\newcommand{\Xth}{\X^\theta}
+
+
+
+
+
+\newcommand{\diag}      {\enma{\mathrm{diag}}}
+\newcommand{\Ker}       {\enma{\mathrm{Ker}}}
+\newcommand{\trace}     {\enma{\mathrm{trace}}}
+\newcommand{\co}        {\enma{\mathrm{co}}}
+\newcommand{\col}       {\enma{\mathrm{col}}}
+\newcommand{\rad}       {\enma{\mathrm{rad}}}
+\newcommand{\blockdiag} {\enma{\mathrm{blockdiag}}}
+\newcommand{\eig}       {\enma{\mathrm{eig}}}
+\newcommand{\sgn}       {\enma{\mathrm{sgn}}}
+\newcommand{\re}        {\enma{\mathrm{Re}}}
+\newcommand{\im}        {\enma{\mathrm{Im}}}
+\newcommand{\defeq}     {\enma{\;\triangleq\;}}
+\newcommand{\then}      {\enma{\;\Longrightarrow\;}}
+\newcommand{\neth}      {\enma{\;\Longleftarrow\;}}
+\newcommand{\inner}[2]{\left\langle #1,#2 \right\rangle}
+
+
+
+
+
+
+
+
+
+
+% Operators, transfer functions
+
+%\newcommand{\op}[1]{ \mbox{\boldmath $ #1$}}
+%\newcommand{\tf}[1]{ \enma{\hat{#1}}}
+%\newcommand{\opdel}{\mbox{\boldmath $\mathit{\Delta}$}}
+
+
+
+
+
+\newcommand{\ahat}{\hat{A}}
+\newcommand{\bhat}{\hat{B}}
+\newcommand{\chat}{\hat{C}}
+\newcommand{\dhat}{\hat{D}}
+\newcommand{\rhat}{\hat{R}}
+\newcommand{\qhat}{\hat{Q}}
+\newcommand{\phat}{\hat{P}}
+\newcommand{\psih}{\hat{\psi}}
+\newcommand{\hv}{\hat{v}}
+\newcommand{\homega}{\hat{\omega}}
+\newcommand{\hu}{\hat{u}}
+\newcommand{\hw}{\hat{w}}
+\newcommand{\hp}{\hat{p}}
+\newcommand{\hd}{\hat{d}}
+\newcommand{\bv}{{\bf v}}
+\newcommand{\bomega}{\bar{\omega}}
+
+
+
+
+\newcommand{\ahatlam}{\hat{A}(\lam)}
+\newcommand{\bhatlam}{\hat{B}(\lam)}
+\newcommand{\chatlam}{\hat{C}(\lam)}
+\newcommand{\dhatlam}{\hat{D}(\lam)}
+\newcommand{\rhatlam}{\hat{R}(\lam)}
+\newcommand{\qhatlam}{\hat{Q}(\lam)}
+
+
+
+
+
+
+\newcommand{\tf}[1]{\enma{#1}}
+\newcommand{\op}[1]{\enma{\mathbf{#1}}}
+\newcommand{\opm}{\op{M}\xspace}
+\newcommand{\opl}{\op{L}\xspace}
+\newcommand{\opi}{\op{I}\xspace}
+\newcommand{\opzero}{\op{0}\xspace}
+\newcommand{\opk}{\op{K}\xspace}
+\newcommand{\opd}{\op{D}\xspace}
+\newcommand{\oph}{\op{H}\xspace}
+\newcommand{\opat}{\op{A}^T\xspace}
+\newcommand{\opg}{\op{G}\xspace}
+\newcommand{\opf}{\op{F}\xspace}
+\newcommand{\opp}{\op{P}\xspace}
+\newcommand{\opn}{\op{N}\xspace}
+\newcommand{\opq}{\op{Q}\xspace}
+\newcommand{\opr}{\op{R}\xspace}
+\newcommand{\ops}{\op{S}\xspace}
+\newcommand{\opt}{\op{T}\xspace}
+\newcommand{\opu}{\op{U}\xspace}
+\newcommand{\opv}{\op{V}\xspace}
+
+\newcommand{\opdel}{\op{\del}\xspace}
+\newcommand{\opups}{\op{\Upsilon}\xspace}
+\newcommand{\opdelbar}{\op{\bar{\del}}\xspace}
+\newcommand{\opdelhat}{\op{\hat{\del}}\xspace}
+\newcommand{\opdelhatk}{\op{\hat{\del}}^k\xspace}
+\newcommand{\opdelbart}{\op{\bar{\del}}^T\xspace}
+\newcommand{\opdelta}{\mbox{\boldmath $\delta$}\xspace}
+\newcommand{\oplam}{\mbox{\boldmath $\lam$}\xspace}
+\newcommand{\opphi}{\op{\Phi}\xspace}
+\newcommand{\oppsi}{\op{\Psi}\xspace}
+\newcommand{\optheta}{\mbox{\boldmath $\theta$}\xspace}
+\newcommand{\opthetachico}{\mbox{\small\boldmath $\theta$}\xspace}
+\newcommand{\opvarrho}{\mbox{\boldmath $\varrho$}\xspace}
+
+
+
+
+
+
+
+
+%deltas
+\newcommand{\del}{\Delta}
+\newcommand{\ddel}{{\bf \Delta}}
+\newcommand{\ddelti}{{\bf \Delta^{\scriptscriptstyle LTI}}}
+\newcommand{\ddeltv}{{{\bf \Delta^{\scriptscriptstyle LTV}}}}
+\newcommand{\ddelslow}{{\bf \Delta^{\nu}}}
+\newcommand{\bdelti}{{\bf B_{\Delta^{\scriptscriptstyle LTI}}}}
+\newcommand{\bdeltv}{{\bf B_{\Delta^{\scriptscriptstyle LTV}}}}
+\newcommand{\bdelnl}{{\bf B_{\Delta^{\scriptscriptstyle NL}}}}
+\newcommand{\bdelslow}{{\bf B_{\Delta^\nu}}}
+\newcommand{\bdeluno}{{\bf B_{\Delta_1}}}
+\newcommand{\bdeldos}{{\bf B_{\Delta_2}}}
+\newcommand{\delo}{\Delta_0}
+\newcommand{\ddelo}{{\bf \Delta_0}}
+\newcommand{\Bdel}{{\bf B_{\Delta}}}
+\newcommand{\Bdelo}{{\bf B_{\Delta_0}}}
+\newcommand{\delu}{\Delta_{u}}
+\newcommand{\ddelu}{{\bf \Delta_{u}}}
+\newcommand{\Bdelu}{{\bf B_{\Delta_{u}}}}
+\newcommand{\dels}{\Delta_{S}}
+\newcommand{\ddels}{{\bf \Delta_{S}}}
+\newcommand{\Bdels}{{\bf B_{\Delta_{S}}}}
+\newcommand{\delso}{\Delta_{S_0}}
+\newcommand{\ddelso}{{\bf \Delta_{S_0}}}
+\newcommand{\Bdelso}{{\bf B_{\Delta_{S_0}}}}
+\newcommand{\bvarrho}{\mathbf{B_\varrho}}
+
+
+
+%White noise stuff
+
+\newcommand{\Wngt}{W_{N,\gamma,T}}
+\newcommand{\Wnt}{W_{N,T}}
+\newcommand{\Wng}{W_{N,\gamma}}
+\newcommand{\Wgt}{W_{\gamma,T}}
+\newcommand{\Wt}{W_{T}}
+\newcommand{\BP}{\cal BP}
+\newcommand{\subN}{_{\scriptscriptstyle N}}
+\newcommand{\subF}{_{\scriptscriptstyle F}}
+\newcommand{\Fch}{{\scriptscriptstyle F}}
+
+
+\newcommand{\WFnav}{\hat{W}_{N,\alpha,V}} %freq domain set
+\newcommand{\Wneta}{\hat{W}_{N,\eta}} %freq domain set
+\newcommand{\Weta}{\hat{W}_{\eta}} %freq domain set
+\newcommand{\Setab}{S_{\eta,B}} %freq domain set
+\newcommand{\Wetab}{W_{\eta,B}} %freq domain set
+\newcommand{\WFav}{\hat{W}_{\alpha,V}} %freq domain set
+\newcommand{\prob}[1]{{\cal P}\left( #1 \right)}
+
+
+% Analysis stuff
+
+\newcommand{\Cprp}{C_{\perp}}
+\newcommand{\Csprp}{C_{S\perp}}
+\newcommand{\Cuprp}{C_{u\perp}}
+
+
+% Mixed LTI/LTV stuff
+
+\newcommand{\pphi}{{\bf \Phi}}
+\newcommand{\ppsi}{{\bf \Psi}}
+\newcommand{\ttheta}{{\Theta}}
+\newcommand{\ddelta}{{\mathbb \delta}}
+\newcommand{\bpphi}{{\bf B}_{\pphi}}
+\newcommand{\bppsi}{{\bf B}_{\ppsi}}
+\newcommand{\bttheta}{{\bf B}_{\ttheta}}
+\newcommand{\bddelta}{{\bf B_\delta}}
+\newcommand{\phit}{\tilde{\Phi}}
+\newcommand{\psit}{\tilde{\Psi}}
+\newcommand{\pphit}{{\bf \tilde{\Phi}}}
+\newcommand{\delt}{\tilde{\del}}
+\newcommand{\ddelt}{{\bf \tilde{\del}}}
+\newcommand{\bdelt}{{\bf B}_\ddelt}
+\newcommand{\atil}{\tilde{A}}
+\newcommand{\mtil}{\tilde{M}}
+\newcommand{\htil}{\tilde{H}}
+\newcommand{\ctil}{\tilde{C}}
+\newcommand{\gtil}{\tilde{G}}
+\newcommand{\ftil}{\tilde{F}}
+\newcommand{\vtil}{\tilde{v}}
+
+
+
+%Array stuff
+
+% Sets uniform spacing for all matrices. To avoid it just comment out
+% the renewcommand stuff
+
+\newcommand{\matbegin}{
+%       \renewcommand{\baselinestretch}{1.5}
+%       \renewcommand{\arraystretch}{0.7}
+        \left[
+}
+\newcommand{\matend}{
+        \right]
+}
+
+
+
+\newcommand{\tbo}[2]{
+  \matbegin \begin{array}{c}
+       #1 \\ #2
+       \end{array} \matend }
+\newcommand{\thbo}[3]{
+  \matbegin \begin{array}{c}
+       #1 \\ #2 \\ #3
+       \end{array} \matend }
+\newcommand{\obt}[2]{
+  \matbegin \begin{array}{cc}
+       #1 & #2
+       \end{array} \matend }
+\newcommand{\obth}[3]{
+  \matbegin \begin{array}{ccc}
+       #1 & #2 & #3
+       \end{array} \matend }
+\newcommand{\tbt}[4]{
+  \matbegin \begin{array}{cc}
+       #1 & #2 \\ #3 & #4
+       \end{array} \matend }
+\newcommand{\thbt}[6]{
+  \matbegin \begin{array}{cc}
+       #1 & #2 \\ #3 & #4 \\ #5 & #6
+       \end{array} \matend }
+\newcommand{\tbth}[6]{
+  \matbegin \begin{array}{ccc}
+       #1 & #2 & #3\\ #4 & #5 & #6
+       \end{array} \matend }
+\newcommand{\thbth}[9]{
+ \matbegin \begin{array}{ccc}
+                #1 & #2 & #3 \\
+                #4 & #5 & #6 \\
+                #7 & #8 & #9
+                \end{array}\matend}
+\newcommand{\fbo}[4]{
+ \matbegin \begin{array}{c}
+                #1 \\ #2 \\ #3 \\ #4
+                \end{array}\matend}
+\newcommand{\obf}[4]{
+ \matbegin \begin{array}{cccc}
+                #1 & #2 & #3 & #4
+                \end{array}\matend}
+
+
+\newcommand{\tbtb}[4]{
+  \matbegin \begin{array}{cc}  \displaystyle
+       #1 &  \displaystyle #2 \\  \displaystyle #3 &  \displaystyle #4
+       \end{array} \matend }
+
+
+\newcommand{\stsp}[4]{  \matbegin \begin{array}{c|c}
+       #1 & #2 \\ \hline
+       #3 & #4
+       \end{array} \matend }
+
+\newcommand{\stsptbth}[6]{  \matbegin \begin{array}{c|cc}
+       #1 & #2 & #3\\ \hline
+       #4 & #5 & #6
+       \end{array} \matend }
+
+\newcommand{\stspthbt}[6]{  \matbegin \begin{array}{c|c}
+       #1 & #2 \\ \hline
+       #3 & #4 \\
+       #5 & #6
+       \end{array} \matend }
+
+\newcommand{\stspthbth}[9]{  \matbegin \begin{array}{c|cc}
+        #1 & #2 & #3 \\ \hline
+        #4 & #5 & #6 \\
+        #7 & #8 & #9
+       \end{array} \matend }
+
+
+% Sets smaller spacing for matrices inside text; to avoid it just comment out
+% the renewcommand stuff
+
+\newcommand{\matparbegin}{
+        \renewcommand{\baselinestretch}{1}
+        \renewcommand{\arraystretch}{.5}
+        \setlength{\arraycolsep}{.25em}
+        \left[
+}
+\newcommand{\matparend}{
+        \right]
+}
+
+%Two by one, two by two, two by three inside paragraph.
+
+\newcommand{\tbopar}[2]{
+  \matparbegin \begin{array}{c}
+       #1 \\ #2
+       \end{array} \matparend }
+
+
+\newcommand{\obtpar}[2]{
+  \matparbegin \begin{array}{cc}
+       #1 & #2
+       \end{array} \matparend }
+
+
+\newcommand{\tbtpar}[4]{
+  \matparbegin \begin{array}{cc}
+       #1 & #2 \\ #3 & #4
+       \end{array} \matparend }
+
+\newcommand{\tbthpar}[6]{
+  \matparbegin \begin{array}{ccc}
+       #1 & #2 & #3\\ #4 & #5 & #6
+       \end{array} \matparend }
+
+% Sets intermediate  spacing for matrices; to avoid it just comment out
+% the renewcommand stuff
+
+\newcommand{\matintbegin}{
+        \renewcommand{\baselinestretch}{1}
+        \renewcommand{\arraystretch}{.7}
+        \setlength{\arraycolsep}{.3em}
+        \left[
+}
+\newcommand{\matintend}{
+        \right]
+}
+
+%Intermediate two by one, two by two, two by three
+
+\newcommand{\tboint}[2]{
+  \matintbegin \begin{array}{c}
+       #1 \\ #2
+       \end{array} \matintend }
+
+\newcommand{\obtint}[2]{
+  \matintbegin \begin{array}{cc}
+       #1 & #2
+       \end{array} \matintend }
+
+
+\newcommand{\tbtint}[4]{
+  \matintbegin \begin{array}{cc}
+       #1 & #2 \\ #3 & #4
+       \end{array} \matintend }
+
+\newcommand{\tbthint}[6]{
+  \matintbegin \begin{array}{ccc}
+       #1 & #2 & #3\\ #4 & #5 & #6
+       \end{array} \matintend }
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Bassam's defs ( afew are commented out)
+
+
+
+
+
+
+
+
+
+
+\newcommand{\dhoo}{\hat{D}_{11}}
+\newcommand{\ca}{{\cal A}}
+\newcommand{\hca}{\hat{\cal A}}
+\newcommand{\cq}{{\cal Q}}
+\newcommand{\calo}{{\cal O}}
+\newcommand{\ce}{{\cal E}}
+\newcommand{\inv}[1]{#1^{\scriptscriptstyle -1}}
+\newcommand{\wctau}{W_\tau}
+\newcommand{\bbee}{{\rm \bf b}}
+\newcommand{\cabe}{{\cal B}}
+\newcommand{\cace}{{\cal C}}
+\newcommand{\lonen}{\ell^1(n)}
+\newcommand{\linfn}{\ell^\infty (n)}
+\newcommand{\bhst}{ ^*\hat{B}_1}
+\newcommand{\hsli}{({\cal H}_n{\cal S}_n)^{\scriptscriptstyle -L}}
+\newcommand{\hjli}{({\cal H}_n{\cal J}_n)^{\scriptscriptstyle -L}}
+\newcommand{\hs}{({\cal H}_n{\cal S}_n)}
+\newcommand{\hj}{({\cal H}_n{\cal J}_n)}
+\newcommand{\cln}{{\cal L}_n}
+\newcommand{\oh}{\hat{\cal O}}
+\newcommand{\oho}{\hat{\cal O}_o}
+\newcommand{\fdbk}[2]{{\cal F}(#1,#2)}
+\newcommand{\elft}{\ell^\infty_{L^\infty {\scriptscriptstyle [0,\tau]}}}
+\newcommand{\elinf}{\ell_{L^\infty {\scriptscriptstyle [0,\tau]}}}
+\newcommand{\Lft}{L^\infty {\scriptstyle [0,\infty]}}
+\newcommand{\Lfte}{L^\infty_e {\scriptstyle [0,\infty]}}
+\newcommand{\Lftt}{L^\infty {\scriptstyle [0,\tau]}}
+\newcommand{\Lonet}{L^1 {\scriptstyle [0,\tau]}}
+\newcommand{\elone}{\ell^1}
+\newcommand{\elfn}{\ell^\infty {\scriptstyle (n)}}
+\newcommand{\inn}{{\cal J}_n}
+\newcommand{\inntl}{\tilde{\cal J}_n}
+\newcommand{\hon}{{\cal H}_n}
+\newcommand{\san}{{\cal S}_n}
+\newcommand{\hot}{{\cal H}_\tau}
+\newcommand{\sat}{{\cal S}_\tau}
+\newcommand{\hoth}{\hat{\cal H}_\tau}
+\newcommand{\sath}{\hat{\cal S}_\tau}
+\newcommand{\dis}{I \hspace*{-.42em}{\cal D}_\tau}
+\newcommand{\imb}{I \hspace*{-.41em}I}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\cell}{{\cal L}}
+\newcommand{\ttl}{\tilde{T}}
+\newcommand{\rtl}{\tilde{R}}
+\newcommand{\ftl}{\tilde{f}}
+\newcommand{\calc}{{\cal C}}
+\newcommand{\cali}{{\cal I}}
+\newcommand{\calg}{\G}
+\newcommand{\fbr}{\bar{f}}
+\newcommand{\coh}{\hat{{\cal O}}}
+\newcommand{\xdot}{\dot{x}}
+\newcommand{\enex}{{n_x}}
+\newcommand{\enu}{{n_u}}
+\newcommand{\eny}{{n_y}}
+
+\newcommand{\cd}{{\cal D}}
+\newcommand{\cs}{{\cal S}}
+
+
+
+\newcommand{\ra}{\rightarrow}
+\newcommand{\peee}{(I-\hat{D}_{11}\hat{D}_{11}^*)}
+\newcommand{\ess}{(I-\hat{D}_{11}^* \hat{D}_{11})}
+\newcommand{\tpee}{(I-TT^*)^{1/2}}
+\newcommand{\tess}{(I-T^*T)^{1/2}}
+\newcommand{\Ltwo}{L^2[0,\tau]}
+\newcommand{\nb}{{\cal N}(\bar{B}_1)}
+\newcommand{\rng}[1]{{\cal R}{\scriptstyle ( #1 )}}
+\newcommand{\rcd}{{\cal R}(\bar{C}_1,\bar{D}_{12})}
+\newcommand{\ustp}[1]{{\bf 1} \hspace*{-.12em}{\scriptstyle( #1 )}\hspace*{.08em}}
+\newcommand{\hif}{H^\infty}
+%\newcommand{\del}{\mbox{${\bf \Delta} \hspace*{-.83em}\Delta$}}
+\newcommand{\ifnm}[1]{\mbox{$ \|#1\|_{H^\infty}$}}
+\newcommand{\anm}[1]{\mbox{$ \|#1\|_{\cal A} $}}
+\newcommand{\real}{\R}
+\newcommand{\arr}{{I \hspace*{-.3em}R}}
+\newcommand{\cplx}{\mbox{$ | \hspace*{-.4em}C$}}
+\newcommand{\cplxs}{ C\kern -.35em \rule{0.03 em}{.7 ex}~   }
+\newcommand{\integ}{\Z}
+\def\complex{\hbox{C\kern -.45em \rule{0.03 em}{1.5 ex}}~}
+\newcommand{\numb}{\mbox{$ I \hspace*{-.4em}N$}}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\lla}{\mbox{$\longleftarrow$}}
+%\newcommand{\Lt}{L^p[0,\tau]}
+\newcommand{\elt}{\mbox{$\ell^p_{L^p[0,\tau]}$}}
+\newcommand{\eltwo}{\mbox{$\ell^2_{L^2[0,\tau]}$}}
+\newcommand{\wt}{W_\tau}
+\newcommand{\wit}{W_\tau^{-1}}
+\newcommand{\gh}{\mbox{$\hat{G}$}}
+\newcommand{\gtl}{\mbox{$\tilde{G}$}}
+\newcommand{\gbr}{\bar{G}}
+\newcommand{\gbrev}{\breve{G}}
+\newcommand{\gcute}{\acute{G}}
+\newcommand{\tcute}{\acute{T}}
+%\newcommand{\th}{\hat{t}}
+%\newcommand{\Th}{\hat{T}}
+\newcommand{\sh}{\hat{s}}
+\newcommand{\fh}{\hat{f}}
+\newcommand{\rh}{\hat{r}}
+\newcommand{\uh}{\hat{u}}
+\newcommand{\xh}{\hat{x}}
+\newcommand{\yh}{\hat{y}}
+\newcommand{\ah}{\hat{A}}
+\newcommand{\bh}{\hat{B}}
+\newcommand{\ch}{\hat{C}}
+%\newcommand{\dh}{\hat{D}}
+\newcommand{\atl}{\tilde{A}}
+\newcommand{\btl}{\tilde{B}}
+\newcommand{\ctl}{\tilde{C}}
+\newcommand{\dtl}{\tilde{D}}
+\newcommand{\abr}{\bar{A}}
+\newcommand{\bbr}{\bar{B}}
+\newcommand{\cbr}{\bar{C}}
+\newcommand{\dbr}{\bar{D}}
+\newcommand{\bbrev}{\breve{B}}
+\newcommand{\cbrev}{\breve{C}}
+\newcommand{\dbrev}{\breve{D}}
+\newcommand{\aacute}{\acute{A}}
+\newcommand{\bcute}{\acute{B}}
+\newcommand{\ccute}{\acute{C}}
+\newcommand{\dcute}{\acute{D}}
+\newcommand{\bbrh}{\hat{\bar{B}}}
+\newcommand{\wtl}{\tilde{w}}
+\newcommand{\ztl}{\tilde{z}}
+\newcommand{\wh}{\hat{w}}
+\newcommand{\zh}{\hat{z}}
+\newcommand{\ytl}{\tilde{y}}
+\newcommand{\utl}{\tilde{u}}
+\newcommand{\chtwo}{\mbox{${\cal H}^2_{L^2[0,\tau]}$}}
+\newcommand{\hinf}{{\cal H}^\infty}
+\newcommand{\echt}{{\cal H}^2}
+\newcommand{\hths}{{\cal H}^2_{{\rm HS}}}
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+
+\def\calF{{\cal{F}}}
+\def\hatz{\hat{z}}
+\def\hatdelta{\hat{\delta}}
+\def\hattheta{\hat{\theta}}
+\def\barsigma{\bar{\sigma}}
+\def\barz{\bar{z}}
+%\newcommand{\diag}[3]{\mbox{diag}\left[ #1, #2, #3 \right]}
+\newcommand{\diagfour}[4]{\mbox{diag}\left[ #1, #2, #3, #4 \right]}
+\newcommand{\pbp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pbpt}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\der}[2]{ \frac{ \partial #1}{ \partial #2} }
+\newcommand{\dder}[2]{ \dfrac{ \partial #1}{ \partial #2} }
+\newcommand{\dert}[2]{ \frac{\partial^2 #1}{ \partial #2^2} }
+
+
+
+\newcommand{\system}[4]{
+ \left[
+  \begin{array}{c|c}
+   #1 & #2 \\
+   \hline
+   #3 & #4
+  \end{array}
+ \right]
+  }
+\newcommand{\systemb}[9]{
+ \left[
+  \begin{array}{cc|c}
+   #1 & #2 & #3   \\
+   #4 & #5 & #6   \\
+   \hline
+   #7 & #8 & #9
+  \end{array}
+ \right]
+  }
+\newcommand{\systembd}[9]{
+ \left[
+  \begin{array}{c|cc}
+   #1 & #2 & #3   \\
+   \hline
+   #4 & #5 & #6   \\
+   #7 & #8 & #9
+  \end{array}
+ \right]
+  }
+
+\newcommand{\tmatrix}[4]{ \left( \begin{array}{cc}
+ {\scriptstyle #1} & {\scriptstyle #2} \\ {\scriptstyle #3} &
+ {\scriptstyle #4} \end{array} \right) }
+\newcommand{\tmatrixb}[4]{ \left( \begin{array}{cc} #1 & #2 \\
+ #3 & #4 \end{array} \right) }
+\newcommand{\sqmatrix}[4]{\left[ \begin{array}{cc} #1 & #2 \\
+ #3 & #4 \end{array} \right] }
+\newcommand{\smsqmatrix}[4]{\mbox{\scriptsize $\left[ \begin{array}{cc}
+ #1 & #2 \\ #3 & #4 \end{array} \right]$ \normalsize}}
+\newcommand{\vct}[2]{ \left[ \begin{array}{c} #1 \\ #2 \end{array} \right] }
+
+\newcommand{\smvct}[2]{\mbox{\footnotesize $\left[ \begin{array}{c} #1 \\
+  #2 \end{array} \right]$ \normalsize} }
+
+\newcommand{\smrow}[2]{\mbox{\footnotesize $\left[ \begin{array}{cc} #1 &
+  #2 \end{array} \right]$ \normalsize} }
+
+\newcommand{\rowvct}[2]{\left[ \begin{array}{cc} #1 &
+  #2 \end{array} \right] }
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{fact}{Fact}
+\newtheorem{assumption}{Assumption}
+\newtheorem{claim}{Claim}
+%\newtheorem{definition}{Definition}
+%\newtheorem{remark}{Remark}
+
+% \newenvironment{proof}{ \begin{list}{\bf Proof:}{\setlength{\leftmargin}{0.5\leftmargin} \setlength{\labelwidth}{0.1in} }
+% \item \slshape }{\hfill \rule{3mm}{3mm} \end{list}
+% \vspace*{1ex}}

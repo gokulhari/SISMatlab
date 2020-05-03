@@ -1,0 +1,529 @@
+# jemdoc: menu{MENU}{reaction-diffusion.html},addpackage{amssymb},addpackage{mathrsfs},addpackage{amsmath}
+# jemdoc: addcss{jemdoc.css}
+# jemdoc: addcss{bibover.css}
+#include{masterFile_2.jeminc}
+#include{mj-complete-bib_3.jeminc}
+
+= Basic example
+
+We illustrate basic features of +SISMatlab+ using the differential equation,
+\(
+  \begin{equation}
+ \left( 
+ \mathrm  D^{2} \; + \; \dfrac{1}{y^2 + 1} \, \mathrm D \; - \; \epsilon^2 I 
+ \right) 
+ \phi (y) 
+ \; = \; 
+ d(y),
+ \label{eq:2}
+\end{equation}
+\)
+with Dirichlet, Neumann, or Robin boundary conditions,
+\(
+\begin{align}
+  \phi (\pm 1) \;& =\;  \pm 1, \label{eq:1b}
+  \\[0.1cm]
+[{\mathrm  D} \phi (\cdot)](\pm 1) \;& =\; \pm 2, \label{eq:1c}
+	\\[0.1cm]
+ 4\,[{\mathrm  D} \phi (\cdot)](\pm 1)  \,+\, 3\,\phi (\pm 1) \;&=\; \pm 3, \label{eq:1d}
+\end{align}
+\)
+\n
+where $y \in \left[ -1, 1 \right]$ is the spatial variable, $\mathrm{D} = \mathrm d / \mathrm dy$, $\epsilon \in \mathbb{R}$, $d$ is the input forcing, and $\phi$ is the unknown variable. 
+	\n
+  \n
+We solve Eq.~$\eqref{eq:2}$ using function +sisSolves+. We then explain technical details that underlie this function and describe functions: +Discretize+ which is an integral part of +sisSolves+ used to solve TPBVPs; +Matgen+ which provides elementary discretization matrices and is the building block of +Discretize+; and +BcMat+ which specifies boundary conditions. An in-depth technical discussion is provided in [latex/tex/SISMatlab_v7.pdf documentation]. 
+ 
+== Solving TPBVPs via +sisSolves+
+
+We first use function +sisSolves+ to solve Eq.~$\eqref{eq:2}$ with boundary conditions~$\eqref{eq:1b}$, $\eqref{eq:1c}$, or~$\eqref{eq:1d}$.    
+	\n
+	\n
+In what follows, $N+1$ denotes the number of basis functions where *$N$ has to be an odd number*.
+
+~~~
+{Step 1: Problem data}{matlab}
+% Set problem data
+% number of basis functions, differential order, spatial variable, parameters
+N = 63; % N has to be an odd number 
+m = 2; % order of differential operator
+y = sety(N); % spatially-independent variable
+
+% parameter eps in TPBVP
+eps = 1; eps2 = eps*eps;
+~~~
+~~~
+{Step 2: Operator and input in TPBVP}{matlab}
+% Represent operator in TPBVP
+Delta = cell(m+1,1); % cell array with coefficients
+Delta{1} = 1.0; Delta{2} = 1./(y.^2 + 1); Delta{3} = -eps2;
+
+% Input in physical space
+d = 1 + y + y.^2;
+~~~
+~~~
+{Step 3: Boundary conditions}{matlab}
+% Dirichlet BCs
+bc1 = BCs(2,1); % two constraints on one variable
+% Identity operator
+I = cell(1,1); % cell array with coefficients
+I{1} = 1.0;
+
+% Dirichlet BCs at y = \pm 1
+bc1.Operator = {I; I}; % boundary operator
+bc1.Points = [1; -1];  % boundary points
+bc1.Values = [1; -1];  % BCs at the boundaries ([0; 0] for homogeneous BCs)
+
+% Neumann BCs
+bc2 = BCs(2,1); % two constraints on one variable 
+% 1st derivative operator: 1.0 Dy + 0.0 I
+Dy = cell(2,1); % cell array with coefficients
+Dy{1} = 1.0; Dy{2} = 0.0;
+
+% Neumann BCs at y = \pm 1
+bc2.Operator = {Dy; Dy};
+bc2.Points = [1; -1];
+bc2.Values = [2; -2];
+
+% Robin BCs
+bc3 = BCs(2,1); % two constraints on one variable
+% Operator 4 Dy + 3 I
+Op = cell(2,1); % cell array with coefficients
+Op{1} = 4; Op{2} = 3;
+
+% Robin BCs at y = \pm 1
+bc3.Operator = {Op; Op};
+bc3.Points = [1; -1];
+bc3.Values = [3; -3];
+~~~
+We now use +sisSolves+ to solve the TPBVP. +sisSolves+ takes five inputs: order of the differential equation $m$ (Eq.~$\eqref{eq:2}$ is a 2nd order differential equation), the number of basis functions $N$, the operator to be discretized (cell array in Matlab), input function $d$, and the boundary conditions.
+~~~
+{Step 4: Solve TPBVP}{matlab}
+% Use sisSolves to solve TPBVP
+% inputs to sisSolves: differential order m, N, operator, BCs, input forcing d 
+solution1 = sisSolves(m,N,Delta,bc1,d); % Dirichlet BCs
+solution2 = sisSolves(m,N,Delta,bc2,d); % Neumann BCs
+solution3 = sisSolves(m,N,Delta,bc3,d); % Robin BCs
+
+% Visualize solution for Dirichlet BCs
+plot(y,solution1); 
+~~~
+~~~
+{}{raw}
+<figure>
+  <img src="pics/cod1Dir.svg" alt="3dflow" style="width:60%">
+  <figcaption>Fig. 1: Response of Eq. \eqref{eq:2} with Dirichlet BCs Eq. \eqref{eq:1b} to input forcing \( d(y) = 1 + y + y^2\).</figcaption>
+</figure>
+~~~
+
+~~~
+{}{raw}
+<figure>
+  <img src="pics/cod1Neu.svg" alt="3dflow" style="width:60%">
+  <figcaption>Fig. 2: Response of Eq. \eqref{eq:2} with Neumann BCs Eq. \eqref{eq:1c} to input forcing \( d(y) = 1 + y + y^2\).</figcaption>
+</figure>
+~~~
+
+~~~
+{}{raw}
+<figure>
+  <img src="pics/cod1Rob.svg" alt="3dflow" style="width:60%">
+  <figcaption>Fig. 3: Response of Eq. \eqref{eq:2} with Robin BCs Eq. \eqref{eq:1d} to input forcing \( d(y) = 1 + y + y^2\).</figcaption>
+</figure>
+~~~
+
+== The spectral integration method
+
+In the spectral integration method, the highest derivative is expressed in the basis of Chebyshev polynomials (of the first kind) and indefinite integration is used to obtain expressions for lower derivatives. In Eq.~$\eqref{eq:2}$, the second derivative of $\phi (y)$ is expressed as
+\(
+  \begin{equation}
+  \mathrm D^2\phi (y) 
+  \;=\; 
+  \sideset{}{'}\sum_{i \, = \, 0}^{\infty} \phi_i^{(2)} \, T_i(y)
+  \; = \;
+  \mathbf t_y^T \, \boldsymbol \Phi^{(2)}, \label{eq:specInt1}
+  \end{equation}
+\)
+where the prime denotes a summation with the first term halved, $\boldsymbol \Phi^{(2)} = [\,\phi^{(2)}_0\;\; \phi^{(2)}_1\;\; \phi^{(2)}_2 \;\; \cdots \;\; ]^T$ is the infinite vector of spectral coefficients in the basis expansion of $\mathrm D^2\phi (y)$, and $\mathbf t_y$ is the vector of Chebyshev polynomials,
+	\(
+  	\mathbf t_y^T \; = \; \left[\,\tfrac{1}{2} T_0(y) \;\; T_1(y) \;\; T_2(y) \;\;  \cdots \;\;\; \right].
+  \)
+
+Indefinite integration of Eq.~$\eqref{eq:specInt1}$ yields
+	\(
+\begin{equation}\label{eq:specInt2}
+  \begin{array}{rclcl}
+  \mathrm D \phi (y) 
+  &~\, = ~\,& 
+  \displaystyle \sideset{}{'}\sum_{i \, = \, 0}^{N} \phi_i^{(1)} \, T_i(y) \,+\, c_1 
+  &~\, = ~\,&
+  \mathbf t_y^T \, \boldsymbol \Phi^{(1)}\,+\, c_1,
+  	\\[0.15cm]
+\phi (y) 
+&~\, = ~\,& 
+\displaystyle \sideset{}{'}\sum_{i \, = \, 0}^{N} \phi_i^{(0)} \, T_i(y) \,+\, c_1 y \,+\, \tilde{c}_0 
+&~\, = ~\,& 
+  \mathbf t_y^T \, \boldsymbol \Phi^{(0)}\,+\, c_1 y \,+\, \tilde{c}_0,
+  \end{array}
+\end{equation}
+	\)
+where $\tilde{c}_0$ and $c_1$ are the integration constants. The spectral coefficients  $\boldsymbol \Phi^{(1)}$ and $\boldsymbol \Phi^{(0)}$ in the basis expansion of $\mathrm D \phi (y)$ and $\phi (y)$ can be expressed in terms of $\boldsymbol \Phi^{(2)}$ via
+\(
+\begin{equation}
+	\begin{array}
+  \boldsymbol \Phi^{(1)} 
+  & = & 
+  \mathbf Q \, \boldsymbol \Phi^{(2)}, 
+  \\[0.1cm]
+  \boldsymbol \Phi^{(0)} 
+  & = & 
+  \mathbf Q^2 \, \boldsymbol \Phi^{(2)}, 
+  \end{array}
+\end{equation}
+\)
+where the indefinite integration operator $\mathbf Q$ is given by,
+\(
+\begin{equation}\label{eq:Q}
+  \mathbf Q 
+  \; = \; 
+  \left[\begin{array}{ccccccc}
+     0& \tfrac{1}{2} & 0 & \cdots\\
+    \tfrac{1}{2} & 0 & -\tfrac{1}{2} & 0 &\cdots \\
+    0 & \tfrac{1}{4} & 0 & -\tfrac{1}{4} & 0 &\cdots \\
+    0 & 0 & \tfrac{1}{6} & 0 & -\tfrac{1}{6} & 0 &\cdots \\
+    \vdots & \vdots &  & \ddots & \ddots & \ddots & \\
+  \end{array}\right].
+\end{equation}
+\)
+The first row in Eq.~$\eqref{eq:Q}$ is different from [/javascript:cite('DuSIAM2016') Du (Section 4)]  and [/javascript:cite('GreSIAM91') Greengard (Eq. 12)], and its derivation is provided in the [latex/tex/SISMatlab_v7.pdf documentation]. In contrast to these references where the first row of $\mathbf Q$ is full, our representation of $\mathbf Q$ in Eq.~$\eqref{eq:Q}$ is given by a banded tri-diagonal matrix. 
+
+Since $T_0(y) = 1$ and $T_1(y) = y$, we let $c_0 = 2 \tilde{c}_0$ and represent integration constants in the basis expansion of $\phi (y)$ and $\mathrm D \phi (y)$ in terms of Chebyshev polynomials to obtain,
+\(	
+  \begin{align}\label{eq:K}
+  \phi (y) 
+  \;&=\; 
+   \mathbf t_y^T \, \mathbf Q^2 \, \mathbf \Phi^{(2)}
+  \; + \;
+  \left[\begin{array}{cc}
+    \tfrac{1}{2}T_0(y) & T_1(y)\\
+  \end{array}\right] 
+  \overbrace{\left[\begin{array}{cc}
+    1 & 0\\
+    0 & 1
+  \end{array}\right]}^{\mathbf K^0}
+  \left[\begin{array}{c}
+    c_0 \\
+    c_1
+  \end{array}\right],
+	\\[0.1cm]
+	\label{eq:K1}
+	\mathrm D \phi (y) 
+  \;&=\; 
+	\mathbf t_y^T \, \mathbf Q^{1} \, \boldsymbol \Phi^{(2)}
+	\; + \;
+	 \left[\begin{array}{cc}
+    \tfrac{1}{2}T_0(y) & T_1(y)\\
+  \end{array}\right] 
+  \underbrace{\left[\begin{array}{cc}
+    0 & 2\\
+    0 & 0
+  \end{array}\right]}_{\mathbf K^1}
+  \left[\begin{array}{c}
+    c_0 \\
+    c_1
+  \end{array}\right].
+\end{align}
+\)
+By introducing the vector of integration constants $\mathbf c^{(2)} = [\begin{array}{cc} c_0 \! & \! c_1 \end{array}]^T$, we can represent $\phi$, $\mathrm D \phi$, and $\mathrm D^2  \phi$ as
+\(
+  \begin{alignat}{5}
+  \phi(y) 
+   &~\,= ~\,& 
+   \mathbf t_y^T \, ( \mathbf Q^2 \, \mathbf \Phi^{(2)} \, + \, \mathbf R_2 \, \mathbf c^{(2)} )
+   &~\,= ~\,& 	
+   \mathbf t_y^T  
+   \, 
+   \underbrace{\left[\begin{array}{cc} \mathbf Q^2 &  \mathbf R_2 \end{array}\right]}_{\mathbf{J}_2}\left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right],
+   \label{eq:rndu}
+	\\
+	\mathrm D \phi (y) 
+  &~\,= ~\,&  
+  \mathbf t_y^T \, ( \mathbf Q^1 \, \mathbf \Phi^{(2)} \,+ \, \mathbf R_1 \, \mathbf c^{(2)} )
+  &~\,= ~\,& 
+  \mathbf t_y^T \, \underbrace{\left[\begin{array}{cc} \mathbf Q^1 &  \mathbf R_1 \end{array}\right]}_{\mathbf J_1}\left[\begin{array}{c}\mathbf \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right],
+	\label{eq:rndDu}
+	\\
+	\mathrm D^2 \phi (y) 
+  &\;=\;& 
+  \mathbf t_y^T \, ( \mathbf Q^0 \, \mathbf \Phi^{(2)} \,+ \, \mathbf R_0 \, \mathbf c^{(2)} )
+  &\; = \;& 
+  \mathbf t_y^T \, \underbrace{\left[\begin{array}{cc} \mathbf Q^0 &  \mathbf R_0 \end{array}\right]}_{\mathbf J_0}\left[\begin{array}{c}\mathbf \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right],
+	\label{eq:rndD2u}
+\end{alignat} 
+\)
+where $\mathbf Q^0 = \mathbf I$ is the identity operator, $\mathbf R_{i}$'s are matrices with an infinite number of rows and two columns,
+\(
+	\mathbf R_{i} 
+	\, = \,
+\left[\begin{array}{c} \mathbf K^{2-i} \\ \mathbf 0\end{array} \right],
+	\qquad 
+	i \, = \, 0, 1, 2,
+	\)
+and $\mathbf K^2 = \mathbf K\,\mathbf K$ is a $2 \times 2$ zero matrix. 
+
+Finally, we utilize the expression for the product of two Chebyshev series (see [/javascript:cite('OlvTowSIAM2013') Olver and Townsend] and [/javascript:cite('DuSIAM2016') Du]) to account for the nonconstant coefficient $a(y) = 1/(y^2 + 1)$ in Eq.~$\eqref{eq:2}$. For a function $a(y)$ in the basis of Chebyshev polynomials, 
+\(
+\begin{equation}
+  a(y) \;=\; \sideset{}{'}\sum_{i \, = \, 0}^{\infty}\,a_i \,T_i(y),
+\end{equation}
+\)
+the multiplication operator is given by
+\(
+\begin{equation}\label{eq:M}
+  {\mathbf M}_a 
+  \;=\; 
+  \dfrac{1}{2}
+  \,
+  \left[\begin{array}{ccccc}
+    a_0 & a_1 & a_2 & a_3 & \cdots\\
+    a_1 & a_0 & a_1 & a_2 & \ddots\\
+    a_2 & a_1 & a_0 & a_1 & \ddots\\
+    a_3 & a_2 & a_1 & a_0 & \ddots\\
+    \vdots & \ddots & \ddots & \ddots& \ddots
+  \end{array}\right] 
+  \;+\; 
+  \dfrac{1}{2} 
+  \, 
+  \left[\begin{array}{ccccc}
+    0 & 0 & 0 & 0 & \cdots\\
+    a_1 & a_2 & a_3 & a_4 & \cdots\\
+    a_2 & a_3 & a_4 & a_5 & \ddots\\
+    a_3 & a_4 & a_5 & a_6 & \ddots\\
+    \vdots & \ddots & \ddots & \ddots& \ddots
+  \end{array}\right].
+\end{equation}
+\)
+
+Thus, in the basis of Chebyshev polynomials, we can express the differential equation~$\eqref{eq:2}$~as,
+\(
+  \begin{equation}
+  \label{eq:rndDiff}
+  \mathbf t_y^T  \left( \mathbf J_0 \,+\, {\mathbf M}_a\, \mathbf J_1\, - \, \epsilon^2 \mathbf J_2 \right)
+  \left[\begin{array}{c} \boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right] 
+  \;=\;  
+  \mathbf t_y^T \, \mathbf d, 
+  \end{equation}
+\)
+where $\mathbf d$ is the vector of spectral coefficients associated with the input $d (y)$ in Eq.~$\eqref{eq:2}$. Furthermore, we can use Eq.~$\eqref{eq:rndu}$ to write the Dirichlet boundary conditions in Eq.~$\eqref{eq:1b}$ as
+\(
+\begin{align}
+  \begin{split}
+    \mathbf t_{\pm 1}^T \, \mathbf J_2 
+    \left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)} \end{array}\right] 
+    \;=\;   
+    \pm 1,
+\end{split}\label{eq:rndDir}
+\end{align}
+\)
+Eq.~$\eqref{eq:rndDu}$ to express the Neumann boundary conditions in Eq.~$\eqref{eq:1c}$ as
+\(
+\begin{align}
+  \begin{split}
+    \mathbf t_{\pm 1}^T \, \mathbf J_1 
+    \left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)} \end{array}\right] 
+    \;=\;   
+    \pm 2,
+\end{split}\label{eq:rndNeu}
+\end{align}
+\) 
+and Eqs.~$\eqref{eq:rndu}$ and~$\eqref{eq:rndDu}$ to represent the Robin boudary conditions in Eq.~$\eqref{eq:1d}$ as 
+ \(
+\begin{align}
+  \begin{split}
+    \mathbf t_{\pm 1}^T \,( 4\,\mathbf J_1 \,+  \, 3\,\mathbf J_2 )
+    \left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)} \end{array}\right] 
+    \;=\;   
+    \pm 3.
+\end{split}\label{eq:rndRob}
+\end{align}
+\)
+
+Combining~$\eqref{eq:rndDiff}$ and~$\eqref{eq:rndDir}$ allows us to represent Eq.~$\eqref{eq:2}$ with Dirichlet boundary conditions Eq.~$\eqref{eq:1b}$ in the basis of Chebyshev polynomials as
+\(
+\begin{equation}\label{eq:rndInfinite}
+  \left[\begin{array}{ccc}
+   \mathbf J_0 \,+\, {\mathbf M}_a \, \mathbf J_1\, - \, \epsilon^2 \mathbf J_2 \\[0.1cm]
+    \mathbf t_{+1}^T \, \mathbf J_2 \\[0.15cm]
+    \mathbf t_{-1}^T \, \mathbf J_2
+  \end{array}\right]\left[\begin{array}{c}
+    \boldsymbol \Phi^{(2)} \\
+    \mathbf c^{(2)}
+  \end{array}\right] \;=\; \left[\begin{array}{c}
+  \mathbf d\\
+  +1\\
+  -1
+  \end{array}\right].
+\end{equation}
+\)
+Similarly, the problem with Neumann and Robin boundary conditions can be solved by replacing the last two rows in Eq.~$\eqref{eq:rndInfinite}$ with Eqs.~$\eqref{eq:rndNeu}$ and~$\eqref{eq:rndRob}$ respectively.
+
+Finally, we use the projection operator~[/javascript:cite('OlvTowSIAM2013') (Olver and Townsend, Section 2.4)] to obtain a finite-dimensional approximation of Eq.~$\eqref{eq:rndInfinite}$ by truncating the infinite vector of spectral coefficients $\boldsymbol \Phi^{(2)}$ to a vector $\hat{\boldsymbol \Phi}^{(2)}$ with $N + 1$ components; see [latex/tex/SISMatlab_v7.pdf documentation] for details. 
+
+
+=== Operator representation via +Discretize+ and +BcMat+
+
+We next use functions +Discretize+ and +BcMat+ to obtain the finite-dimensional representation of Eq.~$\eqref{eq:2}$ and to specify boundary conditions, respectively. 
+	\n
+~~~
+{Step 1: Problem data}{matlab}
+% Set problem data
+% number of basis functions, differential order, spatial variable, parameters
+N = 63; % N has to be an odd number 
+m = 2; % order of differential operator
+y = sety(N); % spatially-independent variable
+
+% parameter eps in TPBVP
+eps = 1; eps2 = eps*eps;
+~~~
+We now use +Discretize+ to represent the operator $\Delta = \mathrm  D^{2} + (1/(y^2 + 1))\, \mathrm D - \epsilon^2 I$ in Eq.~$\eqref{eq:2}$. +Discretize+ takes three inputs: order of the differential equation $m$ (Eq.~$\eqref{eq:2}$ is a 2nd order differential equation), the number of basis functions $N$, and the operator to be discretized (cell array in Matlab).
+~~~
+{Step 2: Operator in TPBVP}{matlab}
+% Represent operator in TPBVP
+Delta = cell(m+1,1); % cell array with coefficients
+Delta{1} = 1.0; Delta{2} = 1./(y.^2 + 1); Delta{3} = -eps2;
+
+% Use Discretize to represent Delta 
+Delta = Discretize(m,N,Delta); % inputs: differential order m, N, and the operator
+~~~
+We next employ +BcMat+ to specify boundary conditions. +BcMat+ takes four inputs: the order of the differential equation $m$, the number of basis functions $N$, the boundary evaluation points (e.g., $y = \pm 1$ in Eq.~$\eqref{eq:rndDir}$), and the operator that acts at the boundary (e.g., identity for Dirichlet and first derivative for Neumann BCs).
+	\n
+	\n
+Implementation of Dirichlet boundary conditions in Eq.~$\eqref{eq:rndDir}$. 	
+~~~
+{Step 3: Dirichlet BCs}{matlab}
+% Dirichlet BCs
+% Identity operator  
+I = cell(1,1); % cell array with coefficients
+I{1} = 1.0;
+
+% Dirichlet BCs at y = \pm 1
+bcOp = {I; I};
+bcPts = [1; -1];
+% inputs to BcMat: differential order m, N, boundary points, and boundary operator
+bc1 = BcMat(m,N,bcPts,bcOp); 
+~~~
+Implementation of Neumann boundary conditions in Eq.~$\eqref{eq:rndNeu}$. 
+~~~
+{Neumann BCs}{matlab}
+% Neumann BCs
+% 1st derivative operator: 1.0 Dy + 0.0 I
+Dy = cell(2,1); % cell array with coefficients  
+Dy{1} = 1.0; Dy{2} = 0.0;
+
+% Neumann BCs at y = \pm 1
+bcOp = {Dy; Dy};
+bcPts = [1; -1];
+bc2 = BcMat(m,N,bcPts,bcOp);
+~~~
+Implementation of Robin boundary conditions in Eq.~$\eqref{eq:rndRob}$.
+~~~
+{Robin BCs}{matlab}
+% Robin BCs
+% Operator 4 Dy + 3 I 
+Op = cell(2,1); % cell array with coefficients
+Op{1} = 4; Op{2} = 3;
+
+% Robin BCs at y = \pm 1
+bcOp = {Op; Op};
+bcPts = [1; -1];
+bc3 = BcMat(m,N,bcPts,bcOp);
+~~~
+
+Steps 2 and 3 are now combined to obtain a finite-dimensional approximation of the operator in Eq.~$\eqref{eq:rndInfinite}$ for Dirichlet (and similarly for Neumann and Robin) boundary conditions. 
+~~~
+{Step 4: Operator with BCs}{matlab}
+% Operator in the equation for spectral coefficients 
+A1 = [Delta; bc1]; % Dirichlet BCs
+A2 = [Delta; bc2]; % Neumann BCs
+A3 = [Delta; bc3]; % Robin BCs
+~~~
+
+By setting up the forcing and converting it to the basis of Chebyshev polynomials, i.e., $d(y) = \mathbf t^T_y \,\mathbf d$, we can obtain the solution.  
+~~~
+{Step 5: Solve TPBVP}{matlab}
+% Forcing in physical space
+d = 1 + y + y.^2;
+
+% Forcing in the basis of Chebyshev polynomials
+d = phys2cheb(d);
+
+% Solve differential equation 
+Phi2IntConst1 = A1\[d; 1; -1]; % Dirichlet BCs
+Phi2IntConst2 = A2\[d; 2; -2]; % Neumann BCs
+Phi2IntConst3 = A3\[d; 3; -3]; % Robin BCs
+~~~
+Vector $\mathsf{Phi2IntConst}$ contains the first $N+1$ spectral coefficients $\hat{\boldsymbol \Phi}^{(2)}$ in the basis representation of $\mathrm D^2\phi (y)$ in Eq.~$\eqref{eq:specInt1}$ as well as the integration constants ${\mathbf c}^{(2)}$, 
+\(
+  \mathsf{Phi2IntConst} = \left[\begin{array}{c} 
+  \hat{\boldsymbol \Phi}^{(2)} \\ 
+  {\mathbf c}^{(2)} 
+  \end{array}\right].
+  \)
+As illustrated in Eq.~$\eqref{eq:rndu}$, the operator $\mathbf J_2$ can be utilized to compute the first $N+1$ spectral coefficients in the basis representation of $\phi (y)$. Function +Matgen+ provides finite-dimensional approximation of $\mathbf J_2$. +Matgen+ takes two inputs: the order of the differential equation and $N$.
+~~~
+{Step 6: Final solution}{matlab}
+% Use Matgen to represent J
+[~,~,J] = Matgen(m,N); % inputs: the order of the differential equation and N
+% Compute spectral coefficients in the basis representation of \phi (y)
+Phi01 = J{end}*Phi2IntConst1; % Dirichlet BCs
+Phi02 = J{end}*Phi2IntConst2; % Neumann BCs
+Phi03 = J{end}*Phi2IntConst3; % Robin BCs
+
+% Solutions in physical space
+solution1 = cheb2phys(Phi01); % Dirichlet BCs
+solution2 = cheb2phys(Phi02); % Neumann BCs
+solution3 = cheb2phys(Phi03); % Robin BCs
+
+% Visualize solution for Dirichlet BCs
+plot(y,solution1); 
+~~~
+
+=== Elementary discretization matrices via +Matgen+
+
+Herein, we explain how function +Matgen+ can be used to represent matrices $\mathbf Q$ in Eq.~$\eqref{eq:Q}$, $\mathbf K$ in Eq.~$\eqref{eq:K}$-$\eqref{eq:K1},$ and $\mathbf J$ in Eq.~$\eqref{eq:rndu}$-$\eqref{eq:rndD2u}$. A finite-dimensional representation of the multiplication operator ${\mathbf M}_a$ in Eq.~$\eqref{eq:M}$ that accounts for nonconstant coefficients is obtained using function +MultMat+.
+
+After setting problem data in Step 1, we employ the following steps. 
+~~~
+{Step 2: Operator in TPBVP}{matlab}
+% Represent operator in TPBVP
+% Use Matgen to obtain Q, K, and J
+[Q,K,J] = Matgen(m,N); % inputs: differential order m and number of basis functions N
+
+% Form operator Delta 
+Delta = J{1} + MultMat(1./(y.^2 + 1))*J{2} - eps2*J{3}; 
+~~~
+Use +BcMat+ to implement boundary conditions.
+~~~
+{Step 3: Boundary conditions}{matlab}
+% Identity operator  
+I = cell(1,1); % cell array with coefficients
+I{1} = 1.0;
+
+% 1st derivative operator: 1.0 Dy + 0.0 I
+Dy = cell(2,1); % cell array with coefficients  
+Dy{1} = 1.0; Dy{2} = 0.0;
+
+% Operator 4 Dy + 3 I 
+Op = cell(2,1); % cell array with coefficients
+Op{1} = 4; Op{2} = 3;
+
+% Implement BCs
+bc1 = [BcMat(m,N,1,I);  BcMat(m,N,-1,I)];  % Dirichlet BCs
+bc2 = [BcMat(m,N,1,Dy); BcMat(m,N,-1,Dy)]; % Neumann BCs
+bc3 = [BcMat(m,N,1,Op); BcMat(m,N,-1,Op)]; % Robin BCs
+~~~
+
+Finally, Steps 4, 5, and 6 can be used to compute the corresponding solutions.
+
+
+

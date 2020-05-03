@@ -1,0 +1,35 @@
+# jemdoc: menu{MENU}{index.html},addpackage{amssymb},addpackage{mathrsfs},addpackage{amsmath}
+# jemdoc: addcss{jemdoc.css}
+# jemdoc: addcss{bibover.css}
+#include{masterFile_2.jeminc}
+#include{mj-complete-bib_3.jeminc}
+= A Matlab Spectral Integration Suite (SISMatlab)
+
+~~~
+{}{img_left}{pics/lnse.png}{dmdsp-visual}{830}{290}{}
+~~~
+  
+*{{<a href="https://gokulhari.github.io/webpage/" target="_blank">Gokul Hariharan</a>}}*, *{{<a href="https://kumar.cems.umn.edu/people/satish-kumar" target="_blank">Satish Kumar</a>}}*, *{{<a href="https://viterbi-web.usc.edu/~mihailo/" target="_blank">Mihailo R. Jovanovic</a>}}*
+
+Updated on April 27, 2020
+
+*Matlab Files*
+	\n
+	+[http://github.com/gokulhari/SISMatlab/zipball/master/ Download all Matlab files]+ 
+	
+*Paper*
+	\n
+	+[https://arxiv.org/abs/1905.11011 arXiv:2004.?????]+	
+
+== Purpose
+
+A Spectral Integration Suite in Matlab ([index.html SISMatlab]) provides a set of routines to solve two-point boundary value problems. This software is based on the spectral integration method by [/javascript:cite('DuSIAM2016') Du] and [/javascript:cite('GreSIAM91') Greengard] and it provides a toolbox for robust computation of the singular value decomposition of the frequency response operator for PDEs with one spatial variable. It is as convenient to use as {{<a href="http://appliedmaths.sun.ac.za/~weideman/research/differ.html" target="_blank"> A Matlab Differentiation Matrix Suite</a>}} but, in contrast to conventional spectral collocation techniques, it also provides well-conditioned differentiation matrices. The adjoints are determined analytically and, for incompressible flows, [index.html SISMatlab] can be applied to the model in primitive variables (the so-called descriptor formulation) without requiring a staggered grid.
+
+~~~
+*[index.html SISMatlab] requires access to {{<a href="https://www.mathworks.com/products/matlab.html" target="_blank"> Matlab</a>}}*
+	\n
+*If you do not have a Matlab license, you can use the C\+\+ version of this software: {{<a href="https://gokulhari.github.io/SISCpp/" target="_blank">SISC++</a>}}*
+~~~
+
+
+

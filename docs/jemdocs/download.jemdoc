@@ -1,0 +1,28 @@
+# jemdoc: menu{MENU}{download.html}
+# jemdoc: addcss{jemdoc.css}
+# jemdoc: addcss{bibover.css}
+= Download
+
+=== 
+~~~
+    {}{table}{}
+    [http://github.com/gokulhari/SISMatlab/zipball/master/  +all Matlab files+] | --- | Zip file containing all Matlab files ||
+| | ||
+~~~
+
+=== Citation
+
+If you use +SISMatlab+ in your research or teaching, please cite our paper:
+\n
+~~~
+{}{}
+@article{,
+   author  = {},
+   title   = {},
+   journal = {},
+   month   = {},
+   volume  = {},
+   pages   = {},
+   year    = {}
+}
+~~~

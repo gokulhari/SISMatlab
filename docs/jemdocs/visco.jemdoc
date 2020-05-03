@@ -1,0 +1,215 @@
+# jemdoc: menu{MENU}{visco.html},addpackage{amssymb},addpackage{mathrsfs},addpackage{amsmath}
+# jemdoc: addcss{jemdoc.css}
+# jemdoc: addcss{bibover.css}
+#include{masterFile_2.jeminc}
+#include{mj-complete-bib_3.jeminc}
+
+= Channel flow of a viscoelastic fluid
+~~~
+{}{raw}
+<figure>
+  <img src="pics/ChannelFlow.svg" alt="3dflow" style="width:50%">
+  <p>Fig.1 Geometry and coordinates for channel flow</p>
+</figure>
+~~~
+
+In the absence of inertia, the frequency response of the linearized Oldroyd-B constitutive equations that govern the dynamics of 2D flow fluctuations in the streamwise/wall-normal plane $(x,y)$ can be represented as
+	\(
+\begin{equation}
+\begin{aligned}
+    \left[\mathcal A(\omega) \,\phi(\cdot)\right] (y) 
+    \;&=\; 
+    \left[\mathcal B(\omega) \, {\mathbf d} (\cdot)\right](y),
+    \\[0.1cm]
+    \boldsymbol \xi (y)
+    \;&=\; 
+    \left[\mathcal C(\omega)\,\phi(\cdot)\right](y),
+    \\[0.1cm]
+    [\mathcal{L}_{\pm 1} \, \phi(\cdot)] (\pm 1)  
+    \;&=\; 
+    0,
+  \end{aligned}\label{eq:sysRep}
+\end{equation}	
+\)
+by eliminating pressure and stress fluctuations from the model. Here, ${\boldsymbol \xi} = [\, u\;\;v \,]^T$ is the velocity fluctuation vector, ${\mathbf d} = [\, d_u \;\; d_v \,]^T$ is the body force fluctuation vector, $\phi$ is the streamfunction (so that the streamwise and wall-normal velocity components are given by $u = {\mathrm D} \phi$ and $v = -{\mathrm i} k_x \phi$, $\mathrm D = \mathrm d / \mathrm d y$, $k_x$ is the streamwise wavenumber, and
+\(
+\begin{align}
+  \mathcal A(\omega) 
+  \;=\; 
+  \sum_{n \, = \, 0}^4 a_n(y,\omega) \mathrm D^n,  
+  \quad
+  \mathcal B 
+  \;=\; 
+  \left[ \begin{array}{cc}
+    \mathrm D & - {\mathrm i} k_x
+  \end{array} \right],
+  	\quad
+  \mathcal C 
+  \;=\;
+  \left[ \begin{array}{c}
+    \mathrm D
+    \\
+    -{\mathrm i} k_x
+   \end{array} \right],
+   \quad
+	\mathcal{L}_{\pm 1} 
+	\;=\; 
+	\left[
+	\begin{array}{c}
+	I 
+	\\
+	\mathrm D
+	\end{array}
+	\right]. 
+	\label{eq:Coef}
+\end{align}
+\)
+Expressions for coefficients $a_n(y,\omega)$ in Eq.~$\eqref{eq:Coef}$ are provided in Appendix~D of [/javascript:cite('liejovJCP13') Lieu and Jovanovic] and in the accompanying paper.
+
+== Frequency response analysis
+
+=== Problem
+
+For Weissenberg numbers that range from $1$ and $20$, compute the principal singular value of the frequency response opeartor associated with 2D velocity fluctuations in inertialess channel flow of an Oldroyd-B fluid with $\beta = 0.5$, $k_x = 1$, and $\omega = 0$.  
+
+=== Solution
+
+We utilize function +sisSvdfrs+ to compute singular values via a well-conditioned spectral integration scheme that exploits a feedback interconnection of the frequency response operator with its adjoint in +SISMatlab+.
+
+~~~
+{SVD of the frequency response operator}{matlab}
+% Frequency response analysis for 2D inertialess channel flow of a viscoelastic fluid
+
+% Set problem data
+% number of basis functions, differential order, spatial variable, parameters
+N = 255; % number of basis functions, has to be an odd number
+m = 4; % differential order of the evolution model
+y = sety(N); % spatially-independent variable
+
+% Parameters
+Weval = 1:20;  % Weissenberg numbers
+beta = 0.5;    % viscosity ration
+omega = 0;     % temporal frequency
+kx = 1;        % streamwise wavenumber
+k2 = kx*kx;    % kx^2
+
+% Flow type 
+type = 'Couette'; % or 'Poiseuille'
+
+% Store singular values
+svalsN255 = zeros(length(Weval),1);
+
+% Computations are done for two values of N to demonstrate grid-independence
+% only N = 255 is reported (replace with N = 383 for another computation)
+
+% Represent identity and first derivative operators
+I = cell(1,1); I{1} = 1; % Identity operator
+Dy = cell(2,1); Dy{1} = 1; Dy{2} = 0; % First derivative operator
+
+% Boundary conditions
+bc = BCs(4,1); % four constraints on one variable
+
+% Boundary conditions at y = \pm 1
+% Boundary operator
+bc.Operator = {I; Dy; I; Dy};
+
+% Boundary points
+bc.Points = [1; 1; -1; -1];
+
+% Start computations
+for ind = 1:length(Weval),
+
+    % Weissenberg number
+    We = Weval(ind);
+
+    if strcmp(type,'Poiseuille')
+    
+        U = 1 - y.^2;
+        Uy = -2*y;
+        Uyy = -2*ones(N+1,1);
+        
+    else 
+    
+        U = y;
+        Uy = ones(N+1,1);
+        Uyy = zeros(N+1,1);
+        
+    end
+    
+    % Specify coefficients in the frequency response
+    c = (1i * omega + 1.0 + (1i * kx * We * U));
+    cy = 1i * We * kx * Uy;
+    cyy = 1i * We * kx * Uyy;
+    
+    % Operator A
+    a4 = -beta + (-1 + beta)./c;   
+     
+    a3 = (-2*(-1 + beta)*(cy - 1i*c.*kx.*Uy.*We))./(c.^2); 
+      
+    a2 = 2*beta*k2 - ((-1 + beta)*(-2*cy.^2 - 4*kx*Uy.*We.*(1i*cy + kx*Uy*We) + ...
+         c.^2.*kx.*(2*kx - 3*1i*Uyy.*We + 2*kx*Uy.^2*We^2) + ...
+         c.*(cyy + 2*1i*kx*We*(Uyy + Uy.*(cy + 1i*kx*Uy*We)))))./c.^3;
+    
+    a1 = ((-2*1i)*(-1 + beta)*kx*(6*cy.*Uy.*We.*(cy - 1i*kx*Uy*We) + ...
+         c.^3.*kx.*Uy.*We.*(kx - 2*1i*Uyy*We) + ...
+         c.^2.*(Uyy.*We.*(cy + 3*1i*kx*Uy*We) + kx*(1i*cy - 2*kx*(Uy.^3)*We^3)) - ...
+         2*c.*We.*(2*cy.*(Uyy + 1i*kx*Uy.^2*We) + ...
+         Uy.*(cyy + kx*We*((-2*1i)*Uyy + kx*Uy.^2*We)))))./c.^4;
+    
+    a0 = (kx*(-(beta*c.^4*kx^3) + ...
+         12*(-1 + beta)*cy.*kx.*Uy.^2.*We^2.*(cy - 1i*kx.*Uy.*We) + ...
+         (-1 + beta)*c.^3*k2.*(kx - 1i*Uyy*We + 2*kx*Uy.^2*We^2) + ...
+         (-1 + beta)*c.^2.*(-(cyy*kx) + 1i*(-cyy + 2*k2).*Uyy*We + 2*kx*Uyy.^2.*We^2 + ...
+         2*1i*cy.*kx.*Uy.*We.*(kx + 2*1i*Uyy*We) + ...
+         2*kx*Uy.^2.*We^2.*(-cyy + k2 + (6*1i)*kx*Uyy.*We)) + ...
+         2*(-1 + beta)*c.*(-2*cyy.*kx.*Uy.^2*We^2 + ...
+         cy.*kx.*(cy - 2*1i*kx*Uy*We).*(1 + 2*Uy.^2.*We^2) + ...
+         1i*Uyy.*We.*(cy.^2 + (6*1i)*cy.*kx.*Uy*We + 6*k2*Uy.^2.*We^2))))./c.^4;
+    
+    % Represent operators A, B, and C
+    % Operator A
+    A = cell(5,1); A{1} = a4; A{2} = a3; A{3} = a2; A{4} = a1; A{5} = a0;
+    
+    % Operator B
+    B = cell(1,2); B{1,1} = Dy; B{1,2} = {-1i*kx};
+    
+    % Operator C
+    C = cell(2,1); C{1,1} = Dy; C{2,1} = {-1i*kx};
+    
+    % Use function sisSvdfrs to compute singular values
+    svals = sisSvdfrs(m,m,N,A,B,C,bc,bc,1);
+    svalsN255(ind) = real(svals(1));
+
+end
+
+% Repeat computations for N = 383
+
+% Visualize results
+plot(Weval,svalsN255,'ok',Weval,svalsN383,'xk');
+axis tight
+xlabel('$W\! e$');
+ylabel('$\sigma_{\mathrm{max}}$');
+hh = legend('$N = 255$','$N = 383$');
+hh.Interpreter = 'latex';
+print('-painters','-dsvg','../docs/pics/Code4_1');
+~~~
+
+
+
+                       
+
+
+~~~
+{}{raw}
+<figure>
+  <img src="pics/Code4_1.svg" alt="3dflow" style="width:50%">
+  <figcaption>Fig. 2 The principal singular values of the frequency response operator in 2D </br> inertialess channel flow of an Oldroyd-B fluid with \(\beta = 0.5\), \(k_x = 1\), and \(\omega = 0\). </br>See <a href="javascript:cite('liejovJCP13')">Figure 8 in Lieu and Jovanovic</a> for a comparison with spectral collocation.</figcaption>
+</figure>
+~~~
+
+                                                                  
+                                                          
+                                           
+
+              
+                  
