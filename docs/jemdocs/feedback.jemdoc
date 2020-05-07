@@ -7,14 +7,14 @@ We would love to hear from you if you have used +SISMatlab+! Get in touch with [
 [harih020@umn.edu Gokul Hariharan]
 with your comments and suggestions.
 
-If you run into bugs with +SISMatlab+, file a bug report [https://github.com/gokulhari?tab=repositories here] and we'll to get back to you. If possible, please include the following
+If you run into bugs with +SISMatlab+, file a bug report [https://github.com/gokulhari/SISMatlab/issues here] and we'll to get back to you. If possible, please include the following
 information:
     . Error messages produced by Matlab
     . Matlab version used
     . Platform (Linux\/Windows\/Mac)
     . Matlab code that can reproduce the problem
 
-If you have ideas to make +SISMatlab+ better, report them [https://github.com/gokulhari?tab=repositories here].
+If you have ideas to make +SISMatlab+ better, report them [https://github.com/gokulhari/SISMatlab/issues here].
 Your help is greatly appreciated.
 
 #To those who would like to take these ideas further, sections on [algo.html algorithm] and [implement.html implementation] will come in handy.

@@ -91,16 +91,16 @@ end
 
 % Pad boundary conditions between spectral coefficients of highest
 % derivatives
-specCoef = sol(1:(N+1)*length(n),:);
-intConsts = sol((N+1)*length(n) + 1 : end,:);
-
-col_counter =  1;
-cc = [1,cumsum(n)];
-for i = 1:length(n)
-    sol(col_counter: col_counter+(N+1) -1,:) = specCoef((N+1)*(i-1)+1:(N+1)*i,:); 
-    sol(col_counter + N + 1 :col_counter + N + 1 + n(i) - 1,:) = intConsts(cc(i):cc(i+1),:);
-    col_counter = col_counter + N+1 + n(i) - 1;
-end
+% specCoef = sol(1:(N+1)*length(n),:);
+% intConsts = sol((N+1)*length(n) + 1 : end,:);
+% 
+% col_counter =  1;
+% cc = [1,cumsum(n)];
+% for i = 1:length(n)
+%     sol(col_counter: col_counter+(N+1) -1,:) = specCoef((N+1)*(i-1)+1:(N+1)*i,:); 
+%     sol(col_counter + N + 1 :col_counter + N + 1 + n(i) - 1,:) = intConsts(cc(i):cc(i+1),:);
+%     col_counter = col_counter + N+1 + n(i) - 1;
+% end
 % Find the lowest derivatives:
 Js = cell(length(n),1);
 for i = 1:length(n)

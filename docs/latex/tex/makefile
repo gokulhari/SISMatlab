@@ -1,6 +1,6 @@
-.PHONY: feedback_svdfr_v24.pdf all clean
+.PHONY: SISMatlab_v10.pdf all clean
 
-all: SISMatlab_v7.pdf
+all: SISMatlab_v10.pdf
 
 %.tex: %.raw
 	./raw2tex $< > $@
@@ -9,8 +9,8 @@ all: SISMatlab_v7.pdf
 	./dat2tex $< > $@
 
 
-SISMatlab_v7.pdf: SISMatlab_v7.tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make SISMatlab_v7.tex
+SISMatlab_v10.pdf: SISMatlab_v10.tex
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make SISMatlab_v10.tex
 
 clean:
 	latexmk -CA
