@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="jemdoc.css" type="text/css" />
 <link rel="stylesheet" href="jemdoc.css" type="text/css" />
 <link rel="stylesheet" href="bibover.css" type="text/css" />
-<title>Download</title>
+<title>Download</title>
 <script type="text/javascript" src="bibover.js">
 </script>
 <!-- MathJax -->
@@ -35,50 +35,57 @@ MathJax.Hub.Config({
 <div class="menu-item"><a href="rnd.html">Reaction-diffusion&nbsp;equation</a></div>
 <div class="menu-item"><a href="NS.html">Navier-Stokes&nbsp;equations</a></div>
 <div class="menu-item"><a href="visco.html">Viscoelastic&nbsp;channel&nbsp;flow</a></div>
-<div class="menu-category">Cite us</div>
-<div class="menu-item"><a href="citation.html">Citation</a></div>
 </td>
 <td id="layout-content">
 <div id="toptitle">
-<h1>Download</h1>
+<h1>Download</h1>
+<div id="subtitle"><br />
+<tt>SISMatlab</tt> is distributed under the terms of the 
+<a href="http://www.gnu.org/licenses/gpl-3.0.html" target=&ldquo;blank&rdquo;>GNU General Public License 3.0</a>. 
+<br /> <br />
+You can download the latest release of <tt>SISMatlab</tt> from <a href="https://github.com/gokulhari/SISMatlab" target=&ldquo;blank&rdquo;>Github</a> or as a zip-file from here. 
+<br />
+</div>
 </div>
-<h3>Matlab files</h3>
+<h3>Matlab files</h3>
 <table>
-<tr class="r1"><td class="c1"><a href="SISMatlabv6.zip" target=&ldquo;blank&rdquo;><tt>all Matlab files</tt></a> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> Zip file containing all Matlab files </td></tr>
+<tr class="r1"><td class="c1"><a href="https://viterbi-web.usc.edu/~mihailo/software/sismatlab/download/SISMatlab.zip" target=&ldquo;blank&rdquo;><tt>SISMatlab.zip</tt></a> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> zip file containing <tt>SISMatlab</tt> functions </td></tr>
 <tr class="r2"><td class="c1"></td><td class="c2"> </td><td class="c3"> </td></tr>
 <tr class="r3"><td class="c1">
 </td></tr></table>
-<h3>Documentation</h3>
+<h3>Documentation</h3>
 <table>
-<tr class="r1"><td class="c1"><a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;><tt>SISMatlab.pdf</tt></a> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> A detailed discussion of the numerical methods used. </td></tr>
+<tr class="r1"><td class="c1"><a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;><tt>SISMatlab.pdf</tt></a> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> description of the spectral integration method and Matlab routines </td></tr>
 <tr class="r2"><td class="c1">
 </td></tr></table>
-<h3>Description of user-level functions</h3>
-<p>Please see the <a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;>documentation</a> for a more complete discussion of the routines provided with SISMatlab. </p>
+<h3>Description of user-level functions</h3>
+<p>
+<a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;><tt>SISMatlab.pdf</tt></a> provides an in-depth description of <tt>SISMatlab</tt> features. </p>
 <table>
-<tr class="r1"><td class="c1"><tt>sisSolves.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> Solves a two-point boundary value problem (TPBVP) to an input. </td></tr>
-<tr class="r2"><td class="c1"><tt>sisEigs.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> Solves for eigenvalues of a TPBVP. </td></tr>
-<tr class="r3"><td class="c1"><tt>sisSvdfrs.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> Solves for the singular values of the frequency response operator of a TPBVP. </td></tr>
-<tr class="r4"><td class="c1"><tt>sisHinf.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> Computes the \( H_\infty\) norm of a stable linear system that can be represented as a TPBVP.
+<tr class="r1"><td class="c1"><tt>sisSolves.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> solution to a forced two-point boundary value problem (TPBVP) </td></tr>
+<tr class="r2"><td class="c1"><tt>sisEigs.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> eigenvalue decomposition of an operator that can be represented by a TPBVP </td></tr>
+<tr class="r3"><td class="c1"><tt>sisSvdfrs.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> singular value decomposition of the frequency response operator that can be represented by a TPBVP </td></tr>
+<tr class="r4"><td class="c1"><tt>sisHinf.m</tt> </td><td class="c2"> &#8201;&mdash;&#8201; </td><td class="c3"> \(H_\infty\) norm of a stable linear system that can be represented by a TPBVP
 </td></tr></table>
-<h3>Citation</h3>
-<p>If you use <tt>SISMatlab</tt> in your research or teaching, please cite our paper:
-<br /></p>
+<h3>Citation</h3>
+<p>
+If you use <tt>SISMatlab</tt> in your research or teaching, please cite our paper:
+<br /></p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
-@article{,
-   author  = {},
-   title   = {},
-   journal = {},
-   month   = {},
-   volume  = {},
-   pages   = {},
-   year    = {}
+@article{harkumjovPRF20,
+author  = {G. Hariharan and S. Kumar and M. R. Jovanovi\'c},
+title   = {Well-conditioned ultraspherical and spectral integration methods for
+resolvent analysis of channel flows of {N}ewtonian and viscoelastic fluids},
+journal = {Phys. Rev. Fluids},
+year    = {2020},
+note    = {submitted; also arXiv:2005.04493},
+pdf     = {https://arxiv.org/abs/2005.04493}
 }
 </pre></div></div>
 <div id="footer">
 <div id="footer-text">
-Page generated 2020-05-07 13:52:51 CDT, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2020-05-12 11:45:15 CDT, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

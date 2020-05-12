@@ -451,7 +451,7 @@ print('-painters','-dsvg','../docs/pics/Code3_2');
 ~~~
 {}{raw}
 <figure>
-  <img src="../docs/pics/Code3_2.svg" alt="3dflow" style="width:40%">
+  <img src="pics/Code3_2.svg" alt="3dflow" style="width:40%">
   <figcaption>Fig.3 Singular values as a function of temporal frequency, \(\omega\). </br>This plot is generated using <a href="../examples/Code3.m">Code3</a>, and is validated against</br>Figure 4.10 in <a href="javascript:cite('schmid2012stability')">Stability and transition in shear flows</a></figcaption>
 </figure>
 ~~~

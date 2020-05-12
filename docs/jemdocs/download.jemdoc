@@ -2,29 +2,35 @@
 # jemdoc: addcss{jemdoc.css}
 # jemdoc: addcss{bibover.css}
 = Download
+\n
++SISMatlab+ is distributed under the terms of the 
+[http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3.0]. 
+\n \n
+You can download the latest release of +SISMatlab+ from [https://github.com/gokulhari/SISMatlab Github] or as a zip-file from here. 
+\n
 
 === Matlab files
 ~~~
     {}{table}{}
-    [SISMatlabv6.zip  +all Matlab files+] | --- | Zip file containing all Matlab files ||
+    [https://viterbi-web.usc.edu/~mihailo/software/sismatlab/download/SISMatlab.zip +SISMatlab.zip+] | --- | zip file containing +SISMatlab+ functions ||
 | | ||
 ~~~
 
 === Documentation
 ~~~
     {}{table}{}
-    [latex/tex/SISMatlab_v11.pdf  +SISMatlab.pdf+] | --- | A detailed discussion of the numerical methods used. ||
+    [latex/tex/SISMatlab_v11.pdf  +SISMatlab.pdf+] | --- | description of the spectral integration method and Matlab routines ||
 ~~~
 
 === Description of user-level functions
 
-Please see the [latex/tex/SISMatlab_v11.pdf documentation] for a more complete discussion of the routines provided with SISMatlab. 
+[latex/tex/SISMatlab_v11.pdf  +SISMatlab.pdf+] provides an in-depth description of +SISMatlab+ features. 
 ~~~
 {}{table}{}
-+sisSolves.m+ | --- | Solves a two-point boundary value problem (TPBVP) to an input. ||
-+sisEigs.m+ | --- | Solves for eigenvalues of a TPBVP. ||
-+sisSvdfrs.m+ | --- | Solves for the singular values of the frequency response operator of a TPBVP. ||
-+sisHinf.m+ | --- | Computes the $ H_\infty$ norm of a stable linear system that can be represented as a TPBVP.
++sisSolves.m+ | --- | solution to a forced two-point boundary value problem (TPBVP) ||
++sisEigs.m+ | --- | eigenvalue decomposition of an operator that can be represented by a TPBVP ||
++sisSvdfrs.m+ | --- | singular value decomposition of the frequency response operator that can be represented by a TPBVP ||
++sisHinf.m+ | --- | $H_\infty$ norm of a stable linear system that can be represented by a TPBVP
 ~~~
 
 === Citation
@@ -33,13 +39,13 @@ If you use +SISMatlab+ in your research or teaching, please cite our paper:
 \n
 ~~~
 {}{}
-@article{,
-   author  = {},
-   title   = {},
-   journal = {},
-   month   = {},
-   volume  = {},
-   pages   = {},
-   year    = {}
+@article{harkumjovPRF20,
+author  = {G. Hariharan and S. Kumar and M. R. Jovanovi\'c},
+title   = {Well-conditioned ultraspherical and spectral integration methods for 
+resolvent analysis of channel flows of {N}ewtonian and viscoelastic fluids},
+journal = {Phys. Rev. Fluids},
+year    = {2020},
+note    = {submitted; also arXiv:2005.04493},
+pdf     = {https://arxiv.org/abs/2005.04493}
 }
 ~~~

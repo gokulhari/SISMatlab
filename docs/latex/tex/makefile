@@ -1,6 +1,6 @@
-.PHONY: SISMatlab_v10.pdf all clean
+.PHONY: SISMatlab_v11.pdf all clean
 
-all: SISMatlab_v10.pdf
+all: SISMatlab_v11.pdf
 
 %.tex: %.raw
 	./raw2tex $< > $@
@@ -9,8 +9,8 @@ all: SISMatlab_v10.pdf
 	./dat2tex $< > $@
 
 
-SISMatlab_v10.pdf: SISMatlab_v10.tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make SISMatlab_v10.tex
+SISMatlab_v11.pdf: SISMatlab_v11.tex
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make SISMatlab_v11.tex
 
 clean:
 	latexmk -CA

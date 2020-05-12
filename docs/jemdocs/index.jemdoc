@@ -11,19 +11,19 @@
   
 *{{<a href="https://gokulhari.github.io/webpage/" target="_blank">Gokul Hariharan</a>}}*, *{{<a href="https://kumar.cems.umn.edu/people/satish-kumar" target="_blank">Satish Kumar</a>}}*, and *{{<a href="https://viterbi-web.usc.edu/~mihailo/" target="_blank">Mihailo R. Jovanovic</a>}}*
 
-Updated on May 4, 2020
+Updated on May 7, 2020
 
 *Matlab Files*
 	\n
-	+[SISMatlabv6.zip Download all Matlab files]+ 
+	+[https://viterbi-web.usc.edu/~mihailo/software/sismatlab/download/SISMatlab.zip Download all Matlab files]+ 
 	
 *Paper*
 	\n
-	+[https://arxiv.org/abs/1905.11011 arXiv:2004.?????]+	
+	+[https://arxiv.org/abs/2005.04493 arXiv:2005.04493]+	
 
 == Purpose
 
-A Spectral Integration Suite in Matlab ([index.html SISMatlab]) provides a set of routines to solve two-point boundary value problems. This software is based on the spectral integration method by [/javascript:cite('DuSIAM2016') Du] and [/javascript:cite('GreSIAM91') Greengard] and it provides a toolbox for robust computation of the singular value decomposition of the frequency response operator for PDEs with one spatial variable. It is as convenient to use as {{<a href="http://appliedmaths.sun.ac.za/~weideman/research/differ.html" target="_blank"> A Matlab Differentiation Matrix Suite</a>}} but, in contrast to conventional spectral collocation techniques, it also provides well-conditioned differentiation matrices. The adjoints are determined analytically and, for incompressible flows, [index.html SISMatlab] can be applied to the model in primitive variables (the so-called descriptor formulation) without requiring a staggered grid.
+A Spectral Integration Suite in Matlab ([index.html +SISMatlab+]) provides a set of routines to solve two-point boundary value problems. This software is based on the spectral integration method (please see [/javascript:cite('DuSIAM2016') Du], [/javascript:cite('GreSIAM91') Greengard], and [download/SISMatlab.pdf +SISMatlab.pdf+]) and it provides a toolbox for solving two point boundary value problems (TPBVPs); for eigenvalue decomposition of operators that can be represented via TPBVPs; and for robust computation of the singular value decomposition of the frequency response operator for PDEs with one spatial variable. It is as convenient to use as {{<a href="http://appliedmaths.sun.ac.za/~weideman/research/differ.html" target="_blank"> A Matlab Differentiation Matrix Suite</a>}} but, in contrast to conventional spectral collocation techniques, it also provides well-conditioned differentiation matrices. The adjoints are determined analytically and, for incompressible flows, [index.html +SISMatlab+] can be applied to the model in primitive variables (the so-called descriptor formulation) without requiring a staggered grid.
 
 ~~~
 *[index.html SISMatlab] requires access to {{<a href="https://www.mathworks.com/products/matlab.html" target="_blank"> Matlab</a>}}*
