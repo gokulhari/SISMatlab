@@ -28,8 +28,8 @@ MathJax.Hub.Config({
 <div class="menu-category">SISMatlab</div>
 <div class="menu-item"><a href="index.html">Home</a></div>
 <div class="menu-item"><a href="basic-example.html">Basic&nbsp;example</a></div>
-<div class="menu-item"><a href="http://github.com/gokulhari/webpage/zipball/master/">Download</a></div>
-<div class="menu-item"><a href="latex/tex/SISMatlab_v7.pdf">Documentation</a></div>
+<div class="menu-item"><a href="download.html">Download</a></div>
+<div class="menu-item"><a href="latex/tex/SISMatlab_v11.pdf">Documentation</a></div>
 <div class="menu-item"><a href="feedback.html">Feedback</a></div>
 <div class="menu-category">Applications</div>
 <div class="menu-item"><a href="rnd.html" class="current">Reaction-diffusion&nbsp;equation</a></div>
@@ -9406,7 +9406,7 @@ bc.Points = [1; -1];
 <h3>Problem </h3>
 <p>Compute the singular values decomposition of the frequency response operator for the reaction-diffusion equation&nbsp;\(\eqref{eq:0}\) with homogeneous Neumann boundary conditions&nbsp;\(\eqref{eq:0bc}\). </p>
 <h3>Solution</h3>
-<p>The temporal Fourier transform can be used to represent the frequency response operator associated with Eqs.&nbsp;\(\eqref{eq:0}\)-\(\eqref{eq:0bc}\) as a TPBVP,</p>
+<p>The temporal Fourier transform can be used to represent the frequency response operator associated with system&nbsp;\(\eqref{eq:0}\)-\(\eqref{eq:0bc}\) as a TPBVP,</p>
 <p style="text-align:center">
 \[
 \begin{align}
@@ -9459,16 +9459,25 @@ bc.Points = [1; -1];
    \phi(y)\\
    \psi(y)
 \end{array} \right], \label{eq:feedback}\\
-\left[\begin{array}{cc}
-\mathcal{L}(\pm 1,\mathrm D) &amp; 0\\
-0 &amp; \mathcal{L}(\pm 1,\mathrm D) 
-\end{array}\right]\left[ \begin{array}{c}
-   \phi(y)\\
-   \psi(y)
-\end{array} \right] \;&amp;=\; 0, \notag
+\left[
+	\begin{array}{c}
+	{[ {\mathcal L}_{\pm 1} \phi ( \cdot ) ]} (\pm 1)
+	\\
+	{[ {\mathcal L}_{\pm 1} \psi ( \cdot ) ]} (\pm 1)
+	\end{array}
+	\right]
+	\;&amp;=\; 
+	\left[
+	\begin{array}{c}
+	0
+	\\
+	0
+	\end{array}
+	\right], 
+ \notag
 \end{align}
 \]
-</p><p>where \((\cdot)^{\dagger}\) denotes adjoint of the operator \((\cdot)\), \(\psi\) is the auxiliary variable associated with the adjoint operator, and \(\mathcal{L} (a,L)\) determines the action of an operator \(L\) on a variable at a point \(a\) in the domain \(y \in [-1,1]\). The resulting eigenvalues determine the singular values in pairs of opposite signs, i.e., \(\gamma = \pm \sigma\).</p>
+</p><p>where \((\cdot)^{\dagger}\) denotes adjoint of the operator \((\cdot)\) and \(\psi\) is the auxiliary variable associated with the adjoint operator. The resulting eigenvalues determine the singular values in pairs of opposite signs, i.e., \(\gamma = \pm \sigma\).</p>
 <div class="codeblock">
 <div class="blocktitle">Step 1: Problem data</div>
 <div class="blockcontent"><pre>
@@ -9519,7 +9528,7 @@ plot(y,Phi0Psi0{1,2}/val_rbc(Phi0Psi0{1,2}));
 </figure>
 <div id="footer">
 <div id="footer-text">
-Page generated 2020-05-03 17:21:30 CDT, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2020-05-07 13:46:44 CDT, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

@@ -99,7 +99,7 @@ Compute the singular values decomposition of the frequency response operator for
 
 === Solution
 
-The temporal Fourier transform can be used to represent the frequency response operator associated with Eqs.~$\eqref{eq:0}$-$\eqref{eq:0bc}$ as a TPBVP,
+The temporal Fourier transform can be used to represent the frequency response operator associated with system~$\eqref{eq:0}$-$\eqref{eq:0bc}$ as a TPBVP,
 \(
 \begin{align}
     \left[\mathcal A(\omega)\,\phi(\cdot)\right] (y) 
@@ -150,16 +150,25 @@ A feedback interconnection of the frequency response operator with its adjoint c
    \phi(y)\\
    \psi(y)
 \end{array} \right], \label{eq:feedback}\\
-\left[\begin{array}{cc}
-\mathcal{L}(\pm 1,\mathrm D) & 0\\
-0 & \mathcal{L}(\pm 1,\mathrm D) 
-\end{array}\right]\left[ \begin{array}{c}
-   \phi(y)\\
-   \psi(y)
-\end{array} \right] \;&=\; 0, \notag
+\left[
+	\begin{array}{c}
+	{[ {\mathcal L}_{\pm 1} \phi ( \cdot ) ]} (\pm 1)
+	\\
+	{[ {\mathcal L}_{\pm 1} \psi ( \cdot ) ]} (\pm 1)
+	\end{array}
+	\right]
+	\;&=\; 
+	\left[
+	\begin{array}{c}
+	0
+	\\
+	0
+	\end{array}
+	\right], 
+ \notag
 \end{align}
 \)
-where $(\cdot)^{\dagger}$ denotes adjoint of the operator $(\cdot)$, $\psi$ is the auxiliary variable associated with the adjoint operator, and $\mathcal{L} (a,L)$ determines the action of an operator $L$ on a variable at a point $a$ in the domain $y \in [-1,1]$. The resulting eigenvalues determine the singular values in pairs of opposite signs, i.e., $\gamma = \pm \sigma$.
+where $(\cdot)^{\dagger}$ denotes adjoint of the operator $(\cdot)$ and $\psi$ is the auxiliary variable associated with the adjoint operator. The resulting eigenvalues determine the singular values in pairs of opposite signs, i.e., $\gamma = \pm \sigma$.
 ~~~
 {Step 1: Problem data}{matlab}
 % Set problem data

@@ -81,7 +81,9 @@ Here, $U' (y) = {\mathrm d} U (y)/ {\mathrm d} y$, ${\mathbf d} = [\,d_u\,\;d_v\
   \\[0.1cm]
     \boldsymbol \xi (y,t) \;&=\; [\mathcal {C}\,\boldsymbol\phi(\cdot,t)](y),&\label{eq:2}
     \\[0.1cm]
-   [\mathcal {L}_{-1} \, \boldsymbol \phi(\cdot,t)](-1)  \;&=\; [\mathcal{L}_{+1} \, \boldsymbol\phi(\cdot,t)](+1) \;=\;  0,&\notag
+   [\mathcal {L}_{ \pm 1} \, \boldsymbol \phi(\cdot,t)]( \pm 1)  
+   \;&=\; 
+   0,&\notag
 \end{alignat}
 	\)	
 where $\boldsymbol{\phi} = [\,u \;\; v \;\; w \;\; p\,]^T$, $\boldsymbol{\xi} = [\,u \;\; v \;\; w\,]^T$, and 

@@ -3,11 +3,28 @@
 # jemdoc: addcss{bibover.css}
 = Download
 
-=== 
+=== Matlab files
 ~~~
     {}{table}{}
-    [http://github.com/gokulhari/SISMatlab/zipball/master/  +all Matlab files+] | --- | Zip file containing all Matlab files ||
+    [SISMatlabv6.zip  +all Matlab files+] | --- | Zip file containing all Matlab files ||
 | | ||
+~~~
+
+=== Documentation
+~~~
+    {}{table}{}
+    [latex/tex/SISMatlab_v11.pdf  +SISMatlab.pdf+] | --- | A detailed discussion of the numerical methods used. ||
+~~~
+
+=== Description of user-level functions
+
+Please see the [latex/tex/SISMatlab_v11.pdf documentation] for a more complete discussion of the routines provided with SISMatlab. 
+~~~
+{}{table}{}
++sisSolves.m+ | --- | Solves a two-point boundary value problem (TPBVP) to an input. ||
++sisEigs.m+ | --- | Solves for eigenvalues of a TPBVP. ||
++sisSvdfrs.m+ | --- | Solves for the singular values of the frequency response operator of a TPBVP. ||
++sisHinf.m+ | --- | Computes the $ H_\infty$ norm of a stable linear system that can be represented as a TPBVP.
 ~~~
 
 === Citation

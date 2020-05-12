@@ -32,7 +32,7 @@ with Dirichlet, Neumann, or Robin boundary conditions,
 where $y \in \left[ -1, 1 \right]$ is the spatial variable, $\mathrm{D} = \mathrm d / \mathrm dy$, $\epsilon \in \mathbb{R}$, $d$ is the input forcing, and $\phi$ is the unknown variable. 
 	\n
   \n
-We solve Eq.~$\eqref{eq:2}$ using function +sisSolves+. We then explain technical details that underlie this function and describe functions: +Discretize+ which is an integral part of +sisSolves+ used to solve TPBVPs; +Matgen+ which provides elementary discretization matrices and is the building block of +Discretize+; and +BcMat+ which specifies boundary conditions. An in-depth technical discussion is provided in [latex/tex/SISMatlab_v9.pdf documentation]. 
+We solve Eq.~$\eqref{eq:2}$ using function +sisSolves+. We then explain technical details that underlie this function and describe functions: +Discretize+ which is an integral part of +sisSolves+ used to solve TPBVPs; +Matgen+ which provides elementary discretization matrices and is the building block of +Discretize+; and +BcMat+ which specifies boundary conditions. An in-depth technical discussion is provided in [latex/tex/SISMatlab_v11.pdf documentation]. 
  
 == Solving TPBVPs via +sisSolves+
 
@@ -195,7 +195,7 @@ where the indefinite integration operator $\mathbf Q$ is given by,
   \end{array}\right].
 \end{equation}
 \)
-The first row in Eq.~$\eqref{eq:Q}$ is different from [/javascript:cite('DuSIAM2016') Du (Section 4)]  and [/javascript:cite('GreSIAM91') Greengard (Eq. 12)], and its derivation is provided in the [latex/tex/SISMatlab_v9.pdf documentation]. In contrast to these references where the first row of $\mathbf Q$ is full, our representation of $\mathbf Q$ in Eq.~$\eqref{eq:Q}$ is given by a banded tri-diagonal matrix. 
+The first row in Eq.~$\eqref{eq:Q}$ is different from [/javascript:cite('DuSIAM2016') Du (Section 4)]  and [/javascript:cite('GreSIAM91') Greengard (Eq. 12)], and its derivation is provided in the [latex/tex/SISMatlab_v11.pdf documentation]. In contrast to these references where the first row of $\mathbf Q$ is full, our representation of $\mathbf Q$ in Eq.~$\eqref{eq:Q}$ is given by a banded tri-diagonal matrix. 
 
 Since $T_0(y) = 1$ and $T_1(y) = y$, we let $c_0 = 2 \tilde{c}_0$ and represent integration constants in the basis expansion of $\phi (y)$ and $\mathrm D \phi (y)$ in terms of Chebyshev polynomials to obtain,
 \(	
@@ -367,7 +367,7 @@ Combining~$\eqref{eq:rndDiff}$ and~$\eqref{eq:rndDir}$ allows us to represent Eq
 \)
 Similarly, the problem with Neumann and Robin boundary conditions can be solved by replacing the last two rows in Eq.~$\eqref{eq:rndInfinite}$ with Eqs.~$\eqref{eq:rndNeu}$ and~$\eqref{eq:rndRob}$ respectively.
 
-Finally, we use the projection operator~[/javascript:cite('OlvTowSIAM2013') (Olver and Townsend, Section 2.4)] to obtain a finite-dimensional approximation of Eq.~$\eqref{eq:rndInfinite}$ by truncating the infinite vector of spectral coefficients $\boldsymbol \Phi^{(2)}$ to a vector $\hat{\boldsymbol \Phi}^{(2)}$ with $N + 1$ components; see [latex/tex/SISMatlab_v9.pdf documentation] for details. 
+Finally, we use the projection operator~[/javascript:cite('OlvTowSIAM2013') (Olver and Townsend, Section 2.4)] to obtain a finite-dimensional approximation of Eq.~$\eqref{eq:rndInfinite}$ by truncating the infinite vector of spectral coefficients $\boldsymbol \Phi^{(2)}$ to a vector $\hat{\boldsymbol \Phi}^{(2)}$ with $N + 1$ components; see [latex/tex/SISMatlab_v11.pdf documentation] for details. 
 
 
 === Operator representation via +Discretize+ and +BcMat+

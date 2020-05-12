@@ -6,16 +6,16 @@
 = A Matlab Spectral Integration Suite (SISMatlab)
 
 ~~~
-{}{img_left}{pics/lnse2.jpg}{dmdsp-visual}{830}{290}{}
+{}{img_left}{pics/lnse.jpg}{dmdsp-visual}{830}{290}{}
 ~~~
   
-*{{<a href="https://gokulhari.github.io/webpage/" target="_blank">Gokul Hariharan</a>}}*, *{{<a href="https://kumar.cems.umn.edu/people/satish-kumar" target="_blank">Satish Kumar</a>}}*, *{{<a href="https://viterbi-web.usc.edu/~mihailo/" target="_blank">Mihailo R. Jovanovic</a>}}*
+*{{<a href="https://gokulhari.github.io/webpage/" target="_blank">Gokul Hariharan</a>}}*, *{{<a href="https://kumar.cems.umn.edu/people/satish-kumar" target="_blank">Satish Kumar</a>}}*, and *{{<a href="https://viterbi-web.usc.edu/~mihailo/" target="_blank">Mihailo R. Jovanovic</a>}}*
 
-Updated on April 27, 2020
+Updated on May 4, 2020
 
 *Matlab Files*
 	\n
-	+[http://github.com/gokulhari/SISMatlab/zipball/master/ Download all Matlab files]+ 
+	+[SISMatlabv6.zip Download all Matlab files]+ 
 	
 *Paper*
 	\n

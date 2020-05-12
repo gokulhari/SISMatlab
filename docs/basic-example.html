@@ -28,8 +28,8 @@ MathJax.Hub.Config({
 <div class="menu-category">SISMatlab</div>
 <div class="menu-item"><a href="index.html">Home</a></div>
 <div class="menu-item"><a href="basic-example.html">Basic&nbsp;example</a></div>
-<div class="menu-item"><a href="http://github.com/gokulhari/webpage/zipball/master/">Download</a></div>
-<div class="menu-item"><a href="latex/tex/SISMatlab_v7.pdf">Documentation</a></div>
+<div class="menu-item"><a href="download.html">Download</a></div>
+<div class="menu-item"><a href="latex/tex/SISMatlab_v11.pdf">Documentation</a></div>
 <div class="menu-item"><a href="feedback.html">Feedback</a></div>
 <div class="menu-category">Applications</div>
 <div class="menu-item"><a href="rnd.html">Reaction-diffusion&nbsp;equation</a></div>
@@ -9350,7 +9350,7 @@ In Proceedings of the 2014 American Control Conference, 2014, pp. 1261-1266<br /
 where \(y \in \left[ -1, 1 \right]\) is the spatial variable, \(\mathrm{D} = \mathrm d / \mathrm dy\), \(\epsilon \in \mathbb{R}\), \(d\) is the input forcing, and \(\phi\) is the unknown variable. 
 <br />
 <br />
-We solve Eq.&nbsp;\(\eqref{eq:2}\) using function <tt>sisSolves</tt>. We then explain technical details that underlie this function and describe functions: <tt>Discretize</tt> which is an integral part of <tt>sisSolves</tt> used to solve TPBVPs; <tt>Matgen</tt> which provides elementary discretization matrices and is the building block of <tt>Discretize</tt>; and <tt>BcMat</tt> which specifies boundary conditions. An in-depth technical discussion is provided in <a href="latex/tex/SISMatlab_v7.pdf" target=&ldquo;blank&rdquo;>documentation</a>. </p>
+We solve Eq.&nbsp;\(\eqref{eq:2}\) using function <tt>sisSolves</tt>. We then explain technical details that underlie this function and describe functions: <tt>Discretize</tt> which is an integral part of <tt>sisSolves</tt> used to solve TPBVPs; <tt>Matgen</tt> which provides elementary discretization matrices and is the building block of <tt>Discretize</tt>; and <tt>BcMat</tt> which specifies boundary conditions. An in-depth technical discussion is provided in <a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;>documentation</a>. </p>
 <h2>Solving TPBVPs via <tt>sisSolves</tt></h2>
 <p>We first use function <tt>sisSolves</tt> to solve Eq.&nbsp;\(\eqref{eq:2}\) with boundary conditions&nbsp;\(\eqref{eq:1b}\), \(\eqref{eq:1c}\), or&nbsp;\(\eqref{eq:1d}\).    
 <br />
@@ -9505,7 +9505,7 @@ plot(y,solution1);
   \end{array}\right].
 \end{equation}
 \]
-</p><p>The first row in Eq.&nbsp;\(\eqref{eq:Q}\) is different from <a href="javascript:cite('DuSIAM2016')">Du (Section 4)</a>  and <a href="javascript:cite('GreSIAM91')">Greengard (Eq. 12)</a>, and its derivation is provided in the <a href="latex/tex/SISMatlab_v7.pdf" target=&ldquo;blank&rdquo;>documentation</a>. In contrast to these references where the first row of \(\mathbf Q\) is full, our representation of \(\mathbf Q\) in Eq.&nbsp;\(\eqref{eq:Q}\) is given by a banded tri-diagonal matrix. </p>
+</p><p>The first row in Eq.&nbsp;\(\eqref{eq:Q}\) is different from <a href="javascript:cite('DuSIAM2016')">Du (Section 4)</a>  and <a href="javascript:cite('GreSIAM91')">Greengard (Eq. 12)</a>, and its derivation is provided in the <a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;>documentation</a>. In contrast to these references where the first row of \(\mathbf Q\) is full, our representation of \(\mathbf Q\) in Eq.&nbsp;\(\eqref{eq:Q}\) is given by a banded tri-diagonal matrix. </p>
 <p>Since \(T_0(y) = 1\) and \(T_1(y) = y\), we let \(c_0 = 2 \tilde{c}_0\) and represent integration constants in the basis expansion of \(\phi (y)\) and \(\mathrm D \phi (y)\) in terms of Chebyshev polynomials to obtain,</p>
 <p style="text-align:center">
 \[	
@@ -9682,7 +9682,7 @@ plot(y,solution1);
 \end{equation}
 \]
 </p><p>Similarly, the problem with Neumann and Robin boundary conditions can be solved by replacing the last two rows in Eq.&nbsp;\(\eqref{eq:rndInfinite}\) with Eqs.&nbsp;\(\eqref{eq:rndNeu}\) and&nbsp;\(\eqref{eq:rndRob}\) respectively.</p>
-<p>Finally, we use the projection operator&nbsp;<a href="javascript:cite('OlvTowSIAM2013')">(Olver and Townsend, Section 2.4)</a> to obtain a finite-dimensional approximation of Eq.&nbsp;\(\eqref{eq:rndInfinite}\) by truncating the infinite vector of spectral coefficients \(\boldsymbol \Phi^{(2)}\) to a vector \(\hat{\boldsymbol \Phi}^{(2)}\) with \(N + 1\) components; see <a href="latex/tex/SISMatlab_v7.pdf" target=&ldquo;blank&rdquo;>documentation</a> for details. </p>
+<p>Finally, we use the projection operator&nbsp;<a href="javascript:cite('OlvTowSIAM2013')">(Olver and Townsend, Section 2.4)</a> to obtain a finite-dimensional approximation of Eq.&nbsp;\(\eqref{eq:rndInfinite}\) by truncating the infinite vector of spectral coefficients \(\boldsymbol \Phi^{(2)}\) to a vector \(\hat{\boldsymbol \Phi}^{(2)}\) with \(N + 1\) components; see <a href="latex/tex/SISMatlab_v11.pdf" target=&ldquo;blank&rdquo;>documentation</a> for details. </p>
 <h3>Operator representation via <tt>Discretize</tt> and <tt>BcMat</tt></h3>
 <p>We next use functions <tt>Discretize</tt> and <tt>BcMat</tt> to obtain the finite-dimensional representation of Eq.&nbsp;\(\eqref{eq:2}\) and to specify boundary conditions, respectively. 
 <br /></p>
@@ -9843,7 +9843,7 @@ bc3 = [BcMat(m,N,1,Op); BcMat(m,N,-1,Op)]; <span class="comment">% Robin BCs</sp
 <p>Finally, Steps 4, 5, and 6 can be used to compute the corresponding solutions.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2020-05-03 17:21:29 CDT, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2020-05-07 13:50:34 CDT, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

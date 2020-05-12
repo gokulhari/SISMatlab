@@ -1,0 +1,1282 @@
+\documentclass[%
+secnumarabic,%
+%preprint,
+ amssymb, amsmath,%
+ aps,prf,superscriptaddress,longbibliography
+frontmatterverbose,
+]{revtex4-2}
+%\documentclass[letterpaper]{article}
+%% Define Bold mathcal
+\DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage{soul}
+%% Sets page size and margins4
+\usepackage[letterpaper,top=2.54cm,bottom=2.54cm,left=2.54cm,right=2.54cm]{geometry}
+\usepackage{tikz}
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{subfig}
+\usepackage{setspace}
+%\usepackage[margins]{trackchanges}
+\usepackage[rflt]{floatflt}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing,angles,quotes}
+\usetikzlibrary{intersections}
+%\usepackage[justification=justified]{caption}
+\usepackage{amssymb}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Code}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
+%\usepackage[document]{ragged2e}
+\usepackage[titletoc]{appendix}
+\usepackage{array}
+\usepackage{booktabs,dcolumn,caption}
+\usepackage{IEEEtrantools}
+% \numberwithin{equation}{section}
+\newcommand{\mjmargin}[1]{\marginpar{\color{red}\tiny\ttfamily{MJ:} #1}}
+
+\newcommand{\ghmargin}[1]{\marginpar{\color{blue}\tiny\ttfamily{GH:} #1}}
+\newcommand{\We}{W\!e}
+\newcommand{\bphi}{\mbox{\boldmath$\phi$}}
+\newcommand{\Bxi}{\mbox{\boldmath$\xi$}}
+\newcommand{\eps}{\epsilon}
+\newcommand{\bzeta}{\mbox{\boldmath$\zeta$}}
+\newcommand{\balpha}{\mbox{\boldmath$\alpha$}}
+\newcommand{\bbeta}{\mbox{\boldmath$\beta$}}
+\newcommand{\bvphi}{\mbox{\boldmath$\varphi$}}
+\newcommand{\bpsi}{\mbox{\boldmath$\psi$}}
+\newcommand{\bxi}{\mbox{\boldmath$\xi$}}
+\newcommand{\bkappa}{\mbox{\boldmath$\kappa$}}
+\newcommand{\tc}{\textcolor}
+\newcommand{\tcb}{\textcolor{blue}}
+\newcommand{\tcr}{\textcolor{red}}
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{\ensuremath{#2}}}
+\newcommand{\fref}[1]{Figure \ref{#1}}
+\newcommand{\sref}[1]{\S~\ref{#1}}
+\input{commands}
+\newcommand{\DefinedAs}[0]{\mathrel{\mathop:}=}
+\newcommand{\AsDefined}[0]{=\mathrel{\mathop:}}
+\newcommand{\beginsupplement}{%
+      %  \setcounter{table}{0}
+      %  \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \setcounter{section}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+        \renewcommand{\thesection}{S\arabic{section}}%
+        \setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{page}{1}
+     }
+  \newcommand{\beginAppendix}{%
+  \setcounter{figure}{0}
+  \setcounter{section}{0}
+  \renewcommand{\thefigure}{A\arabic{figure}}%
+  \renewcommand{\thesection}{A\arabic{section}}%
+  \setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+      }
+%\DeclareMathOperator*{\trace}{trace}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle=\linespread{0.8}\small\ttfamily,
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+% Keywords command
+\providecommand{\keywords}[1]
+{
+  \small
+  \textbf{\textit{Keywords---}} #1
+}
+
+% \setstretch{0.8}
+
+
+\begin{document}
+\title{\bf \large A Matlab Spectral Integration Suite (SISMatlab)}
+
+%\date{\vspace{-5ex}}
+%\author{Gokul Hariharan,$^\text{a}$ Mihailo R. Jovanovi\'c,$^{\text{b}}$ and Satish Kumar$^{\text{a}}$}
+
+\author{Gokul Hariharan}
+\homepage{https://gokulhari.github.io/webpage/}
+\email{gokulhar@usc.edu}
+\affiliation{Ming Hsieh Department of Electrical and Computer Engineering,\\ University of Southern California, Los Angeles, CA 90089, USA} %
+\author{Satish Kumar}
+\homepage{https://kumar.cems.umn.edu}
+\email{kumar030@umn.edu}
+\affiliation{Department of Chemical Engineering and Materials Science,\\ University of Minnesota, Minneapolis, MN 55455, USA} %
+\author{Mihailo R. Jovanovi\'c}
+\homepage{https://viterbi-web.usc.edu/$\sim$mihailo/}
+\email{mihailo@usc.edu}
+\affiliation{Ming Hsieh Department of Electrical and Computer Engineering,\\ University of Southern California, Los Angeles, CA 90089, USA}
+
+%\author{Mihailo R.\ Jovanovi\'c}
+%    \homepage{https://viterbi-web.usc.edu/~mihailo/}
+%    \email{mihailo@usc.edu}
+%    \affiliation{%
+%    Ming Hsieh Department of Electrical and Computer Engineering,\\ University of Southern California, Los Angeles, CA 90089, USA%
+%    }%
+
+
+%% User-defined commands
+\newcommand{\D}{\mathrm D}
+\newcommand{\I}{\mathbf I}
+\newcommand{\J}{\mathbf J}
+\newcommand{\K}{\mathbf K}
+\newcommand{\E}{\mathbf E}
+\newcommand{\0}{\mathbf 0}
+\newcommand{\T}{\mathbf T}
+\newcommand{\R}{\mathbf R}
+\newcommand{\DD}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\BB}[1]{\boldsymbol #1}
+\newcommand{\hh}[1]{\mathbf{\bar{\text{$#1$}}}}
+\newcommand{\HH}[1]{\mathbf{#1}}
+\newcommand{\MM}[1]{\mathcal{#1}}
+\newcommand{\MMbf}[1]{\mathbfcal{#1}}
+%\tableofcontents
+\pagebreak
+
+\begin{abstract}
+We provide a description of the spectral integration method and A Matlab Spectral Integration Suite ({\sf SISMatlab}). Additional information about the examples provided in the paper along with source codes can be found at: 
+	\vspace*{0.15cm}
+	\begin{center}
+	\href{https://viterbi-web.usc.edu/~mihailo/software/sismatlab/}{https://viterbi-web.usc.edu/$\sim$mihailo/software/sismatlab/}
+	\end{center}
+	\end{abstract}
+
+\maketitle
+
+\newpage
+\section{The spectral integration method: Introduction via an example}
+	\label{sec:intro}
+	\vspace*{-2ex}
+	
+We develop a customized Spectral Integration Suite in Matlab ({\sf SISMatlab}) that is based on the method described in~\cite{GreSIAM91,DuSIAM2016}. In order to facilitate application to differential equations of order $n$, our implementation introduces minor modifications that we summarize next. 
+
+	\vspace*{-4ex}
+	\subsection{Basic features of SISMatlab}
+	
+		\vspace*{-2ex}
+Let us consider a second-order linear differential equation,
+\begin{subequations}
+  \begin{align}
+    \left( 
+ \mathrm  D^{2} \; + \; \dfrac{1}{y^2 + 1} \, \mathrm D \; - \; \epsilon^2 I 
+ \right) 
+ \phi (y) 
+ \; = \; 
+ d(y),\label{eq:1}
+  \end{align}  
+  with Dirichlet, Neumann, or Robin boundary conditions,
+  \begin{align}
+    \phi (\pm 1) \;& =\;  \pm 1, \label{eq:1Dir}
+    \\
+  [{\mathrm  D} \phi (\cdot)](\pm 1) \;& =\; \pm 2, \label{eq:1c}
+    \\
+   4\,[{\mathrm  D} \phi (\cdot)](\pm 1)  \,+\, 3\,\phi (\pm 1) \;&=\; \pm 3. \label{eq:1d}
+  \end{align}
+\end{subequations}
+Here, $\phi$ is the field of interest, $d$ is an input, $\epsilon \in \mathbb{R}$ is a given constant, $y \in [-1, 1]$, and $\D \DefinedAs \mathrm d / \mathrm dy$.
+
+
+In the spectral integration method, the highest derivative in a differential equation is expressed in a basis of Chebyshev polynomials. Specifically, for Eq.~\eqref{eq:1}, we have
+\begin{align}
+  \D^2\phi (y) \;=\; 
+  	\sideset{}{'}\sum_{i \, = \, 0}^{\infty} \phi_i^{(2)} T_i(y)
+ 	\; \AsDefined \;
+	  \HH t_y^T \BB \Phi^{(2)},
+	  \label{eq:rndD2}
+\end{align}
+where $\sideset{}{'}\sum$ denotes a summation with the first term halved, $\BB \Phi^{(2)} \DefinedAs [\,\phi^{(2)}_0\;\; \phi^{(2)}_1\;\; \phi^{(2)}_2 \;\; \cdots \;\; ]^T$ is the infinite vector of spectral coefficients $\phi_i^{(2)}$, and $\HH t_y$ is the vector of Chebyshev polynomials of the first kind $T_i(y)$,
+\begin{equation}\label{eq:t}
+  \HH t_y^T \; \DefinedAs \, \left[\,\tfrac{1}{2}T_0(y)\;\; T_1(y)\;\; T_2(y)\;\;  \cdots \;\;\; \right].
+\end{equation}
+Integration of~Eq.~\eqref{eq:rndD2} in conjunction with the recurrence relations for integration of Chebyshev polynomials are used to determine spectral coefficients corresponding to lower derivatives of $\phi$. For example, indefinite integration of~Eq.~\eqref{eq:rndD2} yields
+\begin{align}
+  \D\, \phi (y) \;=\; \sideset{}{'}\sum_{i \, = \, 0}^{\infty} \phi_i^{(1)} T_i(y) \,+\, c_1 
+  \; \AsDefined \;
+	  \HH t_y^T \BB \Phi^{(1)} \,+\, c_1, \label{eq:rndD1}
+  \end{align}
+where $c_1$ is an integration constant and % ~\cite[Eq.~(11)]{GreSIAM91} 
+\begin{equation}\label{ss}
+  \phi_i^{(1)} \;=\;
+  \begin{cases}
+    \tfrac{1}{2} \, \phi_1^{(2)}, & i \, = \, 0,
+    \\[0.1cm]
+  \tfrac{1}{2i} (\phi_{i-1}^{(2)}\,-\,\phi_{i+1}^{(2)}), &  i \, \geq \, 1.
+  \end{cases}
+  \end{equation}
+These expressions for $\phi_i^{(1)}$ are derived in Appendix~\ref{app:ind-int}. 
+
+Similarly, indefinite integration of $\D \phi$ allows us to express $\phi$ as
+	\begin{align*}
+  	\phi (y) 
+	\;&=\; 
+	\sideset{}{'}\sum_{i \, = \, 0}^{\infty} 
+	\phi_i^{(0)} T_i(y) \,+ \, \tilde{c}_0 \, + \,c_1 y
+	 \; \AsDefined \;
+	  \HH t_y^T \BB \Phi^{(0)} 
+	  \,+\, 
+	 \tilde{c}_0 \, + \,c_1 y,
+\end{align*}
+where $\tilde{c}_0$ and $c_1$ are integration constants and 
+\begin{equation}
+	% \label{ss}
+  \phi_i^{(0)} \;=\;
+  \begin{cases}
+    \tfrac{1}{2} \, \phi_1^{(1)}, & i \, = \, 0,
+    \\[0.1cm]
+  \tfrac{1}{2i} (\phi_{i-1}^{(1)}\,-\,\phi_{i+1}^{(1)}), &  i \, \geq \, 1.
+  \end{cases}
+  \non
+  \end{equation}
+Equation~\eqref{ss} provides a recursive relation that is used to determine spectral coefficients of lower derivatives from the spectral coefficients of the highest derivative of the variable $\phi$,
+	\be
+	\BB \Phi^{(1)}
+	\; = \;
+	\HH Q \,\BB \Phi^{(2)},
+	~
+	\BB \Phi^{(0)}
+	\; = \;
+	\HH Q^2\, \BB \Phi^{(2)},
+	\non
+	\ee
+where $\HH Q^2 \DefinedAs \HH Q\, \HH Q$, and
+\begin{equation}\label{eq:Q}
+  \HH Q \;\DefinedAs\; \left[\begin{array}{ccccccc}
+     0& \tfrac{1}{2} & 0 & \cdots
+     \\[0.1cm]
+    \tfrac{1}{2} & 0 & -\tfrac{1}{2} & 0 &\cdots
+    \\[0.1cm]
+    0 & \tfrac{1}{4} & 0 & -\tfrac{1}{4} & 0 &\cdots 
+    \\[0.1cm]
+    0 & 0 & \tfrac{1}{6} & 0 & -\tfrac{1}{6} & 0 &\cdots 
+    \\[0.cm]
+    \vdots & \vdots &  & \ddots & \ddots & \ddots & \\[0.cm]
+  \end{array}\right].
+\end{equation}
+Since $T_0(y) = 1$ and $T_1(y) = y$, we let $c_0 \DefinedAs 2 \,\tilde{c}_0$ and represent integration constants in the basis expansion of $\phi$ and $\D \, \phi$ in terms of Chebyshev polynomials,
+	\begin{align}
+  \phi (y) 
+  \;&=\; 
+   \HH t_y^T \HH Q^2\, \BB \Phi^{(2)} 
+  \, + \,
+  \left[\begin{array}{cc}
+    \tfrac{1}{2}T_0(y) & T_1(y)\\
+  \end{array}\right] 
+  \overbrace{\left[\begin{array}{cc}
+    1 & 0\\
+    0 & 1
+  \end{array}\right]}^{\K^0}
+  \left[\begin{array}{c}
+    c_0 \\
+    c_1
+  \end{array}\right],
+  % \,+ \, c_0 \tfrac{1}{2} T_0(y) \,+ \, c_1 T_1(y),\label{eq:lowestDer2}
+	\\
+	\D \, \phi (y) 
+  \;&=\; 
+	\HH t_y^T \HH Q \,\BB \Phi^{(2)}
+	\,+ \, 
+	 \left[\begin{array}{cc}
+    \tfrac{1}{2}T_0(y) & T_1(y)\\
+  \end{array}\right] 
+  \underbrace{\left[\begin{array}{cc}
+    0 & 2\\
+    0 & 0
+  \end{array}\right]}_{\K^1}
+  \left[\begin{array}{c}
+    c_0 \\
+    c_1
+  \end{array}\right].
+	%0 c_0  \,+ \, 2 c_1 \tfrac{1}{2} T_0(y),
+\end{align}
+By introducing the vector of integration constants ${\HH c}^{(2)} \DefinedAs \obt{c_0}{c_1}^T$, we can represent $\phi$, $\D \phi$, and $\D^2  \phi$ as
+\begin{alignat}{5}
+  \phi(y) 
+   &~\,= ~\,& 
+   \mathbf t_y^T \, ( \mathbf Q^2 \, \mathbf \Phi^{(2)} \, + \, \mathbf R_2 \, \mathbf c^{(2)} )
+   &~\,= ~\,& 	
+   \mathbf t_y^T  
+   \, 
+   \underbrace{\left[\begin{array}{cc} \mathbf Q^2 &  \mathbf R_2 \end{array}\right]}_{\mathbf{J}_2}\left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right],
+   \label{eq:rndu}
+	\\
+	\mathrm D \phi (y) 
+  &~\,= ~\,&  
+  \mathbf t_y^T \, ( \mathbf Q^1 \, \mathbf \Phi^{(2)} \,+ \, \mathbf R_1 \, \mathbf c^{(2)} )
+  &~\,= ~\,& 
+  \mathbf t_y^T \, \underbrace{\left[\begin{array}{cc} \mathbf Q^1 &  \mathbf R_1 \end{array}\right]}_{\mathbf J_1}\left[\begin{array}{c}\mathbf \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right],
+	\label{eq:rndDu}
+	\\
+	\mathrm D^2 \phi (y) 
+  &\;=\;& 
+  \mathbf t_y^T \, ( \mathbf Q^0 \, \mathbf \Phi^{(2)} \,+ \, \mathbf R_0 \, \mathbf c^{(2)} )
+  &\; = \;& 
+  \mathbf t_y^T \, \underbrace{\left[\begin{array}{cc} \mathbf Q^0 &  \mathbf R_0 \end{array}\right]}_{\mathbf J_0}\left[\begin{array}{c}\mathbf \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right],
+	\label{eq:rndD2u}
+\end{alignat} 
+where $\HH Q^0 = \I$ is an identity operator, 
+	\[
+    \mathbf R_{i} 
+    \, = \,
+  \left[\begin{array}{c} \mathbf K^{2-i} \\ \mathbf 0\end{array} \right],
+    \qquad 
+    i \, = \, 0, 1, 2,
+	\]
+are matrices with an infinite number of rows and two columns, and $\K^2 = \K\,\K$ is a $2 \times 2$ zero matrix. 
+
+Finally, we utilize the expression for the product of two Chebyshev series~\cite{OlvTowSIAM2013,DuSIAM2016} to account for the nonconstant coefficient $a(y) \DefinedAs 1/(y^2 + 1)$ in Eq.~\eqref{eq:1}. For a function $a(y)$ whose representation in the basis of Chebyshev polynomials is given by
+	$
+  a(y) 
+  =
+  \sideset{}{'}\sum_{i} a_i \, T_i(y),
+	$
+the multiplication operator is given by
+\begin{equation}
+	\label{eq:M}
+  {\mathbf M}_a 
+  \;=\; 
+  \dfrac{1}{2}
+  \,
+  \left[\begin{array}{ccccc}
+    a_0 & a_1 & a_2 & a_3 & \cdots\\
+    a_1 & a_0 & a_1 & a_2 & \ddots\\
+    a_2 & a_1 & a_0 & a_1 & \ddots\\
+    a_3 & a_2 & a_1 & a_0 & \ddots\\
+    \vdots & \ddots & \ddots & \ddots& \ddots
+  \end{array}\right] 
+  \;+\; 
+  \dfrac{1}{2} 
+  \, 
+  \left[\begin{array}{ccccc}
+    0 & 0 & 0 & 0 & \cdots\\
+    a_1 & a_2 & a_3 & a_4 & \cdots\\
+    a_2 & a_3 & a_4 & a_5 & \ddots\\
+    a_3 & a_4 & a_5 & a_6 & \ddots\\
+    \vdots & \ddots & \ddots & \ddots& \ddots
+  \end{array}\right].
+\end{equation}
+Thus, in the basis of Chebyshev polynomials, we can express the differential equation~\eqref{eq:1}~as,
+  \begin{equation}
+  \label{eq:rndDiff}
+  \mathbf t_y^T  \left( \mathbf J_0 \,+\, {\mathbf M}_a\, \mathbf J_1\, - \, \epsilon^2 \mathbf J_2 \right)
+  \left[\begin{array}{c} \boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right] 
+  \;=\;  
+  \mathbf t_y^T \, \mathbf d, 
+  \end{equation}
+where $\mathbf d$ is the vector of spectral coefficients associated with the input $d (y)$ in Eq.~\eqref{eq:1}. Furthermore, we can use Eq.~\eqref{eq:rndu} to write the Dirichlet boundary conditions in Eq.~\eqref{eq:1Dir} as
+\begin{subequations}
+\begin{align}
+  \begin{split}
+    \mathbf t_{\pm 1}^T \, \mathbf J_2 
+    \left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)} \end{array}\right] 
+    \;=\;   
+    \pm 1,
+\end{split}\label{eq:rndDir}
+\end{align}
+equation~\eqref{eq:rndDu} to express the Neumann boundary conditions in Eq.~\eqref{eq:1c} as
+\begin{align}
+  \begin{split}
+    \mathbf t_{\pm 1}^T \, \mathbf J_1 
+    \left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)} \end{array}\right] 
+    \;=\;   
+    \pm 2,
+\end{split}\label{eq:rndNeu}
+\end{align}
+and Eqs.~\eqref{eq:rndu} and~\eqref{eq:rndDu} to represent the Robin boundary conditions in Eq.~\eqref{eq:1d} as 
+\begin{align}
+  \begin{split}
+    \mathbf t_{\pm 1}^T \,( 4\,\mathbf J_1 \,+  \, 3\,\mathbf J_2 )
+    \left[\begin{array}{c}\boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)} \end{array}\right] 
+    \;=\;   
+    \pm 3.
+\end{split}\label{eq:rndRob}
+\end{align}
+\end{subequations}
+Combining Eqs.~\eqref{eq:rndDiff} and~\eqref{eq:rndDir}, we can represent Eq.~\eqref{eq:1} with Dirichlet boundary conditions~\eqref{eq:1Dir} in the basis of Chebyshev polynomials as
+\begin{equation}
+\underbrace{\left[\begin{array}{ccc}
+   \mathbf J_0 \,+\, {\mathbf M}_a \, \mathbf J_1\, - \, \epsilon^2 \mathbf J_2 \\[0.1cm]
+    \mathbf t_{+1}^T \, \mathbf J_2 \\[0.15cm]
+    \mathbf t_{-1}^T \, \mathbf J_2
+  \end{array}\right]}_{\HH F}\underbrace{\left[\begin{array}{c}
+    \boldsymbol \Phi^{(2)} \\
+    \mathbf c^{(2)}
+  \end{array}\right]}_{\HH v} 
+  \;=\; 
+  \underbrace{\left[\begin{array}{c}
+  \mathbf d\\
+  +1\\
+  -1
+  \end{array}\right]}_{\HH f}
+  ~~\Rightarrow ~~
+  \HH F\, \HH v \;=\; \HH f.
+  \label{eq:rndInfinitea}
+\end{equation}
+Similarly, the problem with Neumann and Robin boundary conditions can be solved by replacing the last two rows in Eq.~\eqref{eq:rndInfinitea} with Eqs.~\eqref{eq:rndNeu} and~\eqref{eq:rndRob}, respectively.
+
+We use the projection operator (see~\cite[Section 2.4]{OlvTowSIAM2013}) 
+\begin{equation}\label{eq:project}
+  \HH P \;=\; \left[\,\I_{N+1}\;\; \0 \,\right],
+\end{equation}
+where $\I_{N+1}$ is an identity matrix of dimension $N+1$, and $\HH P$ is a matrix with an infinite number of columns, to obtain a finite-dimensional approximation of Eq.~\eqref{eq:rndInfinitea} by truncating the infinite vector of spectral coefficients $\boldsymbol \Phi^{(2)}$ to a vector $\hat{\boldsymbol \Phi}^{(2)}$ with $N + 1$ components,
+\begin{align}\label{eq:finalEx1}
+  \hat{\HH F}\,\hat{\HH v} \;&=\; \hat{\HH f},
+\end{align}
+where
+	\begin{align}
+	\label{eq:S}
+	\hat{\HH F} \;=\;  \HH S \,\HH F \,\HH S^T, 
+	\quad 
+	\hat{\HH v} \;=\; \HH S\, \HH v, 
+	\quad 
+	\hat{\HH f} \;=\; \HH S\, \HH f, 
+	\quad 
+	\HH S 
+	\;=\; 
+	\left[
+	\begin{array}{cc}
+        \HH P & \0 \\
+        \0 & \HH I_2
+        \end{array}
+        \right].
+	\end{align}
+Based on Eq.~\eqref{eq:rndu}, approximate solution $\hat{\phi} (y)$ to Eq.~\eqref{eq:1} is obtained by integrating the solution $\hat{\HH v}$ to Eq.~\eqref{eq:finalEx1} twice,
+	\begin{align}
+	\label{eq:finalEx}
+  	\hat{\phi} (y) 
+	\; = \; 
+	\hat{\HH t}_y^T 
+	\, 
+	\hat{\J}_2 
+	\,
+	\hat{\HH F}^{-1} 
+	\hat{\HH f},
+	% \left[\begin{array}{c}\hat {\boldsymbol \Phi}^{(2)} \\ \mathbf c^{(2)} \end{array}\right], 
+	\end{align}
+where
+	$
+	\hat{\HH t}_y 
+	= 
+	\HH P \, \HH t_y
+	$
+and	
+	$ 
+	\hat {\HH J}_2 
+	= 
+	\HH P \, \J_2 \, \HH S^T.
+	$
+
+	\vspace*{-4ex}
+	\subsection{Eigenvalue and frequency response analysis}
+	\vspace*{-2ex}
+Herein, we illustrate how the spectral integration method can be used to conduct modal and nonmodal analysis of the reaction-diffusion equation,
+	\begin{subequations}
+	\label{eq:rndTrans}
+	\begin{align}
+	\phi_{t}(y,t) 
+	\; = \;  
+	\phi_{yy}(y,t)  
+	\; - \; 
+	\epsilon^2 \phi (y,t) 
+	\; + \; 
+	d(y,t),
+	\label{eq:0}
+	\end{align}
+with homogeneous Neumann boundary conditions,
+\begin{align}
+[\partial_y \phi (\cdot, t)](\pm 1) \;& =\; 0, \label{eq:0bc}
+\end{align}
+\end{subequations}
+where $t$ is time, $y \in \left[ -1, 1 \right]$ is a spatial variable, and $ \epsilon \in \mathbb{R}$. 
+
+	\vspace*{1ex}	
+\noindent {\bf Eigenvalue decomposition.}~Let us consider the eigenvalue decomposition of the operator in system~\eqref{eq:rndTrans},
+	\begin{subequations}\label{eq:rndEig}
+  \begin{align}
+    (\D^2  \,-\, \epsilon^2 I)\, \phi (y) \;&=\; \lambda\,\phi (y),
+    \label{eq:rndtrans}
+    \\[0.1cm]
+    \D\,\phi (\pm 1)\;&=\;0,\label{eq:rndEvalBc}
+  \end{align}   
+\end{subequations}
+where $\lambda$ is an eigenvalue and $\phi$ is an eigenfunction. Using the relations in Eqs.~\eqref{eq:rndu}-\eqref{eq:rndD2u}, differential equation~\eqref{eq:rndtrans} and boundary conditions~\eqref{eq:rndEvalBc} can be expressed in the basis of \mbox{Chebyshev polynomials~as,}
+\begin{subequations}
+\begin{align}
+   \underbrace{\left( \mathbf J_0 \, - \, \epsilon^2 \mathbf J_2 \right)}_{\HH F}
+  \underbrace{\left[\begin{array}{c} \boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right] }_{\HH v }
+  \;&=\;  
+  \lambda \, \mathbf J_2
+\underbrace{\left[\begin{array}{c} \boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right] }_{\HH v}, 
+	\\
+     \underbrace{ \left[\begin{array}{c}
+      \HH t_{-1}\mathbf J_1\\
+      \HH t_{+1}\mathbf J_1
+     \end{array}\right] }_{\HH M} 
+    \underbrace{\left[\begin{array}{c} \boldsymbol \Phi^{(2)} \\ \mathbf c^{(2)}  \end{array}\right] }_{\HH v }
+    \;&=\;  
+    0,
+    \end{align}
+  \end{subequations}
+or, equivalently,
+	\begin{subequations}
+	\label{eq1:rndDiff}
+\begin{align}
+	\label{eq:rndDiffeig}
+  \HH F\, \HH v \;&=\; \lambda \, \HH J_2 \, \HH v,
+  \\[0.1cm]
+  \HH M \, \HH v \;&=\; 0,
+  \label{eq:rndDiffeigBc}
+\end{align}
+\end{subequations}
+Thus, only functions $\HH v$ that belong to the null-space of the operator $\HH M$ in Eq.~\eqref{eq:rndDiffeigBc} are permissible solutions to Eq.~\eqref{eq:rndDiffeig}. A finite-dimensional representation of system~\eqref{eq1:rndDiff} is given by
+\begin{subequations}\label{eq:finiteEig}
+\begin{align}
+  \hat{\HH F}\, \hat{\HH v} \;&=\; \lambda \, \hat{\HH J}_2 \,\hat{\HH v},\label{eq:finiteEiga}\\
+  \hat{\HH M} \, \hat{\HH v} \;&=\; 0,\label{eq:finiteEigb}
+\end{align}
+\end{subequations}
+where,
+$$
+\hat{\HH F} \;=\;  \HH P \,\HH F \,\HH S^T, \quad 
+\hat{\HH M} \;=\;  \HH M \,\HH S^T, \quad 
+\hat{\HH J}_2 \;=\;  \HH P \,\HH J_2 \,\HH S^T, \quad 
+\hat{\HH v} \;=\; \HH S\, \HH v,
+$$
+with $\HH P$ and $\HH S$ defined in Eqs.~\eqref{eq:project} and~\eqref{eq:S}, respectively. SVD of the fat full-row-rank matrix $\hat{\HH M} $ in~\eqref{eq:finiteEigb} can be used to parameterize its null-space~\cite{jovbamSCL06}, 
+	\begin{equation}
+  \hat{\HH M}\,\hat{\HH v }
+  \; = \; 
+  \hat{\HH U} \hat{\BB \Sigma} \hat{\HH V}^\dagger \hat{\HH v} 
+  \; = \; 
+  \hat{\HH U}  \left[\begin{array}{cc} \hat{\BB \Sigma}_1 & \0 \end{array} \right] \left[\begin{array}{c}\hat{\HH V}_{1}^\dagger \\[0.3em] \hat{\HH V}_{2}^\dagger \end{array}\right] \hat{\HH v }
+  \; = \; 
+  0.
+  \label{eq:Msvd}
+\end{equation}
+Hence, $\hat{\HH v} \DefinedAs \hat{\HH V}_{2}\, \hat{\HH u}$ parametrizes the null-space~\cite{FourSubspaces} of the matrix $\hat{\HH M}$ in Eq.~\eqref{eq:finiteEigb}.  
+Substituting this expression for $\hat{\HH v}$ to Eq.~\eqref{eq:finiteEiga} yields the finite-dimensional generalized eigenvalue problem,
+\begin{align}
+  (\hat{\HH F} \hat{\HH V}_{2})\,\hat{\HH u} \;=\; \lambda \,(\hat{\HH J}_2 \hat{\HH V}_{2})\, \hat{\HH u},
+\end{align}
+which can be used to compute the eigenpair ($\lambda, \hat{\HH u}$). The eigenfunctions in Eq.~\eqref{eq:rndEig} can be recovered by using the null-space parametrization in conjunction with the integration operator (see~Eq.~\eqref{eq:rndu}),
+	\[
+	\hat{\phi} (y)
+	\; = \; 
+	\hat{\HH t}_y^T
+	\, 
+	\hat{\HH J}_2 
+	\, 
+	\hat{\HH V}_{2} 
+	\, 
+	\hat{\HH u}. 
+	\]
+
+	% \vspace*{1ex}
+\noindent {\bf Frequency response analysis.}~The temporal Fourier transform can be used to represent the frequency response operator associated with system~\eqref{eq:rndTrans} as a two-point boundary value problem (TPBVP),
+\begin{align}
+    \left[\mathcal A(\omega)\,\phi(\cdot)\right] (y) \;&=\; \left[\mathcal B(\omega)\, d(\cdot)\right](y),\notag\\
+    \xi (y)\;&=\; \left[\mathcal C(\omega)\,\phi(\cdot)\right](y),\label{eq:mot1c}\\
+    [\mathcal{L}_a \, \phi(\cdot)](a)  \;&=\; [\mathcal{L}_b \, \phi(\cdot)](b) \;=\;  0,\notag
+  \end{align}  
+where
+	$
+	\mathcal A (\omega) = (\mathrm i\omega + \epsilon^2) I - \mathrm D^2,
+	$
+	$
+	\mathcal B 
+	= 
+	\mathcal C 
+	= I,
+	$
+and 
+	$
+	\mathcal {L}_{\pm 1} = \mathrm D.
+	$
+A feedback interconnection of the frequency response operator with its adjoint can be used to compute singular values (see our paper and~\cite{Boyd1989})
+	\begin{subequations}
+	\label{eq:feedbackRnd}
+  	\begin{align}
+	\left[
+	\begin{array}{cc}
+  	0 &\mathcal{B}\mathcal{B}^{\dagger} \\
+   	\mathcal{C}^{\dagger}\mathcal{C}&0
+	\end{array} \right] \left[ \begin{array}{c}
+   	\phi(y)\\
+   	\psi(y)
+	\end{array} 
+	\right]   
+	\;&=\; 
+	\gamma 
+	\left[
+	\begin{array}{cc}
+  	\mathcal{A} & 0 \\
+  	0 & \mathcal{A}^{\dagger}
+	\end{array}\right]
+	\left[ 
+	\begin{array}{c}
+   	\phi(y)\\
+   	\psi(y)
+	\end{array} 
+	\right], 
+	\label{eq:feedback}
+	\\
+%	\left[
+%	\begin{array}{cc}
+%	\mathcal{L}(\pm 1,\mathrm D) & 0
+%	\\
+%	0 & \mathcal{L}(\pm 1,\mathrm D) 
+%	\end{array}
+%	\right]
+%	\left[ \begin{array}{c}
+%   	\phi(y)\\
+%   	\psi(y)
+%	\end{array} \right] 
+%	\;&=\; 0, 
+%	\\
+	\left[
+	\begin{array}{c}
+	{[ {\mathcal L}_{\pm 1} \phi ( \cdot ) ]} (\pm 1)
+	\\
+	{[ {\mathcal L}_{\pm 1} \psi ( \cdot ) ]} (\pm 1)
+	\end{array}
+	\right]
+	% \tbo{ {[ {\mathcal L}_{\pm 1} \phi ( \cdot ) ]} (\pm 1)}{ {[ {\mathcal L}_{\pm 1} \psi ( \cdot ) ]} (\pm 1)}
+	\;&=\; 
+	\left[
+	\begin{array}{c}
+	0
+	\\
+	0
+	\end{array}
+	\right], 
+	\end{align}
+where $(\cdot)^{\dagger}$ denotes the adjoint of the operator $(\cdot)$ and $\psi$ is the auxiliary variable associated with the adjoint operator. The resulting eigenvalues determine the singular values in pairs of opposite signs, i.e., $\gamma = \pm \sigma$. Using definition of the operators $\mathcal A$, $\mathcal B$, $\mathcal C$, as well as their adjoints, we can express Eq.~\eqref{eq:feedback} as
+\begin{align}
+  \left[\begin{array}{cc}
+    0 & I\\
+    I & 0
+  \end{array}\right]\left[\begin{array}{c}
+    \phi (y)\\
+    \psi (y)
+  \end{array}\right]\;&=\;\lambda \,\left[\begin{array}{ccc}
+    (\mathrm i \omega + \epsilon^2) I \,-\, \D^2 & & 0\\
+    0 && (-\mathrm i \omega + \epsilon^2) I \,-\, \D^2
+  \end{array}\right] \left[\begin{array}{c}
+    \phi (y)\\
+    \psi (y)
+  \end{array}\right],\label{eq:feedbackRnda}
+\end{align}
+\end{subequations}
+and employe Eqs.~\eqref{eq:rndu}-\eqref{eq:rndD2u} to obtained a discretized approximation of Eq.~\eqref{eq:feedbackRnd}, 
+\begin{subequations}\label{eq:rnd_fr_eq}
+\begin{IEEEeqnarray}{rCl}\label{eq:rnd_fr_eq1}
+  \underbrace{\left[\begin{array}{cccc}
+    \0 & \HH J_2\\
+    \HH J_2 & \0 
+  \end{array}\right]}_{\HH F}\,\underbrace{\left[\begin{array}{c}
+    \BB \Phi^{(2)}\\
+    \HH c^{(\phi)}\\
+    \BB \Psi^{(2)}\\
+    \HH c^{(\psi)}
+  \end{array}\right]}_{{\HH v}}
+  ~&=&~ 
+    \gamma 
+  \underbrace{\left[\begin{array}{cccccc}
+    (\mathrm i \omega + \epsilon^2){\HH J}_2 - \J_0  & \0 \\
+    \0 & (-\mathrm i \omega + \epsilon^2) {\HH J}_2 - \J_0
+  \end{array}\right]}_{{\HH E}} \underbrace{\left[\begin{array}{c}
+    \BB \Phi^{(2)}\\
+    \HH c^{(\phi)}\\
+    \BB \Psi^{(2)}\\
+    \HH c^{(\psi)}
+  \end{array}\right]}_{{\HH v}},\\
+\underbrace{ \left[\begin{array}{cccc}
+  \HH t_{+1}^T\,{\HH J}_1 & \0\\[0.15cm]
+  \HH t_{-1}^T\,{\HH J}_1 & \0\\[0.15cm]
+   \0 & \HH t_{+1}^T\,{\HH J}_1 \\[0.15cm]
+    \0 &\HH t_{-1}^T\,{\HH J}_1 \\
+\end{array}\right]}_{{\HH M}}\left[\begin{array}{c}
+  \BB \Phi^{(2)}\\
+  \HH c^{(\phi)}\\
+  \BB \Psi^{(2)}\\
+  \HH c^{(\psi)}
+\end{array}\right] \;&=&~ \0.\label{eq:rnd_fr_bcs}
+\end{IEEEeqnarray}
+\end{subequations}	
+Finally, the projection operator~\eqref{eq:project} yields a finite dimensional approximation of system~\eqref{eq:rnd_fr_eq},
+%\begin{subequations}
+%\begin{align}
+%  \HH F \, \HH v \;&=\; \gamma \,\HH E \,\HH v,\\
+%  \HH M \,\HH v \;&=\; \0,
+%\end{align}
+%\end{subequations}
+\begin{subequations}\label{eq:rnd_fr_final}
+\begin{align}
+  \hat {\HH F} \, \hat{\HH v} \;&=\; \gamma \,\hat{\HH E} \,\hat{\HH v},\\
+  \hat{\HH M} \,\hat{\HH v} \;&=\; \0,\label{eq:rnd_fr_finite_bc}
+\end{align}
+\end{subequations}
+with
+	$$
+	\hat{\HH F} 
+	\;=\;  
+	\HH P_{2} \, \HH F \, \HH S_2^T, 
+	\quad 
+	\hat{\HH M} 
+	\;=\;  
+	\HH M \, \HH S_{2}^T, 
+	\quad 
+	\hat{\HH E} 
+	\;=\;  
+	\HH P_{2} \, \HH E \, \HH S_2^T, 
+	\quad 
+	\hat{\HH v} 
+	\;=\; 
+	\HH S_2 {\HH v},
+	\quad
+	\HH P_{2} 
+	\;=\; 
+	\left[\begin{array}{cc}
+	\HH P & \0  \\
+	\0 & \HH P
+	\end{array}\right], 
+	\quad  
+	\HH S_{2} 
+	\;=\; 
+	\left[\begin{array}{cc}
+  	\HH S & \0\\
+  	\0 & \HH S
+  	\end{array}\right],
+	$$
+where the expressions for $\HH P$ and $\HH S$ are given in Eqs.~\eqref{eq:project} and~\eqref{eq:S}, respectively. The same procedure as in the modal analysis can be used to parametrize the null-space of the matrix $\hat{\HH M}$ in Eq.~\eqref{eq:rnd_fr_finite_bc}. Namely, SVD of $\hat{\HH M}$ in Eq.~\eqref{eq:Msvd} reduces Eq.~\eqref{eq:rnd_fr_final} to the generalized eigenvalue problem,
+\begin{align}
+  (\hat{\HH F} \,\hat{\HH V}_{2})\,\hat{\HH u} \;=\; \gamma \,(\hat{\HH E}\, \hat{\HH V}_{2})\, \hat{\HH u},
+\end{align}
+and yielding,
+\begin{align}
+  \left[\begin{array}{c}
+    \hat{\phi} (y)\\
+    \hat{\psi} (y)
+  \end{array}\right] 
+  \; = \; 
+  \left[\begin{array}{cc}
+    \hat{\HH t}_y^T \, \hat{\HH J}_2 & \0\\
+    \0 & \hat{\HH t}_y^T \, \hat{\HH J}_2
+  \end{array}\right] \hat{\HH V}_{2} \, \HH u.
+\end{align}     
+
+	\vspace*{-4ex}
+\section{Linear differential operators with non-constant coefficients}
+	\label{sec.main}
+
+	\vspace*{-2ex}
+In Section~\ref{sec:intro}, we described how spectral integration method can be used to solve forced TPBVPs and conduct modal and nonmodal analyses of PDEs with one spatial variable and second-order differential operators. Herein, we illustrate the method for $n$th order linear differential operators with non-constant coefficients. 
+
+Let us consider an $n$th order linear differential equation with non-constant coefficients,
+\begin{subequations}\label{eq1:1}
+\begin{align}
+    \sum_{k \, = \, 0}^{n}\, a^{(k)}(y)\, \D^k \phi (y) \;&=\; d(y),\label{eq:1a}\\
+    \sum_{k \, = \, 0}^{n-1}\,b^{(k,\mathbf p)} \, \D^k \phi (\mathbf p) \;&=\; \mathbf q,\label{eq:1b}
+\end{align}
+\end{subequations}
+where $d$ is an input, $\phi$ is the unknown variable, $a^{(k)} (y)$ are non-constant coefficients, $b^{(k,\HH p)}$ are constant coefficients associated with boundary constraints at a vector of evaluation points, $\mathbf p$, with the corresponding values at the boundaries, $\mathbf q$. 
+
+	\vspace*{1ex}
+\noindent {\bf Differential equation.}
+The highest derivative of $\phi$ in~Eq.~\eqref{eq:1a} is expressed in a basis of Chebyshev polynomials as
+\begin{align}
+  \D^n \phi (y) \;=\; 
+  	\sideset{}{'}\sum_{i \, = \, 0}^{\infty} \phi_i^{(n)} T_i(y)
+ 	\; \AsDefined \;
+	  \HH t_y^T \BB \Phi^{(n)},
+	  \label{eq:2a}
+\end{align}
+where $\HH \Phi^{(n)}  \DefinedAs [\,\phi^{(n)}_0\;\; \phi^{(n)}_1\;\; \phi^{(n)}_2 \;\; \cdots \;\; ]^T$, and the lower derivatives are expressed as,
+\begin{align}
+  \D^i \phi (y) 
+  \;=\; 
+  \HH t_{y}^T \! \left(\HH Q^{n-i}\BB \Phi^{(n)} \,+\,\HH R_{n-i} \, {\HH c}^{(n)} \right) 
+  \;=\; 
+  \underbrace{\left[\begin{array}{cc}
+    \HH Q^{n-i} & \HH R_{n-i}
+  \end{array}\right]}_{\HH J_{n-i}} \left[\begin{array}{c}
+    \BB \Phi^{(n)}\\
+    {\HH c}^{(n)}
+  \end{array}\right].
+  \label{eq:Di}
+\end{align}
+Here, $\HH Q$ is defined in~Eq.~\eqref{eq:Q}, ${\HH c}^{(n)} = [\,c_0\;\;c_1\;\;\cdots\;\; c_{n-1}\,]^T$ is the vector of integration constants, and
+\[
+	\R_{i} 
+	\, \DefinedAs \,
+	\tbo{{\K^{n-i}}}{\HH 0},
+	\]
+are matrices with $n$ columns and infinite number of rows with~\cite[Eq. 10]{GreSIAM91} 
+\begin{equation}\label{eq:K}
+  \K 
+  \; = \,
+  \left[\begin{array}{ccccccccccc}
+    0 & 2 & 0 & 6 & 0 & 10 & \cdots\\
+    0 & 0 & 4 & 0 & 8 & 0 & \ddots\\
+    0 & 0 & 0 & 6 & 0 & 10 & \ddots\\
+    \vdots & \ddots & \ddots & \ddots& \ddots& \ddots & \ddots 
+  \end{array}\right]
+  \, \in \;
+  \mathbb{R}^{n \times n}.
+\end{equation}
+
+	\newpage
+\noindent {\bf Infinite-dimensional representation and finite-dimensional approximation.}~Equations~\eqref{eq:M}  and~\eqref{eq:Di} can be used to express system~\eqref{eq1:1} in the basis of Chebyshev polynomials as 
+\begin{subequations}
+\begin{align}
+  \HH t_{y}^T
+  \sum_{k \, = \, 0}^{n}
+  \mathbf M_{a^{(k)}}
+  \,
+  \HH J_{n-k}
+  \left[\begin{array}{c}
+    \BB \Phi^{(n)}
+    \\ 
+    {\HH c}^{(n)} \end{array}\right] 
+    &\;=\; 
+    \HH t_{y}^T\,\HH d,
+    \label{eq:nDeq}
+	\\[0.cm]
+	\label{eq:ndBc}
+    \HH t_{\HH p}^T\sum_{k \, = \, 0}^{n-1}
+    b^{(k,\mathbf p)} 
+    \,
+    \HH J_{n-k} 
+    \left[\begin{array}{c}
+    \BB \Phi^{(n)}\\
+    {\HH c}^{(n)}
+  \end{array}\right]
+  &\;=\;
+  \HH q.
+  \end{align}
+\end{subequations}
+Thus, representation of the $n$th order differential equation~\eqref{eq:1a} with boundary conditions~\eqref{eq:1b} is given~by,
+\begin{equation}\label{eq:infiniteDim}
+  \underbrace{\left[
+  \begin{array}{cc}
+    \displaystyle{\sum_{k \, = \, 0}^{n}} \mathbf M_{a^{(k)}} \, \HH J_{n-k}
+    \\[0.35cm]
+    \HH t_{\HH p}^T
+    \displaystyle{\sum_{k \, = \, 0}^{n-1}}b^{(k,\mathbf p)} \, \HH J_{n-k}
+  \end{array}\right]}_{\HH F}\underbrace{\left[\begin{array}{c}
+    \BB \Phi^{(n)}\\
+    {\HH c}^{(n)}
+  \end{array}\right]}_{\HH v} \;=\;\underbrace{\left[\begin{array}{c}
+    \HH d\\
+    \mathbf q
+  \end{array}\right]}_{\HH f}.
+\end{equation} 
+Application of the projection operator given by~Eq.~\eqref{eq:project} yields a finite-dimensional approximation,
+\begin{align}\label{eq:nDFinal}
+    \hat{\HH F} \,\hat{\HH v}\;&=\; \hat{\HH f},
+  \end{align}
+ where,
+  \begin{equation}\label{eq:Sn}
+    \hat{\HH F} 
+    \;=\;  
+    \HH S \,\HH F \,\HH S^T, 
+    \quad
+    \hat{\HH v} 
+    \;=\; 
+    \HH S \, \HH v, 
+    \quad \hat{\HH f} 
+    \;=\; 
+    \HH S \, \HH f, 
+    \quad \HH S 
+    \;=\; 
+    \left[\begin{array}{cc}
+    \HH P & \0 \\
+    \0 & \HH I_n
+    \end{array}\right] .
+  \end{equation}
+The approximate solution $\hat{\phi} (y)$ to system~\eqref{eq1:1} is obtained by integrating the solution $\hat{\HH v}$ to Eq.~\eqref{eq:nDFinal} $n$ times,
+$$
+	\hat{\phi} (y) 
+	\; = \; 
+	\hat{\HH t}_y^T \, \hat{\HH J}_n \, \hat{\HH F}^{-1} \, \hat{\HH f},
+$$ 
+where
+	$
+	\hat{\HH t}_y = \HH P \HH t_y,
+	$	 
+	$
+	\hat {\HH J}_n = \HH P \J_n \HH S^T,
+	$
+with $\HH S$ and $\HH P$ defined in Eqs.~\eqref{eq:Sn} and~\eqref{eq:project}, respectively.
+
+	\vspace*{-3ex}
+\section{Description of Matlab files}
+	\label{sec.matlab}
+
+	\vspace*{-2ex}
+{\sf SISMatlab} contains a set of functions to obtain finite-dimensional approximations of linear operators via the spectral integration method. We next describe the functions that make up this suite. 
+
+	\vspace*{1ex}
+\noindent {\bf Note:}~Our implementation requires $N$ (where $N+1$ is the number of basis functions) to be an odd number.
+\begin{itemize}
+  \item \textsf{sety(N)}:~sets $N+1$ points in physical space via $y_i = \cos (\pi \,(i + 0.5) / (N + 1))$. A discrete cosine transform of these points yields a vector that represents spectral coefficients in the basis of Chebyshev polynomials~\cite[Eq.~12.4.16-17]{NumRecipes}.
+\begin{lstlisting}
+N = 63; % N + 1 basis functions
+y = sety(N); % spatially-independent variable
+f = 1 - y.^2; % function in physical space
+plot(y,f); % visualize results
+\end{lstlisting}  
+
+\item \textsf{phys2cheb(f)}:~takes a vector $f$ in physical space (we refer to this as phys-space in this text and in our codes) and converts it to a vector of spectral coefficients in the basis of Chebyshev polynomials (we refer to this as cheb-space in this text and in our codes) via~\cite[Eq.~12.4.16-17]{NumRecipes}.
+\begin{lstlisting}
+N = 63; % N + 1 basis functions
+y = sety(N); % spatially-independent variable
+f_phys = 1 - y.^2; %  [0.5*T_0; T_1; T_2]^T  [1; 0; -0.5] = 0.5 - 0.5 (2 y^2 -1)  = 1 - y^2
+f_cheb = phys2cheb(f);
+disp(f_cheb);
+\end{lstlisting}
+  
+  \item \textsf{cheb2phys.m}:~takes a vector of spectral coefficients in the basis of Chebyshev polynomials and coverts them to points in physical space via~\cite[Eq.~12.4.16-17]{NumRecipes}.
+  
+  \item \textsf{Matgen(n,N)}:~generates \textsf{[Q,K,J] = Matgen(n,N)}, where \textsf{Q} contains matrices that correspond to $\HH Q$ in Eq.~\eqref{eq:Q}, \textsf{K} to $\HH K$ in Eq.~\eqref{eq:K}, and \textsf{J} to $\HH J$ in~\eqref{eq:Di}.
+\begin{lstlisting}
+N = 63; % number of basis functions
+m = 2;   % order of differential equation
+
+% Use Matgen to represent Q, K, and J
+[Q,K,J] = Matgen(m,N); % inputs: the order of the differential equation and N
+
+% Q
+Q{1} % Q^0: identity matrix
+Q{2} % Q^1: matrix Q
+Q{3} % Q^2: matrix Q*Q
+% K
+K{1} % K^1 matrix K
+K{2} % K^0
+% J
+J{1} % J_0 matrix J
+J{2} % J_1
+J{3} % J_2
+\end{lstlisting}
+   
+   \item \textsf{MultMat(f)}:~yields finite-dimensional representation of the operator that accounts for spatially-varying coefficients, i.e., the operator $\HH M_a$ in Eq.~\eqref{eq:M}.
+\begin{lstlisting}
+N = 63; % N + 1 basis functions
+y = sety(N); % spatially-independent variable
+% multiplication operator in the basis of Chebyshev polynomials
+Ma = MultMat(1./(y.^2 + 1));
+\end{lstlisting}
+
+  \item \textsf{Discretize(m,N,L)}:~employs functions \textsf{Matgen} and \textsf{MultMat} to obtain finite-dimensional representation of linear operators. Inputs are the highest differential order, $m$, the number of basis functions, $N$, and the linear operator $L$. Linear operators are specified as cells in Matlab, e.g., the operator $a\,\D^2 + b\,\D + c$ is represented using a $3\times 1$ cell with $L\{1\} = a$, $L\{2\} = b$, and $L\{3\} = c$). 
+  
+	\vspace*{0.1cm}  
+{\sf basic-example.m} in the ``examples'' directory illustrates how to use \textsf{Matgen} and \textsf{MultMat} directly.
+ 
+ 	\vspace*{0.1cm}  
+Block-matrix operators are defined as cells of linear operators. For example, 
+\begin{lstlisting}
+% operator Dy
+L11 = cell(2,1), L11{1} = 1; L11{2} = 0;
+
+% operator Dyy + 2Dy
+L12 = cell(3,1); L12{1} = 1; L12{2} = 2; L12{3} = 0;
+
+% operator 2Dyy + 3Dy
+L21 = cell(3,1); L21{1} = 2; L21{2} = 3; L21{3} = 1;
+
+% Identity operator I
+L22 = cell(1,1), L22{1} = 1;
+
+% 2x2 block-matrix operator
+L = cell(2,2);
+L{1,1} = L11; L{1,2} = L12;
+L{2,1} = L21; L{2,2} = L22;
+\end{lstlisting}
+  
+\item {\sf AdjointFormal(L):}~returns the formal adjoint of a linear operator or a block-matrix operator $L$.
+\begin{lstlisting}
+Lad = AdjointFormal(L); % adjoint of the operator L
+\end{lstlisting}
+  
+\item {\sf MultOps(L1,L2):}~returns composition of linear operators $L_1$ and $L_2$ of compatible dimensions.
+\begin{lstlisting}
+L = MultOps(L1,L2); % composition of operators L1 and L2
+\end{lstlisting}
+
+  \item \textsf{BcMat(n,N,eval,L)}: Generates a matrix of boundary evaluations given the highest order of the linear differential equation, $n$, $N$, the evaluation points, \textsf{eval}, and the linear operator to be applied at that point (Dirichlet, Neumann or mixed). %The matrix $\HH B$ in~Eq.~\eqref{eq:Final} can be generated using this routine.
+  
+\begin{lstlisting}
+% Identity operator
+I = cell(1,1); % cell array with coefficients
+I{1} = 1.0;
+
+% 1st derivative operator: 1.0 Dy + 0.0 I
+Dy = cell(2,1); % cell array with coefficients
+Dy{1} = 1.0; Dy{2} = 0.0;
+
+% Operator 4 Dy + 3 I
+Op = cell(2,1); % cell array with coefficients
+Op{1} = 4; Op{2} = 3;
+
+% boundary points 
+bcPts = [1; -1]; % \pm 1
+
+% boundary operators
+bcOp1 = {I; I}; % Dirichlet BCs 
+bcOp2 = {Dy; Dy}; % Neumann BCs
+bcOp3 = {Op; Op}; % Robin BCs 
+
+% inputs to BcMat:
+% differential order m, number of basis functions, N, boundary points, and boundary operator
+bc1 = BcMat(m,N,bcPts,bcOp1); % Dirichlet BCs at \pm 1
+bc2 = BcMat(m,N,bcPts,bcOp2); % Neumann BCs at \pm 1
+bc3 = BcMat(m,N,bcPts,bcOp3); % Robin BCs at \pm 1
+\end{lstlisting}
+  
+\end{itemize}
+
+We also provide the following auxiliary functions that are useful in certain applications:
+\begin{itemize}
+  
+  \item {\sf ChebMat2CellMat(f,N):}~takes a matrix-valued function $f$ of size $m(N+1) \times N$ and returns a cell of arrays of size $m \times N$. Each element in this cell is a vector that represents a function in $y$.
+\begin{lstlisting}
+N = 63; % N + 1 basis functions
+y = sety(N); % spatially-independent variable
+% define entries of a matrix-valued function f
+f11 = y; f12 = 1 - y.^2;
+f21 = 1 + y.^3; f22 = y.^4;
+
+% the matrix-valued function f
+f = [f11, f12;
+    f21, f22]; % matrix of dimension 128 x 2
+
+f = ChebMat2CellMat(f,N); % convert f to a 2 x 2 cell
+plot(y,f{1,2}); % visualize f12
+
+% all functions in this format (cell of arrays) can be
+% represented in the basis of Chebyshev polynomials
+f_cheb = phys2cheb(f);
+\end{lstlisting}    
+  
+\item {\sf integ(f):} integrates a function $f$ (defined in a physical space)  
+\begin{lstlisting}
+N = 63; % N + 1 basis functions
+y = sety(N); % spatially-independent variable
+% define a function f
+f = 1 - y.^2;
+
+% indefinite integral
+f_indefinite = integ(f);
+
+% integrate from -1 to 1
+f_definite = val_rbc(f_indefinite) - val_lbc(f_indefinite);
+\end{lstlisting}
+Functions {\sf val\_rbc} and {\sf val\_lbc} evaluate its argument in phys-space at $y = 1$ and $y = -1$ respectively.
+
+\item {\sf ChebEval(f,pts):} evaluates a function defined in cheb-space at specified set of points in the domain.
+\begin{lstlisting}
+N = 63; % N + 1 basis functions
+y = sety(N); % spatially-independent variable
+f = phys2cheb(1 - y.^2); % define a function f in the basis of Chebyshev polynomials
+
+pts = [-1; 0.5; 1]; % set of points within a domain
+values = ChebEval(f,pts); % evaluate function f at the specified set of points
+\end{lstlisting}
+  
+\end{itemize}
+We encourage you to try out the code snippets (compiled into a Matlab live-script, {\sf Illustrations\_m} in directory ``examples'') to see how the codes relate to this document. Furthermore, in directory ``examples'' we provide several scripts that illustrate the utility of {\sf SISMatlab}; these may serve as templates for the use in your own problems. Examples whose file-names end with ``\_details'' provide implementation details.
+
+		\vspace*{-3ex}
+\section{User-level functions}
+	\vspace*{-2ex}
+	
+Functions described in Section~\ref{sec.matlab} can be employed to solve a broad class of problems. For users who would like to use a simple interface, we also provide user-level functions for solving TPBVPs, conducting eigenvalue and singular value decompositions, and computing the $H_\infty$ norm of a \mbox{stable linear dynamical system.}
+\begin{itemize}
+  \item {\sf sisSolves(m,N,A,bc,d):}~solves a TPBVP of the form $[ \MM A \phi (\cdot) ] (y) = d(y)$ with differential operator {\sf A} of order {\sf m}, boundary conditions {\sf bc}, and input function {\sf d}, where {\sf N} determines the number of Chebyshev polynomials. By default, this function utilizes sparse matrix solvers; optional argument {\sf 'Full'}, i.e., {\sf sisSolves(m,N,A,bc,f,'Full')}, specifies the use of dense linear algebra routines.
+  
+The boundary conditions class {\sf BCs} is used to specify boundary conditions {\sf bc}. The number of boundary conditions and the number of variables are required inputs into {\sf BCs}. For example, the following script can be used to solve
+	\[
+	\ba{rcl}
+    	\left( 
+ 	\mathrm  D^{2} \; + \; \dfrac{1}{y^2 + 1} \, \mathrm D \; - \; \epsilon^2 I 
+ 	\right) 
+ 	\phi (y) 
+ 	& = & 
+ 	d(y),
+	\\[0.45cm]
+	2\, [\mathrm D \phi (\cdot)] (-1) \,+\, 3\, \phi (-1) 
+	& = &  
+	4,
+	\\[0.25cm]
+	5\, [\mathrm D \phi (\cdot)](+1) \,+\, 6\, \phi (+1) 
+	& = & 
+	7.
+ 	\ea
+ \]	
+\begin{lstlisting}
+% Set problem data
+% number of basis functions, differential order, spatial variable, parameters
+N = 63; % N has to be an odd number
+m = 2; % order of differential operator
+y = sety(N); % spatially-independent variable
+
+% parameter eps in TPBVP
+eps = 1; eps2 = eps*eps;
+
+% Represent operator in TPBVP
+A = cell(m+1,1); % cell array with coefficients
+A{1} = 1.0; A{2} = 1./(y.^2 + 1); A{3} = -eps2;
+
+% Input in physical space
+d = 1 + y + y.^2;
+ 
+% Robin BCs
+bc = BCs(2,1); % two constraints on one variable
+
+% boundary operators
+OpLeft = cell(2,1); OpLeft{1} = 2; OpLeft{2} = 3; % for 2 Dy + 3 I
+OpRight = cell(2,1); OpRight{1} = 5; OpRight{2} = 6; % for 5 Dy + 6 I
+
+% Robin BCs at y = \pm 1
+bc.Operator = {OpLeft; OpRight};
+bc.Points = [-1; 1];
+bc.Values = [4; 7];
+
+% Use sisSolves to solve TPBVP
+% inputs to sisSolves: differential order m, N, operator, BCs, input forcing d
+solution = sisSolves(m,N,A,bc,d); 
+\end{lstlisting}
+  
+  \item {\sf sisEigs(m,N,F,E,bc):}~solves generalized eigenvalue problem $[ \MM F \phi (\cdot) ](y) = \lambda \, [ \MM E \phi (\cdot) ] (y)$, where $\MM F$ and $\MM E$ are differential operators in $y$. This function can be called via:
+\begin{lstlisting}
+% solve generalized e-value problem via sisEigs 
+[V,lambda] = sisEigs(m,N,F,E,bc);
+[V,lambda] = sisEigs(m,N,F,E,bc,K);
+[V,lambda] = sisEigs(m,N,F,E,bc,K,SIGMA);
+\end{lstlisting}   
+Here, {\sf V} and {\sf lambda} are the eigenvectors and eigenvalues and {\sf m} is a vector that specifies the differential order of each variable in the block-matrix operator, {\sf N} is the number of Chebyshev polynomials, {\sf F} and {\sf E} are linear matrix-valued operators in the generalized eigenvalue problem, and {\sf bc} are boundary conditions that are specified using class {\sf BCs}. 
+  
+  By default, this function computes 6 eigenvalues with largest magnitude along with the corresponding eigenvectors. The optional arguments modify this behavior as done in Matlab's function {\sf eigs}: 
+  	\bi
+	\item {\sf K} -- specifies number of eigenvalues to be computed;
+  
+   \item {\sf SIGMA} -- if {\sf SIGMA} is a scalar, the closest eigenvalues to {\sf SIGMA} are computed; if {\sf SIGMA} is a character array, use `LR' and `SR' for the eigenvalues with largest and smallest real part, and `LM' and `SM' for the eigenvalues with largest and smallest magnitude.
+   \ei
+  Setting {\sf SIGMA} to {\sf `Full'} signals the use of Matlab's function {\sf eig} instead of {\sf eigs}; in this special case,
+  {\sf K} is not used and all eigenpairs of the finite-dimensional approximation are computed.
+  \item {\sf sisSvdfrs(m,mad,N,A,B,C,bcReg,bcAdj):} computes singular value decomposition of the frequency response operator that can be represented via a TPBVP. This function can be called via:   
+\begin{lstlisting} 
+% resolvent analysis via sisSvdfrs
+% (i.e., SVD of the frequency response operator) 
+[V,gamma] = sisSvdfrs(m,mad,N,A,B,C,bcReg,bcAdj);
+[V,gamma] = sisSvdfrs(m,mad,N,A,B,C,bcReg,bcAdj,K);
+[V,gamma] = sisSvdfrs(m,mad,N,A,B,C,bcReg,bcAdj,K,SIGMA);
+\end{lstlisting}   
+Here, {\sf V} contains the right and left singular functions of the feedback interconnected system (i.e., $\phi$ and $\psi$ in~\eqref{eq:feedbackRnd}) and {\sf gamma} is the vector of the singular values. The inputs to {\sf sisSvdfrs} are:~{\sf m} and ~{\sf mad} are vectors that specify the differential order of regular and adjoint variables in TPBVP, {\sf N} is the number of Chebyshev polynomials, {\sf A}, {\sf B}, and {\sf C} are matrix-valued operators $\MM A$, $\MM B$, and $\MM C$ in the TPBVP representation given by Eq.~\eqref{eq:mot1c}, and {\sf bcReg} and {\sf bcAdj} are boundary conditions that regular and adjoint variables have to satisfy (these are to be specified using class {\sf BCs}).  
+
+  By default, this function computes 6 singular values with largest magnitude along with the corresponding right and left singular functions. The optional arguments modify this behavior as done in Matlab's function {\sf eigs}: 
+  \bi
+\item {\sf K} -- specifies number of singular values to be computed;
+
+\item {\sf SIGMA} -- if {\sf SIGMA} is a scalar, the closest singular values to {\sf SIGMA} are computed; if {\sf SIGMA} is a character array, use `LR' and `SR' for the singular values with largest and smallest real part.
+\ei
+Setting {\sf SIGMA} to {\sf `Full'} signals the use of Matlab's function {\sf eig} instead of {\sf eigs}; in this special case,
+{\sf K} is not used and all eigenpairs of the finite-dimensional approximation are computed.
+      
+  \textbf{Note:} We currently do not provide a routine to compute adjoint boundary conditions, you need to explicitly provide it as an input. However, we understand that this can be cumbersome as adjoint boundary conditions are derived by integrating by parts. We developed a Mathematica package `AdjointFinder' that is  posted on our website, and can help derive analytical expressions for adjoint boundary conditions (and operators) by automatic integration by parts.   
+
+  \item {\sf sisHinf(m,N,E,F,B,C,bcReg,bcAdj):}~Computes the $H_\infty$ norm of a stable linear dynamical system,
+  \begin{subequations}\label{eq:mot1E}
+    \begin{alignat}{3}
+    \partial_{t} [\MM{E} \, \bphi( \cdot , t)](y) 
+    \;&=\; 
+    [\MM{F} \, \bphi(\cdot , t)](y) 
+    \; + \; 
+    [\MM{B} \, \BB{d}(\cdot,t)](y),
+    &&\label{eq:mot1Ea}
+    \\
+      \Bxi(y,t) 
+      \;&=\; 
+      [\MM{C} \, \bphi(\cdot,t)](y),
+      &\label{eq:mot1Eb}
+      \\
+     [\MM{L}_a \, \bphi(\cdot,t)](a)  
+     \;&=\; 
+     [\MM{L}_b \, \bphi(\cdot,t)](b) 
+     \;=\;  0.
+     &\label{eq:mot1Ec}
+  \end{alignat}
+  \end{subequations}
+  The $H_\infty$ norm is determined by the peak (over temporal frequency) of the largest singular value of the frequency response operator associated with system~Eq.~\eqref{eq:mot1Ec}, i.e., $\sup_\omega {\mathcal T} (\omega)$. This function can be called via:\begin{lstlisting}
+% H infinity norm of a stable linear system via sisHinf
+[wopt,Hinf] = sisHinf(m,N,E,F,B,C,bcReg,bcAdj);
+\end{lstlisting}
+  where {\sf wopt} is the frequency at which $\sup_\omega {\mathcal T} (\omega)$ takes place, {\sf Hinf} is the $H_\infty$ norm, {\sf m} is a vector that specifies the differential order of each variable in the vector $\bphi$, {\sf N} is the number of Chebyshev polynomials, {\sf E}, {\sf F}, {\sf B}, and {\sf C} are the operators in Eq.~\eqref{eq:mot1E}, and {\sf bcReg} and {\sf bcAdj} are boundary conditions that regular and adjoint variables have to satisfy (these are to be specified using class {\sf BCs}).  
+\end{itemize} 
+
+	\vspace*{-4ex}
+  \appendix
+\section{Recurrence relations}\label{app:ind-int}
+Consider the expression for the highest derivative of a second order differential equation in a Chebyshev basis,
+\begin{align}\label{eq:A1}
+  \D^2 u (y) \;&=\; u_0^{(2)} \,\tfrac{1}{2}T_0(y) \;+\; u_1^{(2)}\,T_1(y) \,+\, u_2^{(2)}\,T_2(y) \;+\; u_3^{(2)}\,T_3(y) \,+\, \cdots.
+\end{align}
+
+Relation of Chebyshev polynomials with derivatives is given by~\cite[Equation 3.25]{chebExpanExact}
+\begin{subequations}\label{eq:A2}
+\begin{align}
+  T_0(y) \;&=\; T_1'(y),\\
+  T_1(y) \;&=\; \tfrac{1}{4}\,T_2'(y),\\
+  T_n(y) \;&=\; \tfrac{1}{2}\left( \frac{T_{n+1}'(y)}{n+1} - \frac{T_{n-1}'(y)}{n-1}\right), \qquad n > 1.
+\end{align}
+\end{subequations}
+Substituting~Eq.~\eqref{eq:A2} in~Eq.~\eqref{eq:A1} and making an indefinite integration on the resultant expression yields,
+
+\begin{align}\label{eq1:2}
+  \begin{split}
+    \D\,v(y) \;=&\; \frac{u^{(2)}_0}{2}y \,+ \, \frac{u^{(2)}_1}{2}y^2 \,+\,\frac{u^{(2)}_2}{2}\left(\frac{T_3(y)}{3} - \frac{T_1(y)}{1}\right) \,+\,\frac{u^{(2)}_3}{2}\left(\frac{T_4(y)}{4} - \frac{T_2(y)}{2}\right)\,\\
+    &\;+\,\frac{u^{(2)}_4}{2}\left(\frac{T_5(y)}{5} - \frac{T_3(y)}{3}\right)\,+\, \cdots + c_0,
+  \end{split}
+\end{align}
+where $c_0$ is the effective integration constant.
+As $y^2 = (T_0(y)+T_2(y))/2$, Eq.~\eqref{eq1:2} takes the form:
+\begin{align}
+  \begin{split}
+  \D\,v(y)\;=&\; \frac{u^{(2)}_0}{2}y \,+\, \frac{u^{(2)}_1}{2} \left(\frac{T_0(y) + T_1(y)}{2}\right) \,+\,\frac{u^{(2)}_2}{2}\left(\frac{T_3(y)}{3} - \frac{T_1(y)}{1}\right) \,\\&+\,\frac{u^{(2)}_3}{2}\left(\frac{T_4(y)}{4} - \frac{T_2(y)}{2}\right)\,+\,\frac{u^{(2)}_4}{2}\left(\frac{T_5(y)}{5} - \frac{T_3(y)}{3}\right)\,+\, \cdots + c_0,
+\end{split} \\
+  &=\; T_1(y)\underbrace{\left(\frac{u^{(2)}_0}{2} - \frac{u^{(2)}_2}{2}\right)}_{u^{(1)}_1} \,+\,T_2(y)\underbrace{\left(\frac{u^{(2)}_1}{4} - \frac{u^{(2)}_3}{4} \right)}_{u^{(1)}_2} \,+\,T_3(y)\underbrace{\left(\frac{u^{(2)}_2}{6} - \frac{u^{(2)}_2}{6}\right)}_{u^{(1)}_3} \,+\,\cdots + \underbrace{\frac{u^{(2)}_1}{4}}_{u^{(1)}_0/2} \,+\, c_0.\label{eq:A5}
+\end{align}
+Hence we have from~Eq.~\eqref{eq:A5},
+\begin{align}
+  \D\, v(y) \;&=\; u^{(1)}_0 \,\tfrac{1}{2}T_0(y) \;+\; u^{(1)}_1\,T_1(y) \,+\, u^{(1)}_2\,T_2(y) \;+\; u^{(1)}_3\,T_3(y) \,+\, \cdots \,+\, c_0,
+\end{align}
+where $u^{(1)}_0 = u^{(2)}_1/2$ and the remaining coefficients for $u^{(1)}_i$ from the recursive relation in~Eq.~\eqref{ss}.
+
+	% \vspace*{-4ex}
+\newpage
+\bibliographystyle{abbrv}
+\singlespacing
+\bibliography{../bib/masterFile,../bib/mj-complete-bib}
+\end{document}

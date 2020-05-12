@@ -1,9 +1,8 @@
-# GH: Download link must be changed from webpage to SISMatlab, after we publish
 SISMatlab
 	Home            [index.html]
 	Basic example [basic-example.html]
-	Download		[http://github.com/gokulhari/webpage/zipball/master/]
-	Documentation  [latex/tex/SISMatlab_v7.pdf]
+	Download		[download.html]
+	Documentation  [latex/tex/SISMatlab_v11.pdf]
     Feedback		[feedback.html]
 
 Applications
