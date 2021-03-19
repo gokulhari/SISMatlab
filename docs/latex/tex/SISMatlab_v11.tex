@@ -157,7 +157,7 @@ frontmatterverbose,
 \pagebreak
 
 \begin{abstract}
-We provide a description of the spectral integration method and A Matlab Spectral Integration Suite ({\sf SISMatlab}). Additional information about the examples provided in the paper along with source codes can be found at: 
+We provide a description of the spectral integration method and A Matlab Spectral Integration Suite ({\sf SISMatlab}). Additional information about the examples provided in the paper along with Matlab source codes can be found at: 
 	\vspace*{0.15cm}
 	\begin{center}
   \href{https://viterbi-web.usc.edu/~mihailo/software/sismatlab/}{https://viterbi-web.usc.edu/$\sim$mihailo/software/sismatlab/}
@@ -395,7 +395,7 @@ where $\mathbf d$ is the vector of spectral coefficients associated with the inp
     \pm 1,
 \end{split}\label{eq:rndDir}
 \end{align}
-equation~\eqref{eq:rndDu} to express the Neumann boundary conditions in Eq.~\eqref{eq:1c} as
+Eq.~\eqref{eq:rndDu} to express the Neumann boundary conditions in Eq.~\eqref{eq:1c} as
 \begin{align}
   \begin{split}
     \mathbf t_{\pm 1}^T \, \mathbf J_1 
@@ -462,7 +462,7 @@ where
         \end{array}
         \right].
 	\end{align}
-Based on Eq.~\eqref{eq:rndu}, approximate solution $\hat{\phi} (y)$ to Eq.~\eqref{eq:1} is obtained by integrating the solution $\hat{\HH v}$ to Eq.~\eqref{eq:finalEx1} twice,
+Based on Eq.~\eqref{eq:rndu}, an approximate solution $\hat{\phi} (y)$ to Eq.~\eqref{eq:1} is obtained by integrating the solution $\hat{\HH v}$ to Eq.~\eqref{eq:finalEx1} twice,
 	\begin{align}
 	\label{eq:finalEx}
   	\hat{\phi} (y) 
@@ -689,7 +689,7 @@ where $(\cdot)^{\dagger}$ denotes the adjoint of the operator $(\cdot)$ and $\ps
   \end{array}\right],\label{eq:feedbackRnda}
 \end{align}
 \end{subequations}
-and employe Eqs.~\eqref{eq:rndu}-\eqref{eq:rndD2u} to obtained a discretized approximation of Eq.~\eqref{eq:feedbackRnd}, 
+and employ Eqs.~\eqref{eq:rndu}-\eqref{eq:rndD2u} to obtained a discretized approximation of Eq.~\eqref{eq:feedbackRnd}, 
 \begin{subequations}\label{eq:rnd_fr_eq}
 \begin{IEEEeqnarray}{rCl}\label{eq:rnd_fr_eq1}
   \underbrace{\left[\begin{array}{cccc}
@@ -774,7 +774,7 @@ where the expressions for $\HH P$ and $\HH S$ are given in Eqs.~\eqref{eq:projec
 \begin{align}
   (\hat{\HH F} \,\hat{\HH V}_{2})\,\hat{\HH u} \;=\; \gamma \,(\hat{\HH E}\, \hat{\HH V}_{2})\, \hat{\HH u},
 \end{align}
-and yielding,
+yielding,
 \begin{align}
   \left[\begin{array}{c}
     \hat{\phi} (y)\\
@@ -792,7 +792,7 @@ and yielding,
 	\label{sec.main}
 
 	\vspace*{-2ex}
-In Section~\ref{sec:intro}, we described how spectral integration method can be used to solve forced TPBVPs and conduct modal and nonmodal analyses of PDEs with one spatial variable and second-order differential operators. Herein, we illustrate the method for $n$th order linear differential operators with non-constant coefficients. 
+In Section~\ref{sec:intro}, we described how the spectral integration method can be used to solve forced TPBVPs and conduct modal and nonmodal analyses of PDEs with one spatial variable and second-order differential operators. Herein, we illustrate the method for $n$th order linear differential operators with non-constant coefficients. 
 
 Let us consider an $n$th order linear differential equation with non-constant coefficients,
 \begin{subequations}\label{eq1:1}
@@ -877,7 +877,7 @@ are matrices with $n$ columns and infinite number of rows with~\cite[Eq. 10]{Gre
   \HH q.
   \end{align}
 \end{subequations}
-Thus, representation of the $n$th order differential equation~\eqref{eq:1a} with boundary conditions~\eqref{eq:1b} is given~by,
+Thus, a representation of the $n$th order differential equation~\eqref{eq:1a} with boundary conditions~\eqref{eq:1b} is given~by,
 \begin{equation}\label{eq:infiniteDim}
   \underbrace{\left[
   \begin{array}{cc}
@@ -981,7 +981,7 @@ J{2} % J_1
 J{3} % J_2
 \end{lstlisting}
    
-   \item \textsf{MultMat(f)}:~yields finite-dimensional representation of the operator that accounts for spatially-varying coefficients, i.e., the operator $\HH M_a$ in Eq.~\eqref{eq:M}.
+   \item \textsf{MultMat(f)}:~yields a finite-dimensional representation of the operator that accounts for spatially varying coefficients, i.e., the operator $\HH M_a$ in Eq.~\eqref{eq:M}.
 \begin{lstlisting}
 N = 63; % N + 1 basis functions
 y = sety(N); % spatially-independent variable
@@ -989,7 +989,7 @@ y = sety(N); % spatially-independent variable
 Ma = MultMat(1./(y.^2 + 1));
 \end{lstlisting}
 
-  \item \textsf{Discretize(m,N,L)}:~employs functions \textsf{Matgen} and \textsf{MultMat} to obtain finite-dimensional representation of linear operators. Inputs are the highest differential order, $m$, the number of basis functions, $N$, and the linear operator $L$. Linear operators are specified as cells in Matlab, e.g., the operator $a\,\D^2 + b\,\D + c$ is represented using a $3\times 1$ cell with $L\{1\} = a$, $L\{2\} = b$, and $L\{3\} = c$). 
+  \item \textsf{Discretize(m,N,L)}:~employs functions \textsf{Matgen} and \textsf{MultMat} to obtain finite-dimensional representations of linear operators. Inputs are the highest differential order, $m$, the number of basis functions, $N$, and the linear operator $L$. Linear operators are specified as cells in Matlab, e.g., the operator $a\,\D^2 + b\,\D + c$ is represented using a $3\times 1$ cell with $L\{1\} = a$, $L\{2\} = b$, and $L\{3\} = c$). 
   
 	\vspace*{0.1cm}  
 {\sf basic-example.m} in the ``examples'' directory illustrates how to use \textsf{Matgen} and \textsf{MultMat} directly.
@@ -1020,7 +1020,7 @@ L{2,1} = L21; L{2,2} = L22;
 Lad = AdjointFormal(L); % adjoint of the operator L
 \end{lstlisting}
   
-\item {\sf MultOps(L1,L2):}~returns composition of linear operators $L_1$ and $L_2$ of compatible dimensions.
+\item {\sf MultOps(L1,L2):}~returns the composition of linear operators $L_1$ and $L_2$ of compatible dimensions.
 \begin{lstlisting}
 L = MultOps(L1,L2); % composition of operators L1 and L2
 \end{lstlisting}
@@ -1169,7 +1169,7 @@ bc.Values = [4; 7];
 solution = sisSolves(m,N,A,bc,d); 
 \end{lstlisting}
   
-  \item {\sf sisEigs(m,N,F,E,bc):}~solves generalized eigenvalue problem $[ \MM F \phi (\cdot) ](y) = \lambda \, [ \MM E \phi (\cdot) ] (y)$, where $\MM F$ and $\MM E$ are differential operators in $y$. This function can be called via:
+  \item {\sf sisEigs(m,N,F,E,bc):}~solves the generalized eigenvalue problem $[ \MM F \phi (\cdot) ](y) = \lambda \, [ \MM E \phi (\cdot) ] (y)$, where $\MM F$ and $\MM E$ are differential operators in $y$. This function can be called via:
 \begin{lstlisting}
 % solve generalized e-value problem via sisEigs 
 [V,lambda] = sisEigs(m,N,F,E,bc);
@@ -1178,7 +1178,7 @@ solution = sisSolves(m,N,A,bc,d);
 \end{lstlisting}   
 Here, {\sf V} and {\sf lambda} are the eigenvectors and eigenvalues and {\sf m} is a vector that specifies the differential order of each variable in the block-matrix operator, {\sf N} is the number of Chebyshev polynomials, {\sf F} and {\sf E} are linear matrix-valued operators in the generalized eigenvalue problem, and {\sf bc} are boundary conditions that are specified using class {\sf BCs}. 
   
-  By default, this function computes 6 eigenvalues with largest magnitude along with the corresponding eigenvectors. The optional arguments modify this behavior as done in Matlab's function {\sf eigs}: 
+  By default, this function computes 6 eigenvalues with the largest magnitude along with the corresponding eigenvectors. The optional arguments modify this behavior as done in Matlab's function {\sf eigs}: 
   	\bi
 	\item {\sf K} -- specifies number of eigenvalues to be computed;
   
@@ -1196,7 +1196,7 @@ Here, {\sf V} and {\sf lambda} are the eigenvectors and eigenvalues and {\sf m} 
 \end{lstlisting}   
 Here, {\sf V} contains the right and left singular functions of the feedback interconnected system (i.e., $\phi$ and $\psi$ in~\eqref{eq:feedbackRnd}) and {\sf gamma} is the vector of the singular values. The inputs to {\sf sisSvdfrs} are:~{\sf m} and ~{\sf mad} are vectors that specify the differential order of regular and adjoint variables in TPBVP, {\sf N} is the number of Chebyshev polynomials, {\sf A}, {\sf B}, and {\sf C} are matrix-valued operators $\MM A$, $\MM B$, and $\MM C$ in the TPBVP representation given by Eq.~\eqref{eq:mot1c}, and {\sf bcReg} and {\sf bcAdj} are boundary conditions that regular and adjoint variables have to satisfy (these are to be specified using class {\sf BCs}).  
 
-  By default, this function computes 6 singular values with largest magnitude along with the corresponding right and left singular functions. The optional arguments modify this behavior as done in Matlab's function {\sf eigs}: 
+  By default, this function computes 6 singular values with the largest magnitude along with the corresponding right and left singular functions. The optional arguments modify this behavior as done in Matlab's function {\sf eigs}: 
   \bi
 \item {\sf K} -- specifies number of singular values to be computed;
 
@@ -1205,7 +1205,7 @@ Here, {\sf V} contains the right and left singular functions of the feedback int
 Setting {\sf SIGMA} to {\sf `Full'} signals the use of Matlab's function {\sf eig} instead of {\sf eigs}; in this special case,
 {\sf K} is not used and all eigenpairs of the finite-dimensional approximation are computed.
       
-  \textbf{Note:} We currently do not provide a routine to compute adjoint boundary conditions, you need to explicitly provide it as an input. However, we understand that this can be cumbersome as adjoint boundary conditions are derived by integrating by parts. We developed a Mathematica package `AdjointFinder' that is  posted on our \href{https://gokulhari.github.io/webpage/AdjointFinder.html}{website}, and can help derive analytical expressions for adjoint boundary conditions (and operators) by automatic integration by parts.   
+  \textbf{Note:} We currently do not provide a routine to compute adjoint boundary conditions; you need to explicitly provide it as an input. However, we understand that this can be cumbersome as adjoint boundary conditions are derived by integrating by parts. We developed a Mathematica package `AdjointFinder' that is  posted on our \href{https://gokulhari.github.io/webpage/AdjointFinder.html}{website}, and can help derive analytical expressions for adjoint boundary conditions (and operators) by automatic integration by parts.   
 
   \item {\sf sisHinf(m,N,E,F,B,C,bcReg,bcAdj):}~Computes the $H_\infty$ norm of a stable linear dynamical system,
   \begin{subequations}\label{eq:mot1E}
@@ -1272,7 +1272,7 @@ Hence we have from~Eq.~\eqref{eq:A5},
 \begin{align}
   \D\, v(y) \;&=\; u^{(1)}_0 \,\tfrac{1}{2}T_0(y) \;+\; u^{(1)}_1\,T_1(y) \,+\, u^{(1)}_2\,T_2(y) \;+\; u^{(1)}_3\,T_3(y) \,+\, \cdots \,+\, c_0,
 \end{align}
-where $u^{(1)}_0 = u^{(2)}_1/2$ and the remaining coefficients for $u^{(1)}_i$ from the recursive relation in~Eq.~\eqref{ss}.
+where $u^{(1)}_0 = u^{(2)}_1/2$ and the remaining coefficients for $u^{(1)}_i$ are from the recursive relation in~Eq.~\eqref{ss}.
 
 	% \vspace*{-4ex}
 \newpage
